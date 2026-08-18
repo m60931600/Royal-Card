@@ -1,5 +1,3 @@
-cd /storage/emulated/0/Download
-cat > index.html << 'EOF'
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -9,7 +7,6 @@ cat > index.html << 'EOF'
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #ffd700;
             --primary-dark: #c9a800;
@@ -22,7 +19,7 @@ cat > index.html << 'EOF'
             --text-dim: #aaaaaa;
             --text-dark: #1a1a2e;
             --border: rgba(255,215,0,0.15);
-            --radius: 16px;
+            --radius: 12px;
             --shadow: 0 10px 40px rgba(0,0,0,0.5);
             --shadow-gold: 0 0 40px rgba(255,215,0,0.2);
             --success: #4caf50;
@@ -32,6 +29,7 @@ cat > index.html << 'EOF'
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --gradient-gold: linear-gradient(135deg, #ffd700, #f5b342, #ffd700);
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Tajawal', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; position: relative; }
         .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
         .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite alternate; }
@@ -39,12 +37,11 @@ cat > index.html << 'EOF'
         .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.8s ease, transform 0.8s ease; }
         .splash-screen.hide { opacity: 0; transform: scale(1.1); pointer-events: none; }
         .splash-screen .logo { font-size: 80px; animation: pulse 1.5s ease-in-out infinite; text-shadow: 0 0 60px var(--primary-glow); }
-        .splash-screen h1 { font-size: 36px; font-weight: 900; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 10px; animation: fadeInUp 1s ease; }
-        .splash-screen .sub { color: var(--text-dim); font-size: 16px; margin-top: 5px; animation: fadeInUp 1.2s ease; }
+        .splash-screen h1 { font-size: 36px; font-weight: 900; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 10px; }
+        .splash-screen .sub { color: var(--text-dim); font-size: 16px; margin-top: 5px; }
         .splash-screen .loader { margin-top: 30px; width: 50px; height: 50px; border: 4px solid var(--bg-card); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .marquee-bar { background: var(--gradient-gold); background-size: 200% 200%; animation: shimmer 3s ease-in-out infinite; color: var(--text-dark); padding: 8px 0; font-weight: 700; overflow: hidden; white-space: nowrap; position: sticky; top: 0; z-index: 1001; }
         @keyframes shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .marquee-bar .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
@@ -106,20 +103,69 @@ cat > index.html << 'EOF'
         .btn-secondary { background: var(--bg-card); color: var(--text); border: 2px solid var(--border); }
         .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
         .btn-block { width: 100%; justify-content: center; }
-        .category-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 25px; transition: var(--transition); cursor: pointer; }
-        .category-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: var(--shadow-gold); }
-        .category-card .category-image { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 60px; color: var(--primary); background: rgba(255,215,0,0.05); }
-        .category-card .category-info { padding: 15px 20px; }
-        .category-card .category-info h3 { color: var(--primary); font-size: 22px; }
-        .category-card .category-info p { color: var(--text-dim); font-size: 14px; }
-        .category-card .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
-        .product-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; text-align: center; padding: 15px; transition: var(--transition); cursor: pointer; }
-        .product-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow-gold); }
-        .product-card .product-image { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; background: rgba(255,215,0,0.05); display: flex; align-items: center; justify-content: center; font-size: 40px; color: var(--primary); overflow: hidden; }
+        
+        /* ===== الأقسام الرئيسية (3 في صف) ===== */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        .category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-gold);
+        }
+        .category-card .cat-icon { font-size: 30px; display: block; margin-bottom: 5px; }
+        .category-card .cat-name { font-size: 14px; font-weight: 700; color: var(--text); }
+        .category-card .cat-count { font-size: 11px; color: var(--text-dim); }
+        .category-card .sub-categories {
+            display: none;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .category-card .sub-categories.show { display: flex; }
+        .category-card .sub-category {
+            background: var(--bg);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--primary);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .category-card .sub-category:hover { background: var(--primary); color: var(--text-dark); }
+        .category-card .toggle-sub { font-size: 12px; color: var(--primary); cursor: pointer; margin-top: 5px; display: inline-block; }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .product-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; text-align: center; padding: 12px; transition: var(--transition); cursor: pointer; }
+        .product-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-gold); }
+        .product-card .product-image { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; background: rgba(255,215,0,0.05); display: flex; align-items: center; justify-content: center; font-size: 30px; color: var(--primary); overflow: hidden; }
         .product-card .product-image img { width: 100%; height: 100%; object-fit: cover; }
-        .product-card .product-info h4 { font-size: 14px; margin: 8px 0 2px; }
-        .product-card .product-info .price { color: var(--primary); font-weight: 700; font-size: 16px; }
-        .product-card .product-info .rating { color: var(--warning); font-size: 12px; margin: 3px 0; }
+        .product-card .product-info h4 { font-size: 13px; margin: 5px 0 2px; }
+        .product-card .product-info .price { color: var(--primary); font-weight: 700; font-size: 14px; }
+        .product-card .product-info .rating { color: var(--warning); font-size: 11px; }
+        
+        /* ===== النوافذ المنبثقة ===== */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
         .modal.show { display: flex; }
         .modal-content { background: #1a1a2e; padding: 25px; border-radius: var(--radius); border: 2px solid var(--primary); max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; animation: modalIn 0.3s ease; }
@@ -132,6 +178,9 @@ cat > index.html << 'EOF'
         .modal-content .modal-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
         .modal-content .error-msg { color: var(--danger); font-size: 14px; text-align: center; margin: 5px 0; }
         .modal-content .success-msg { color: var(--success); font-size: 14px; text-align: center; margin: 5px 0; }
+        .modal-content .timer { font-size: 48px; color: var(--primary); text-align: center; margin: 10px 0; }
+        .modal-content .timer-text { text-align: center; color: var(--text-dim); font-size: 14px; }
+        
         .admin-panel { background: var(--bg-card); border: 2px solid var(--primary); border-radius: var(--radius); padding: 25px; margin-top: 20px; }
         .admin-panel h3 { color: var(--primary); margin-bottom: 15px; font-size: 20px; }
         .admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
@@ -139,15 +188,34 @@ cat > index.html << 'EOF'
         .admin-card input, .admin-card select { width: 100%; padding: 8px; margin: 5px 0; border-radius: 10px; border: 1px solid #333; background: #0a0a1a; color: #fff; }
         .admin-product-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-left: 3px solid var(--primary); }
         .admin-user-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; border-left: 3px solid var(--info); }
+        
         .loading-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; justify-content: center; align-items: center; flex-direction: column; }
         .loading-screen.show { display: flex; }
         .loading-screen .clock { font-size: 80px; color: var(--primary); animation: pulse 1.5s ease-in-out infinite; }
         .loading-screen h3 { color: var(--primary); margin-top: 15px; font-size: 24px; }
         .loading-screen p { color: var(--text-dim); margin-top: 5px; }
+        
         .firework { position: fixed; pointer-events: none; z-index: 3001; font-size: 30px; animation: fireworkUp 1.5s ease-out forwards; }
         @keyframes fireworkUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-200px) scale(0); } }
-        @media (max-width: 768px) { .products-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); } .admin-grid { grid-template-columns: 1fr; } .sidebar { width: 280px; right: -290px; } .hamburger { top: 42px; left: 10px; padding: 8px 10px; } .top-bar { top: 38px; padding: 8px 12px; } .top-bar .balance { font-size: 13px; } .top-bar .balance span { font-size: 16px; } }
-        @media (max-width: 480px) { .products-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); } .category-card .category-image { height: 120px; font-size: 40px; } .section-title { font-size: 22px; } .splash-screen h1 { font-size: 28px; } }
+        
+        @media (max-width: 768px) {
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+            .admin-grid { grid-template-columns: 1fr; }
+            .sidebar { width: 280px; right: -290px; }
+            .hamburger { top: 42px; left: 10px; padding: 8px 10px; }
+            .top-bar { top: 38px; padding: 8px 12px; }
+            .top-bar .balance { font-size: 13px; }
+            .top-bar .balance span { font-size: 16px; }
+        }
+        @media (max-width: 480px) {
+            .categories-grid { grid-template-columns: 1fr 1fr; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); }
+            .category-card .cat-icon { font-size: 24px; }
+            .category-card .cat-name { font-size: 12px; }
+            .section-title { font-size: 22px; }
+            .splash-screen h1 { font-size: 28px; }
+        }
     </style>
 </head>
 <body>
@@ -162,7 +230,7 @@ cat > index.html << 'EOF'
 
 <div class="loading-screen" id="loadingScreen">
     <div class="clock">⏳</div>
-    <h3>الطلب قيد التنفيذ...</h3>
+    <h3>جاري المعالجة...</h3>
     <p>يرجى الانتظار</p>
 </div>
 
@@ -181,7 +249,7 @@ cat > index.html << 'EOF'
         <i class="fas fa-wallet"></i> رصيدي: <span id="headerBalance">0</span> <span id="currencySymbol">دولار</span>
     </div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-        <button class="btn-add" onclick="showPage('payment')"><i class="fas fa-plus"></i> إضافة</button>
+        <button class="btn-add" onclick="showAddBalanceModal()"><i class="fas fa-plus"></i> إضافة رصيد</button>
         <span id="userNameDisplay" style="color:var(--primary);font-weight:bold;"></span>
         <button id="loginBtnTop" class="btn-add" onclick="showLoginModal()">تسجيل الدخول</button>
         <button id="logoutBtnTop" class="btn-add" onclick="logout()" style="background:#ff4444;color:#fff;display:none;">خروج</button>
@@ -249,15 +317,12 @@ cat > index.html << 'EOF'
             <i class="fas fa-wallet" style="font-size:60px;color:var(--primary);"></i>
             <div style="font-size:36px;color:var(--primary);font-weight:bold;margin:15px 0;" id="balancePageAmount">0</div>
             <div style="color:var(--text-dim);">رصيدك الحالي</div>
-            <button class="btn btn-primary mt-20" onclick="showPage('payment')">💰 إضافة رصيد</button>
+            <button class="btn btn-primary mt-20" onclick="showAddBalanceModal()">💰 إضافة رصيد</button>
         </div>
     </section>
     <section id="page-payment" class="page">
         <h2 class="section-title">💳 طرق الدفع</h2>
         <div id="paymentMethodsGrid"></div>
-        <div style="text-align:center;margin-top:20px;">
-            <button class="btn btn-primary" onclick="showAddBalanceModal()">💰 إضافة رصيد</button>
-        </div>
     </section>
     <section id="page-orders" class="page">
         <h2 class="section-title">📋 طلباتي</h2>
@@ -265,6 +330,8 @@ cat > index.html << 'EOF'
     </section>
     <section id="page-admin" class="page">
         <h2 class="section-title">🔧 لوحة التحكم</h2>
+        
+        <!-- إحصائيات -->
         <div class="admin-panel">
             <h3>📊 الإحصائيات</h3>
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;">
@@ -280,51 +347,55 @@ cat > index.html << 'EOF'
                     <div style="font-size:28px;color:var(--primary);" id="statRevenue">0</div>
                     <div style="color:var(--text-dim);font-size:13px;">💰 الأرباح</div>
                 </div>
+                <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
+                    <div style="font-size:28px;color:var(--primary);" id="statInvoices">0</div>
+                    <div style="color:var(--text-dim);font-size:13px;">📄 الفواتير</div>
+                </div>
             </div>
         </div>
+
+        <!-- إدارة العمولة -->
         <div class="admin-panel">
-            <h3>🔑 تغيير كلمة مرور الإدارة</h3>
+            <h3>💰 إعدادات العمولة</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
                 <div style="flex:1;">
-                    <label>كلمة المرور الجديدة</label>
-                    <input type="password" id="newAdminPassword" placeholder="كلمة المرور الجديدة">
+                    <label>نسبة العمولة (%)</label>
+                    <input type="number" id="commissionRate" value="1" min="0" max="100" step="0.1">
                 </div>
-                <button class="btn btn-primary" onclick="changeAdminPassword()">تغيير كلمة المرور</button>
+                <button class="btn btn-primary" onclick="updateCommission()">تحديث</button>
             </div>
-            <div id="passwordChangeMsg" style="margin-top:10px;"></div>
+            <div id="commissionMsg" style="margin-top:10px;"></div>
         </div>
+
+        <!-- إدارة الألوان -->
         <div class="admin-panel">
-            <h3>👑 إضافة مدير جديد</h3>
+            <h3>🎨 تخصيص الألوان</h3>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
+                <div><label style="font-size:12px;">اللون الأساسي</label><input type="color" id="colorPrimary" value="#ffd700" oninput="updateColors()"></div>
+                <div><label style="font-size:12px;">الخلفية</label><input type="color" id="colorBg" value="#0a0a1a" oninput="updateColors()"></div>
+                <div><label style="font-size:12px;">لون البطاقات</label><input type="color" id="colorCard" value="#1a1f2f" oninput="updateColors()"></div>
+                <div><label style="font-size:12px;">لون النصوص</label><input type="color" id="colorText" value="#ffffff" oninput="updateColors()"></div>
+            </div>
+        </div>
+
+        <!-- إدارة اللاعبين -->
+        <div class="admin-panel">
+            <h3>🎮 إدارة اللاعبين</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
                 <div style="flex:1;">
-                    <label>الإيميل</label>
-                    <input type="email" id="newAdminEmail" placeholder="admin@example.com">
+                    <label>معرف اللاعب (ID)</label>
+                    <input type="text" id="newPlayerId" placeholder="معرف اللاعب">
                 </div>
                 <div style="flex:1;">
-                    <label>كلمة المرور</label>
-                    <input type="password" id="newAdminPass" placeholder="كلمة المرور">
+                    <label>اسم اللاعب</label>
+                    <input type="text" id="newPlayerName" placeholder="اسم اللاعب">
                 </div>
-                <div style="flex:1;">
-                    <label>الاسم</label>
-                    <input type="text" id="newAdminName" placeholder="اسم المدير">
-                </div>
-                <button class="btn btn-primary" onclick="addAdmin()">➕ إضافة مدير</button>
+                <button class="btn btn-primary" onclick="addPlayer()">➕ إضافة</button>
             </div>
-            <div id="adminList" style="margin-top:15px;"></div>
+            <div id="playersList" style="margin-top:15px;"></div>
         </div>
-        <div class="admin-panel">
-            <h3>📝 العبارات المتحركة</h3>
-            <textarea id="marqueeTexts" rows="3" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">🔥 عروض حصرية بأسعار خيالية
-⭐ خدمة فورية 24/7
-💰 أفضل الأسعار في السوق
-🚀 تسوق الآن واستمتع بالخصومات
-🛡️ ضمان الجودة 100%</textarea>
-            <button class="btn btn-primary mt-20" onclick="updateMarquee()">تحديث العبارات</button>
-        </div>
-        <div class="admin-panel">
-            <h3>👥 إدارة المستخدمين</h3>
-            <div id="usersList"></div>
-        </div>
+
+        <!-- إدارة الأقسام الرئيسية -->
         <div class="admin-panel">
             <h3>📂 إدارة الأقسام</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
@@ -340,33 +411,54 @@ cat > index.html << 'EOF'
             </div>
             <div id="categoryList" style="margin-top:15px;"></div>
         </div>
+
+        <!-- إدارة الأقسام الفرعية -->
+        <div class="admin-panel">
+            <h3>📂 إدارة الأقسام الفرعية</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+                <div style="flex:1;">
+                    <label>القسم الرئيسي</label>
+                    <select id="subCategoryParentSelect"></select>
+                </div>
+                <div style="flex:1;">
+                    <label>اسم القسم الفرعي</label>
+                    <input type="text" id="newSubCategoryName" placeholder="اسم القسم الفرعي">
+                </div>
+                <button class="btn btn-primary" onclick="addSubCategory()">➕ إضافة</button>
+            </div>
+            <div id="subCategoryList" style="margin-top:15px;"></div>
+        </div>
+
+        <!-- إدارة المنتجات -->
         <div class="admin-panel">
             <h3>📦 إدارة المنتجات</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;min-width:120px;">
-                    <label>القسم</label>
-                    <select id="productCategorySelect"></select>
+                <div style="flex:1;min-width:100px;">
+                    <label>القسم الفرعي</label>
+                    <select id="productSubCategorySelect"></select>
                 </div>
-                <div style="flex:1;min-width:120px;">
+                <div style="flex:1;min-width:100px;">
                     <label>اسم المنتج</label>
                     <input type="text" id="newProductName" placeholder="اسم المنتج">
                 </div>
-                <div style="flex:1;min-width:100px;">
+                <div style="flex:1;min-width:80px;">
                     <label>السعر ($)</label>
                     <input type="number" id="newProductPrice" placeholder="السعر">
                 </div>
-                <div style="flex:1;min-width:120px;">
+                <div style="flex:1;min-width:100px;">
                     <label>صورة المنتج</label>
                     <input type="file" id="newProductImage" accept="image/*">
                 </div>
-                <div style="flex:2;min-width:200px;">
-                    <label>📝 معلومات مطلوبة من الزبون</label>
-                    <input type="text" id="newProductRequirements" placeholder="مثل: أدخل معرف اللاعب / رقم الاشتراك">
+                <div style="flex:1;min-width:150px;">
+                    <label>📝 معلومات مطلوبة</label>
+                    <input type="text" id="newProductRequirements" placeholder="مثل: أدخل معرف اللاعب">
                 </div>
                 <button class="btn btn-primary" onclick="addProduct()">➕ إضافة</button>
             </div>
             <div id="productList" style="margin-top:15px;"></div>
         </div>
+
+        <!-- إدارة العملات -->
         <div class="admin-panel">
             <h3>💱 إدارة العملات</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
@@ -386,6 +478,8 @@ cat > index.html << 'EOF'
             </div>
             <div id="currencyListAdmin" style="margin-top:15px;"></div>
         </div>
+
+        <!-- إدارة طرق الدفع -->
         <div class="admin-panel">
             <h3>💳 إدارة طرق الدفع</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
@@ -397,23 +491,85 @@ cat > index.html << 'EOF'
                     <label>الرقم/الحساب</label>
                     <input type="text" id="newPayNumber" placeholder="رقم الحساب">
                 </div>
+                <div style="flex:1;">
+                    <label>صورة</label>
+                    <input type="file" id="newPayImage" accept="image/*">
+                </div>
                 <button class="btn btn-primary" onclick="addPaymentMethod()">➕ إضافة</button>
             </div>
             <div id="paymentMethodsListAdmin" style="margin-top:15px;"></div>
         </div>
+
+        <!-- إدارة الفواتير -->
+        <div class="admin-panel">
+            <h3>📄 إدارة الفواتير</h3>
+            <div id="invoicesListAdmin"></div>
+        </div>
+
+        <!-- إدارة الطلبات -->
         <div class="admin-panel">
             <h3>📋 إدارة الطلبات</h3>
             <div id="ordersListAdmin"></div>
         </div>
+
+        <!-- إدارة المستخدمين -->
+        <div class="admin-panel">
+            <h3>👥 إدارة المستخدمين</h3>
+            <div id="usersList"></div>
+        </div>
+
+        <!-- إدارة المدراء -->
+        <div class="admin-panel">
+            <h3>👑 إدارة المدراء</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+                <div style="flex:1;">
+                    <label>الإيميل</label>
+                    <input type="email" id="newAdminEmail" placeholder="admin@example.com">
+                </div>
+                <div style="flex:1;">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="newAdminPass" placeholder="كلمة المرور">
+                </div>
+                <div style="flex:1;">
+                    <label>الاسم</label>
+                    <input type="text" id="newAdminName" placeholder="اسم المدير">
+                </div>
+                <button class="btn btn-primary" onclick="addAdmin()">➕ إضافة</button>
+            </div>
+            <div id="adminList" style="margin-top:15px;"></div>
+        </div>
+
+        <!-- تغيير كلمة مرور الإدارة -->
+        <div class="admin-panel">
+            <h3>🔑 تغيير كلمة مرور الإدارة</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+                <div style="flex:1;">
+                    <label>كلمة المرور الجديدة</label>
+                    <input type="password" id="newAdminPassword" placeholder="كلمة المرور الجديدة">
+                </div>
+                <button class="btn btn-primary" onclick="changeAdminPassword()">تغيير</button>
+            </div>
+            <div id="passwordChangeMsg" style="margin-top:10px;"></div>
+        </div>
+
+        <!-- العبارات المتحركة -->
+        <div class="admin-panel">
+            <h3>📝 العبارات المتحركة</h3>
+            <textarea id="marqueeTexts" rows="3" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">🔥 عروض حصرية بأسعار خيالية
+⭐ خدمة فورية 24/7
+💰 أفضل الأسعار في السوق
+🚀 تسوق الآن واستمتع بالخصومات
+🛡️ ضمان الجودة 100%</textarea>
+            <button class="btn btn-primary mt-20" onclick="updateMarquee()">تحديث العبارات</button>
+        </div>
     </section>
 </div>
 
+<!-- ===== نافذة تسجيل الدخول ===== -->
 <div class="modal" id="loginModal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('loginModal')">✕</span>
         <h2>🔑 تسجيل الدخول</h2>
-        <div id="loginError" class="error-msg"></div>
-        <div id="loginSuccess" class="success-msg"></div>
         <div id="loginFields">
             <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
             <input type="password" id="loginPassword" placeholder="كلمة المرور">
@@ -427,60 +583,98 @@ cat > index.html << 'EOF'
             <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
             <input type="tel" id="regPhone" placeholder="رقم الهاتف">
             <input type="password" id="regPassword" placeholder="كلمة المرور">
-            <input type="text" id="regVerifyCode" placeholder="رمز التحقق" style="display:none;">
-            <div id="registerError" class="error-msg"></div>
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="register()">إنشاء حساب</button>
-                <button class="btn btn-secondary" onclick="showLogin()">عودة للتسجيل</button>
-            </div>
-            <div style="text-align:center;margin-top:10px;">
-                <button class="btn btn-secondary" onclick="sendVerificationCode()" id="sendCodeBtn" style="font-size:12px;">📧 إرسال رمز التحقق</button>
+                <button class="btn btn-secondary" onclick="showLogin()">عودة</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- ===== نافذة إضافة رصيد (فاتورة) ===== -->
 <div class="modal" id="balanceModal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('balanceModal')">✕</span>
-        <h2>💰 إضافة رصيد</h2>
-        <input type="number" id="addBalanceAmount" placeholder="المبلغ بالدولار" min="1">
-        <input type="text" id="addBalanceCode" placeholder="رقم عملية التحويل">
-        <div id="balanceError" class="error-msg"></div>
+        <h2>💰 إنشاء فاتورة</h2>
+        <div id="invoiceError" class="error-msg"></div>
+        <div id="invoiceSuccess" class="success-msg"></div>
+        <input type="number" id="invoiceAmount" placeholder="المبلغ بالدولار" min="1">
+        <select id="invoiceCurrency">
+            <option value="usd">🇺🇸 دولار أمريكي</option>
+            <option value="syp">🇸🇾 ليرة سورية</option>
+        </select>
+        <div id="commissionDisplay" style="text-align:center;color:var(--text-dim);font-size:14px;margin:5px 0;"></div>
+        <div class="timer" id="invoiceTimer">⏳</div>
+        <div class="timer-text" id="timerText">الوقت المتبقي: 30:00</div>
+        <input type="text" id="invoiceTransferCode" placeholder="رقم عملية التحويل">
         <div class="modal-buttons">
-            <button class="btn btn-primary" onclick="addBalance()">إضافة</button>
-            <button class="btn btn-secondary" onclick="closeModal('balanceModal')">إلغاء</button>
+            <button class="btn btn-primary" onclick="createInvoice()">إنشاء فاتورة</button>
+            <button class="btn btn-success" onclick="confirmInvoice()" id="confirmInvoiceBtn" style="display:none;">تأكيد الدفع</button>
+            <button class="btn btn-danger" onclick="closeModal('balanceModal')">إلغاء</button>
         </div>
+        <div id="invoiceStatus" style="text-align:center;margin-top:10px;"></div>
+    </div>
+</div>
+
+<!-- ===== نافذة تفاصيل المنتج ===== -->
+<div class="modal" id="productModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('productModal')">✕</span>
+        <h2 id="productModalTitle">المنتج</h2>
+        <div id="productModalBody"></div>
     </div>
 </div>
 
 <script>
+// ===== البيانات =====
 let currentUser = null;
 let balance = 0;
 let categories = [];
+let subCategories = [];
 let products = [];
 let orders = [];
+let invoices = [];
 let paymentMethods = [];
 let users = [];
 let admins = [];
+let players = [];
 let currencies = [];
 let selectedCurrency = 'usd';
 let exchangeRates = { usd: 1, syp: 130 };
-let verificationCode = null;
 let adminPassword = 'Admin@2024';
+let commissionRate = 1;
+let currentInvoice = null;
+let timerInterval = null;
 
 function loadData() {
     try {
         balance = parseFloat(localStorage.getItem('balance')) || 0;
-        categories = JSON.parse(localStorage.getItem('categories')) || [{ id: 1, name: '🎮 ألعاب', icon: '🎮' }, { id: 2, name: '📱 تطبيقات', icon: '📱' }, { id: 3, name: '🎬 اشتراكات', icon: '🎬' }];
-        products = JSON.parse(localStorage.getItem('products')) || [{ id: 1, categoryId: 1, name: 'لعبة الأسطورة', price: 25, image: '', requirements: '' }, { id: 2, categoryId: 2, name: 'تطبيق VIP', price: 15, image: '', requirements: '' }, { id: 3, categoryId: 3, name: 'نتفلكس شهر', price: 30, image: '', requirements: '' }];
+        categories = JSON.parse(localStorage.getItem('categories')) || [
+            { id: 1, name: '🎮 ألعاب', icon: '🎮' },
+            { id: 2, name: '📱 تطبيقات', icon: '📱' },
+            { id: 3, name: '🎬 اشتراكات', icon: '🎬' }
+        ];
+        subCategories = JSON.parse(localStorage.getItem('subCategories')) || [];
+        products = JSON.parse(localStorage.getItem('products')) || [];
         orders = JSON.parse(localStorage.getItem('orders')) || [];
-        paymentMethods = JSON.parse(localStorage.getItem('paymentMethods')) || [{ id: 1, name: 'شنكاشي', number: '0991234567' }];
+        invoices = JSON.parse(localStorage.getItem('invoices')) || [];
+        paymentMethods = JSON.parse(localStorage.getItem('paymentMethods')) || [
+            { id: 1, name: 'شنكاشي', number: '0991234567', image: '' }
+        ];
         users = JSON.parse(localStorage.getItem('users')) || [];
         admins = JSON.parse(localStorage.getItem('admins')) || [];
-        currencies = JSON.parse(localStorage.getItem('currencies')) || [{ id: 1, name: 'دولار أمريكي', symbol: '🇺🇸', rate: 1, code: 'usd' }, { id: 2, name: 'ليرة سورية', symbol: '🇸🇾', rate: 130, code: 'syp' }];
+        players = JSON.parse(localStorage.getItem('players')) || [
+            { id: 'player1', name: 'أسطورة اللعبة' },
+            { id: 'player2', name: 'المحارب الأسطوري' }
+        ];
+        currencies = JSON.parse(localStorage.getItem('currencies')) || [
+            { id: 1, name: 'دولار أمريكي', symbol: '🇺🇸', rate: 1, code: 'usd' },
+            { id: 2, name: 'ليرة سورية', symbol: '🇸🇾', rate: 130, code: 'syp' }
+        ];
         exchangeRates = JSON.parse(localStorage.getItem('exchangeRates')) || { usd: 1, syp: 130 };
         adminPassword = localStorage.getItem('adminPassword') || 'Admin@2024';
+        commissionRate = parseFloat(localStorage.getItem('commissionRate')) || 1;
+        
         const adminExists = admins.some(a => a.email === 'admin@royal.com');
         if (!adminExists && admins.length === 0) {
             admins.push({ email: 'admin@royal.com', password: adminPassword, name: 'المدير الرئيسي' });
@@ -488,36 +682,79 @@ function loadData() {
         }
         const userData = localStorage.getItem('currentUser');
         if (userData) currentUser = JSON.parse(userData);
+        
+        // تنظيف الفواتير المنتهية
+        const now = Date.now();
+        invoices = invoices.filter(inv => {
+            if (inv.expiry && inv.expiry < now && !inv.confirmed) {
+                return false;
+            }
+            return true;
+        });
+        localStorage.setItem('invoices', JSON.stringify(invoices));
     } catch(e) { console.log('خطأ', e); }
 }
 
 function saveData() {
     localStorage.setItem('balance', balance);
     localStorage.setItem('categories', JSON.stringify(categories));
+    localStorage.setItem('subCategories', JSON.stringify(subCategories));
     localStorage.setItem('products', JSON.stringify(products));
     localStorage.setItem('orders', JSON.stringify(orders));
+    localStorage.setItem('invoices', JSON.stringify(invoices));
     localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
     localStorage.setItem('users', JSON.stringify(users));
     localStorage.setItem('admins', JSON.stringify(admins));
+    localStorage.setItem('players', JSON.stringify(players));
     localStorage.setItem('currencies', JSON.stringify(currencies));
     localStorage.setItem('exchangeRates', JSON.stringify(exchangeRates));
     localStorage.setItem('adminPassword', adminPassword);
+    localStorage.setItem('commissionRate', commissionRate);
     if (currentUser) localStorage.setItem('currentUser', JSON.stringify(currentUser));
 }
 
-window.onload = function() { createStars(); loadData(); updateUI(); setTimeout(() => { document.getElementById('splashScreen').classList.add('hide'); }, 2000); };
-function createStars() { const c = document.getElementById('stars'); for (let i=0; i<100; i++) { const s = document.createElement('div'); s.className = 'star'; s.style.width = Math.random()*3+1+'px'; s.style.height = s.style.width; s.style.left = Math.random()*100+'%'; s.style.top = Math.random()*100+'%'; s.style.setProperty('--duration', (Math.random()*3+2)+'s'); s.style.animationDelay = (Math.random()*5)+'s'; c.appendChild(s); } }
-function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); document.getElementById('hamburger').classList.toggle('active'); }
+// ===== النجوم =====
+window.onload = function() {
+    const c = document.getElementById('stars');
+    for (let i=0; i<80; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.width = Math.random()*2+1+'px';
+        s.style.height = s.style.width;
+        s.style.left = Math.random()*100+'%';
+        s.style.top = Math.random()*100+'%';
+        s.style.setProperty('--duration', (Math.random()*3+2)+'s');
+        s.style.animationDelay = (Math.random()*5)+'s';
+        c.appendChild(s);
+    }
+    loadData();
+    updateUI();
+    setTimeout(() => document.getElementById('splashScreen').classList.add('hide'), 1500);
+};
 
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('active');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+    document.getElementById('hamburger').classList.toggle('active');
+}
+
+// ===== عرض الصفحات =====
 function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const target = document.getElementById('page-' + page);
     if (target) target.classList.add('active');
     document.querySelectorAll('.bottom-nav a').forEach(a => a.classList.remove('active'));
-    document.querySelectorAll('.bottom-nav a').forEach(a => { if (a.onclick && a.onclick.toString().includes(page)) a.classList.add('active'); });
+    document.querySelectorAll('.bottom-nav a').forEach(a => {
+        if (a.onclick && a.onclick.toString().includes(page)) a.classList.add('active');
+    });
     document.querySelectorAll('.menu-items li').forEach(a => a.classList.remove('active'));
-    document.querySelectorAll('.menu-items li').forEach(a => { if (a.onclick && a.onclick.toString().includes(page)) a.classList.add('active'); });
-    if (page === 'admin') { if (!isAdmin()) { alert('⚠️ هذه الصفحة مخصصة للمدراء فقط!'); showPage('shop'); return; } renderAdminPanel(); }
+    document.querySelectorAll('.menu-items li').forEach(a => {
+        if (a.onclick && a.onclick.toString().includes(page)) a.classList.add('active');
+    });
+    if (page === 'admin') {
+        if (!isAdmin()) { alert('⚠️ هذه الصفحة مخصصة للمدراء فقط!'); showPage('shop'); return; }
+        renderAdminPanel();
+    }
     if (page === 'shop') renderCategories();
     if (page === 'orders') renderOrders();
     if (page === 'payment') renderPaymentMethods();
@@ -525,67 +762,659 @@ function showPage(page) {
     toggleSidebar();
 }
 
-function isAdmin() { if (!currentUser) return false; return admins.some(a => a.email === currentUser.email); }
-
-function changeAdminPassword() {
-    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي يمكنه تغيير كلمة المرور');
-    const newPass = document.getElementById('newAdminPassword').value.trim();
-    if (!newPass || newPass.length < 6) return alert('❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل');
-    adminPassword = newPass;
-    const mainAdmin = admins.find(a => a.email === 'admin@royal.com');
-    if (mainAdmin) mainAdmin.password = newPass;
-    saveData();
-    document.getElementById('passwordChangeMsg').innerHTML = '<span style="color:var(--success);">✅ تم تغيير كلمة مرور الإدارة بنجاح!</span>';
-    document.getElementById('newAdminPassword').value = '';
-    alert('✅ تم تغيير كلمة مرور الإدارة بنجاح!');
+function isAdmin() {
+    if (!currentUser) return false;
+    return admins.some(a => a.email === currentUser.email);
 }
 
-function addAdmin() {
-    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي يمكنه إضافة مدراء');
-    const email = document.getElementById('newAdminEmail').value.trim();
-    const password = document.getElementById('newAdminPass').value.trim();
-    const name = document.getElementById('newAdminName').value.trim() || 'مدير';
-    if (!email || !password) return alert('❌ أدخل الإيميل وكلمة المرور');
-    if (admins.some(a => a.email === email)) return alert('❌ هذا الإيميل مدير بالفعل');
-    admins.push({ email, password, name });
-    saveData();
-    renderAdminList();
-    document.getElementById('newAdminEmail').value = '';
-    document.getElementById('newAdminPass').value = '';
-    document.getElementById('newAdminName').value = '';
-    alert('✅ تم إضافة المدير بنجاح!');
+// ===== العملات =====
+function changeCurrency(code) {
+    selectedCurrency = code;
+    document.querySelectorAll('.currency-item').forEach(el => el.classList.remove('active'));
+    document.querySelector(`.currency-item[data-currency="${code}"]`)?.classList.add('active');
+    updateBalance();
+    localStorage.setItem('selectedCurrency', code);
 }
 
-function renderAdminList() {
-    const container = document.getElementById('adminList');
+function convertCurrency(amount, from, to) {
+    if (from === to) return amount;
+    const rateFrom = exchangeRates[from] || 1;
+    const rateTo = exchangeRates[to] || 1;
+    return (amount / rateFrom) * rateTo;
+}
+
+function renderCurrencies() {
+    const container = document.getElementById('currencyList');
+    if (container) container.innerHTML = currencies.map(c => 
+        `<div class="currency-item ${selectedCurrency === c.code ? 'active' : ''}" data-currency="${c.code}" onclick="changeCurrency('${c.code}')">
+            <span>${c.symbol} ${c.name}</span>
+            <span class="rate">1 دولار = ${c.rate}</span>
+        </div>`
+    ).join('');
+    const adminContainer = document.getElementById('currencyListAdmin');
+    if (adminContainer) adminContainer.innerHTML = currencies.map(c => 
+        `<div class="admin-product-item"><span>${c.symbol} ${c.name} (1 دولار = ${c.rate})</span>
+        <button class="btn btn-danger" onclick="deleteCurrency(${c.id})">🗑️ حذف</button></div>`
+    ).join('');
+}
+
+function addCurrency() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const name = document.getElementById('newCurrencyName').value.trim();
+    const symbol = document.getElementById('newCurrencySymbol').value.trim();
+    const rate = parseFloat(document.getElementById('newCurrencyRate').value);
+    if (!name || !symbol || !rate) return alert('❌ أدخل جميع البيانات');
+    const id = Date.now();
+    const code = name.substring(0,3).toLowerCase();
+    currencies.push({ id, name, symbol, rate, code });
+    exchangeRates[code] = rate;
+    saveData(); renderCurrencies();
+    document.getElementById('newCurrencyName').value = '';
+    document.getElementById('newCurrencySymbol').value = '';
+    document.getElementById('newCurrencyRate').value = '';
+    alert('✅ تم إضافة العملة');
+}
+
+function deleteCurrency(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد؟')) return;
+    currencies = currencies.filter(c => c.id !== id);
+    saveData(); renderCurrencies();
+}
+
+// ===== إدارة العمولة =====
+function updateCommission() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const rate = parseFloat(document.getElementById('commissionRate').value);
+    if (isNaN(rate) || rate < 0) return alert('❌ أدخل نسبة صحيحة');
+    commissionRate = rate;
+    saveData();
+    document.getElementById('commissionMsg').innerHTML = '<span style="color:var(--success);">✅ تم تحديث العمولة إلى ' + rate + '%</span>';
+    alert('✅ تم تحديث العمولة');
+}
+
+// ===== إدارة الألوان =====
+function updateColors() {
+    const primary = document.getElementById('colorPrimary').value;
+    const bg = document.getElementById('colorBg').value;
+    const card = document.getElementById('colorCard').value;
+    const text = document.getElementById('colorText').value;
+    document.documentElement.style.setProperty('--primary', primary);
+    document.documentElement.style.setProperty('--bg', bg);
+    document.documentElement.style.setProperty('--bg-card', card);
+    document.documentElement.style.setProperty('--text', text);
+    localStorage.setItem('colors', JSON.stringify({ primary, bg, card, text }));
+}
+
+function loadColors() {
+    try {
+        const colors = JSON.parse(localStorage.getItem('colors'));
+        if (colors) {
+            document.getElementById('colorPrimary').value = colors.primary;
+            document.getElementById('colorBg').value = colors.bg;
+            document.getElementById('colorCard').value = colors.card;
+            document.getElementById('colorText').value = colors.text;
+            updateColors();
+        }
+    } catch(e) {}
+}
+
+// ===== إدارة اللاعبين =====
+function renderPlayers() {
+    const container = document.getElementById('playersList');
     if (!container) return;
-    container.innerHTML = admins.map(a => `<div class="admin-product-item"><span>👑 ${a.name} - ${a.email}</span>${a.email !== 'admin@royal.com' ? `<button class="btn btn-danger" onclick="removeAdmin('${a.email}')">🗑️ حذف</button>` : '<span style="color:var(--primary);font-size:12px;">(المالك)</span>'}</div>`).join('');
+    container.innerHTML = players.map(p => 
+        `<div class="admin-product-item">
+            <span>🎮 ${p.id} → ${p.name}</span>
+            <button class="btn btn-danger" onclick="deletePlayer('${p.id}')">🗑️ حذف</button>
+        </div>`
+    ).join('') || '<p style="color:var(--text-dim);">لا يوجد لاعبين</p>';
 }
 
-function removeAdmin(email) {
-    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي يمكنه حذف مدراء');
-    if (email === 'admin@royal.com') return alert('❌ لا يمكن حذف المدير الرئيسي');
-    if (!confirm('هل أنت متأكد من حذف هذا المدير؟')) return;
-    admins = admins.filter(a => a.email !== email);
-    saveData();
-    renderAdminList();
-    alert('✅ تم حذف المدير');
+function addPlayer() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const id = document.getElementById('newPlayerId').value.trim();
+    const name = document.getElementById('newPlayerName').value.trim();
+    if (!id || !name) return alert('❌ أدخل المعرف والاسم');
+    if (players.some(p => p.id === id)) return alert('❌ هذا المعرف موجود مسبقاً');
+    players.push({ id, name });
+    saveData(); renderPlayers();
+    document.getElementById('newPlayerId').value = '';
+    document.getElementById('newPlayerName').value = '';
+    alert('✅ تم إضافة اللاعب');
 }
 
-function updateUI() {
-    const loginBtn = document.getElementById('loginBtnTop'), logoutBtn = document.getElementById('logoutBtnTop'), userNameDisplay = document.getElementById('userNameDisplay'), profileName = document.getElementById('profileName'), profileEmail = document.getElementById('profileEmail'), adminMenuLink = document.getElementById('adminMenuLink'), adminNavLink = document.getElementById('adminNavLink');
-    if (currentUser) {
-        loginBtn.style.display = 'none'; logoutBtn.style.display = 'inline-block'; userNameDisplay.textContent = '👋 ' + (currentUser.name || 'مستخدم'); profileName.textContent = currentUser.name || 'مستخدم'; profileEmail.textContent = currentUser.email || '';
-        const isAdminUser = isAdmin();
-        adminMenuLink.style.display = isAdminUser ? 'block' : 'none';
-        adminNavLink.style.display = isAdminUser ? 'block' : 'none';
-        if (currentUser.avatar) { document.getElementById('avatarImage').style.display = 'block'; document.getElementById('avatarImage').src = currentUser.avatar; document.getElementById('avatarText').style.display = 'none'; }
+function deletePlayer(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد؟')) return;
+    players = players.filter(p => p.id !== id);
+    saveData(); renderPlayers();
+}
+
+// ===== التحقق من اللاعب =====
+function verifyPlayer() {
+    const id = document.getElementById('verifyPlayerId').value.trim();
+    if (!id) return alert('❌ أدخل معرف اللاعب');
+    const player = players.find(p => p.id === id);
+    if (player) {
+        document.getElementById('verifyResult').innerHTML = `<span style="color:var(--success);">✅ تم التحقق! الاسم: ${player.name}</span>`;
     } else {
-        loginBtn.style.display = 'inline-block'; logoutBtn.style.display = 'none'; userNameDisplay.textContent = ''; profileName.textContent = 'زائر'; profileEmail.textContent = 'غير مسجل'; adminMenuLink.style.display = 'none'; adminNavLink.style.display = 'none';
+        document.getElementById('verifyResult').innerHTML = `<span style="color:var(--danger);">❌ لم يتم العثور على لاعب بهذا المعرف</span>`;
     }
-    updateBalance(); renderCategories(); renderProducts(); renderOrders(); renderPaymentMethods(); renderCurrencies(); renderUsers(); renderAdminList(); updateStats(); renderOrdersAdmin();
 }
 
+// ===== إدارة الأقسام =====
+function renderCategories() {
+    const container = document.getElementById('categoriesContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    categories.forEach(cat => {
+        const subs = subCategories.filter(s => s.parentId === cat.id);
+        const div = document.createElement('div');
+        div.className = 'category-card';
+        div.innerHTML = `
+            <span class="cat-icon">${cat.icon}</span>
+            <span class="cat-name">${cat.name}</span>
+            <span class="cat-count">${subs.length} أقسام</span>
+            <span class="toggle-sub" onclick="toggleSubCategories(${cat.id})">▼ عرض الأقسام الفرعية</span>
+            <div class="sub-categories" id="subs-${cat.id}">
+                ${subs.map(s => `<span class="sub-category" onclick="showSubCategoryProducts(${s.id})">${s.name}</span>`).join('')}
+            </div>
+        `;
+        container.appendChild(div);
+    });
+    
+    const categoryList = document.getElementById('categoryList');
+    if (categoryList) categoryList.innerHTML = categories.map(cat => 
+        `<div class="admin-product-item"><span>${cat.icon} ${cat.name}</span>
+        <button class="btn btn-danger" onclick="deleteCategory(${cat.id})">🗑️ حذف</button></div>`
+    ).join('');
+    updateSelects();
+}
+
+function toggleSubCategories(catId) {
+    const el = document.getElementById('subs-' + catId);
+    if (el) el.classList.toggle('show');
+}
+
+function addCategory() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const name = document.getElementById('newCategoryName').value.trim();
+    const icon = document.getElementById('newCategoryIcon').value.trim() || '📁';
+    if (!name) return alert('❌ أدخل اسم القسم');
+    const id = Date.now();
+    categories.push({ id, name, icon });
+    saveData(); renderCategories();
+    document.getElementById('newCategoryName').value = '';
+    document.getElementById('newCategoryIcon').value = '';
+    alert('✅ تم إضافة القسم');
+}
+
+function deleteCategory(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد؟')) return;
+    categories = categories.filter(c => c.id !== id);
+    subCategories = subCategories.filter(s => s.parentId !== id);
+    products = products.filter(p => p.subCategoryId !== undefined);
+    saveData(); renderCategories();
+}
+
+// ===== إدارة الأقسام الفرعية =====
+function renderSubCategories() {
+    const container = document.getElementById('subCategoryList');
+    if (!container) return;
+    container.innerHTML = subCategories.map(s => {
+        const parent = categories.find(c => c.id === s.parentId);
+        return `<div class="admin-product-item"><span>📂 ${s.name} (في ${parent ? parent.name : 'غير معروف'})</span>
+        <button class="btn btn-danger" onclick="deleteSubCategory(${s.id})">🗑️ حذف</button></div>`;
+    }).join('') || '<p style="color:var(--text-dim);">لا توجد أقسام فرعية</p>';
+}
+
+function addSubCategory() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const parentId = parseInt(document.getElementById('subCategoryParentSelect').value);
+    const name = document.getElementById('newSubCategoryName').value.trim();
+    if (!name) return alert('❌ أدخل اسم القسم الفرعي');
+    const id = Date.now();
+    subCategories.push({ id, parentId, name });
+    saveData(); renderCategories(); renderSubCategories();
+    document.getElementById('newSubCategoryName').value = '';
+    alert('✅ تم إضافة القسم الفرعي');
+}
+
+function deleteSubCategory(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد؟')) return;
+    subCategories = subCategories.filter(s => s.id !== id);
+    products = products.filter(p => p.subCategoryId !== id);
+    saveData(); renderCategories(); renderSubCategories();
+}
+
+// ===== إدارة المنتجات =====
+function renderProducts() {
+    const container = document.getElementById('productList');
+    if (!container) return;
+    container.innerHTML = products.map(p => {
+        const sub = subCategories.find(s => s.id === p.subCategoryId);
+        return `<div class="admin-product-item">
+            <span>${p.image ? '🖼️' : '📦'} ${p.name} - ${p.price} $ ${sub ? '(في ' + sub.name + ')' : ''} ${p.requirements ? '📝' : ''}</span>
+            <button class="btn btn-danger" onclick="deleteProduct(${p.id})">🗑️ حذف</button>
+        </div>`;
+    }).join('') || '<p style="color:var(--text-dim);">لا توجد منتجات</p>';
+}
+
+function addProduct() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const subCategoryId = parseInt(document.getElementById('productSubCategorySelect').value);
+    const name = document.getElementById('newProductName').value.trim();
+    const price = parseFloat(document.getElementById('newProductPrice').value);
+    const requirements = document.getElementById('newProductRequirements').value.trim();
+    if (!name || !price) return alert('❌ أدخل اسم المنتج والسعر');
+    const fileInput = document.getElementById('newProductImage');
+    let imageData = '';
+    if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imageData = e.target.result;
+            saveProduct(subCategoryId, name, price, imageData, requirements);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    } else {
+        saveProduct(subCategoryId, name, price, '', requirements);
+    }
+}
+
+function saveProduct(subCategoryId, name, price, image, requirements) {
+    const id = Date.now();
+    products.push({ id, subCategoryId, name, price, image, requirements });
+    saveData(); renderCategories(); renderProducts();
+    document.getElementById('newProductName').value = '';
+    document.getElementById('newProductPrice').value = '';
+    document.getElementById('newProductImage').value = '';
+    document.getElementById('newProductRequirements').value = '';
+    alert('✅ تم إضافة المنتج');
+}
+
+function deleteProduct(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد؟')) return;
+    products = products.filter(p => p.id !== id);
+    saveData(); renderProducts();
+}
+
+function updateSelects() {
+    const parentSelect = document.getElementById('subCategoryParentSelect');
+    if (parentSelect) parentSelect.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    const subSelect = document.getElementById('productSubCategorySelect');
+    if (subSelect) subSelect.innerHTML = subCategories.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+}
+
+// ===== عرض المنتج للزبون =====
+function showProductDetails(id) {
+    if (!currentUser) { showLoginModal(); return; }
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+    
+    const displayPrice = convertCurrency(product.price, 'usd', selectedCurrency);
+    const currency = currencies.find(c => c.code === selectedCurrency);
+    const symbol = currency ? currency.symbol : '$';
+    
+    const modal = document.getElementById('productModal');
+    document.getElementById('productModalTitle').textContent = product.name;
+    document.getElementById('productModalBody').innerHTML = `
+        <div style="text-align:center;font-size:60px;margin:10px 0;">
+            ${product.image ? `<img src="${product.image}" style="max-width:100%;max-height:150px;border-radius:10px;">` : '📦'}
+        </div>
+        <div style="text-align:center;font-size:24px;color:var(--primary);font-weight:bold;">${displayPrice.toFixed(2)} ${symbol}</div>
+        ${product.requirements ? `
+            <div style="background:var(--bg-card);padding:10px;border-radius:10px;margin:10px 0;border:1px solid var(--primary);">
+                <div style="font-size:13px;color:var(--text-dim);">📝 معلومات مطلوبة:</div>
+                <div style="font-size:14px;color:var(--primary);">${product.requirements}</div>
+            </div>
+            <div style="margin:10px 0;">
+                <label style="color:var(--text-dim);font-size:13px;">✏️ أدخل المعلومات المطلوبة:</label>
+                <input type="text" id="productUserInfo" placeholder="${product.requirements}" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
+            </div>
+        ` : ''}
+        <div class="modal-buttons">
+            <button class="btn btn-success" onclick="buyProduct(${product.id})">🛒 شراء</button>
+            <button class="btn btn-danger" onclick="closeModal('productModal')">إلغاء</button>
+        </div>
+    `;
+    modal.classList.add('show');
+}
+
+function buyProduct(id) {
+    if (!currentUser) { showLoginModal(); return; }
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+    
+    const userInfo = document.getElementById('productUserInfo')?.value.trim();
+    if (product.requirements && !userInfo) {
+        alert('❌ يرجى إدخال المعلومات المطلوبة قبل الشراء');
+        return;
+    }
+    if (balance < product.price) {
+        alert('❌ رصيدك غير كافٍ! رصيدك: ' + balance + ' دولار');
+        return;
+    }
+    
+    closeModal('productModal');
+    const loading = document.getElementById('loadingScreen');
+    loading.classList.add('show');
+    
+    setTimeout(() => {
+        balance -= product.price;
+        orders.push({
+            id: Date.now(),
+            productId: product.id,
+            productName: product.name,
+            price: product.price,
+            date: new Date().toLocaleDateString('ar'),
+            status: 'قيد التنفيذ',
+            userInfo: userInfo || 'لا يوجد',
+            userName: currentUser.name || 'مستخدم'
+        });
+        saveData();
+        updateBalance();
+        renderOrders();
+        loading.classList.remove('show');
+        createFireworks();
+        alert('✅ تم شراء ' + product.name + ' بنجاح!');
+        showPage('orders');
+    }, 2000);
+}
+
+function createFireworks() {
+    const emojis = ['🎉', '🎊', '✨', '🌟', '💫', '⭐', '🎆', '🎇'];
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const el = document.createElement('div');
+            el.className = 'firework';
+            el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            el.style.left = (Math.random() * 90 + 5) + '%';
+            el.style.top = (Math.random() * 60 + 10) + '%';
+            el.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1500);
+        }, i * 100);
+    }
+}
+
+// ===== الفواتير =====
+function showAddBalanceModal() {
+    if (!currentUser) { showLoginModal(); return; }
+    document.getElementById('balanceModal').classList.add('show');
+    document.getElementById('invoiceAmount').value = '';
+    document.getElementById('invoiceTransferCode').value = '';
+    document.getElementById('invoiceStatus').innerHTML = '';
+    document.getElementById('invoiceError').textContent = '';
+    document.getElementById('invoiceSuccess').textContent = '';
+    document.getElementById('confirmInvoiceBtn').style.display = 'none';
+    document.getElementById('invoiceTimer').textContent = '⏳';
+    document.getElementById('timerText').textContent = 'الوقت المتبقي: 30:00';
+    currentInvoice = null;
+    if (timerInterval) clearInterval(timerInterval);
+}
+
+function createInvoice() {
+    const amount = parseFloat(document.getElementById('invoiceAmount').value);
+    const currency = document.getElementById('invoiceCurrency').value;
+    if (!amount || amount < 1) return alert('❌ أدخل مبلغاً صحيحاً');
+    
+    const commissionAmount = amount * (commissionRate / 100);
+    const finalAmount = amount - commissionAmount;
+    
+    document.getElementById('commissionDisplay').innerHTML = `💰 سيتم إضافة ${finalAmount.toFixed(2)} دولار إلى رصيدك (بعد خصم ${commissionRate}% عمولة)`;
+    
+    const expiry = Date.now() + 30 * 60 * 1000; // 30 دقيقة
+    currentInvoice = {
+        id: Date.now(),
+        amount: amount,
+        finalAmount: finalAmount,
+        currency: currency,
+        expiry: expiry,
+        userId: currentUser.email,
+        userName: currentUser.name,
+        confirmed: false,
+        transferCode: null
+    };
+    
+    document.getElementById('invoiceStatus').innerHTML = `
+        <div style="color:var(--primary);font-weight:bold;">📄 تم إنشاء الفاتورة</div>
+        <div style="color:var(--text-dim);font-size:13px;">المبلغ: ${amount} ${currency}</div>
+        <div style="color:var(--text-dim);font-size:13px;">سيتم إضافة: ${finalAmount.toFixed(2)} دولار</div>
+        <div style="color:var(--warning);font-size:13px;">⏳ يجب تأكيد الدفع خلال 30 دقيقة</div>
+    `;
+    document.getElementById('confirmInvoiceBtn').style.display = 'inline-block';
+    
+    // بدء العداد
+    if (timerInterval) clearInterval(timerInterval);
+    let timeLeft = 30 * 60;
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        const mins = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        document.getElementById('timerText').textContent = `الوقت المتبقي: ${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            document.getElementById('timerText').textContent = '⏰ انتهى الوقت!';
+            document.getElementById('invoiceStatus').innerHTML = '<span style="color:var(--danger);">❌ انتهت صلاحية الفاتورة</span>';
+            document.getElementById('confirmInvoiceBtn').style.display = 'none';
+            currentInvoice = null;
+        }
+    }, 1000);
+    
+    invoices.push(currentInvoice);
+    saveData();
+}
+
+function confirmInvoice() {
+    if (!currentInvoice) return alert('❌ لا توجد فاتورة نشطة');
+    const code = document.getElementById('invoiceTransferCode').value.trim();
+    if (!code) return alert('❌ أدخل رقم عملية التحويل');
+    if (Date.now() > currentInvoice.expiry) {
+        alert('❌ انتهت صلاحية الفاتورة');
+        return;
+    }
+    
+    // حفظ رقم التحويل للتحقق اليدوي
+    currentInvoice.transferCode = code;
+    currentInvoice.confirmed = 'pending';
+    saveData();
+    
+    document.getElementById('invoiceStatus').innerHTML = `
+        <div style="color:var(--warning);">⏳ جاري التحقق من عملية التحويل...</div>
+        <div style="color:var(--text-dim);font-size:13px;">رقم التحويل: ${code}</div>
+        <div style="color:var(--text-dim);font-size:13px;">سيتم إضافة الرصيد بعد التأكيد اليدوي من قبل الإدارة</div>
+    `;
+    alert('✅ تم استلام رقم التحويل. سيتم إضافة الرصيد بعد التأكيد اليدوي.');
+    closeModal('balanceModal');
+}
+
+// ===== إدارة الفواتير في لوحة التحكم =====
+function renderInvoicesAdmin() {
+    const container = document.getElementById('invoicesListAdmin');
+    if (!container) return;
+    container.innerHTML = invoices.map(inv => {
+        const status = inv.confirmed === true ? 'مكتمل' : inv.confirmed === 'pending' ? 'قيد المراجعة' : 'معلق';
+        const statusColor = inv.confirmed === true ? 'var(--success)' : inv.confirmed === 'pending' ? 'var(--warning)' : 'var(--danger)';
+        return `<div class="admin-product-item">
+            <div>
+                <div>👤 ${inv.userName} (${inv.userId})</div>
+                <div>💰 ${inv.amount} دولار → ${inv.finalAmount.toFixed(2)} دولار (بعد العمولة)</div>
+                <div>📅 ${new Date(inv.expiry).toLocaleString('ar')}</div>
+                <div>📝 ${inv.transferCode ? 'رقم التحويل: ' + inv.transferCode : 'لم يتم الإدخال'}</div>
+                <div style="color:${statusColor};">الحالة: ${status}</div>
+            </div>
+            ${inv.confirmed === 'pending' ? `
+                <div>
+                    <button class="btn btn-success" onclick="approveInvoice(${inv.id})" style="font-size:11px;padding:4px 10px;">✅ تأكيد</button>
+                    <button class="btn btn-danger" onclick="rejectInvoice(${inv.id})" style="font-size:11px;padding:4px 10px;">❌ رفض</button>
+                </div>
+            ` : ''}
+        </div>`;
+    }).join('') || '<p style="color:var(--text-dim);">لا توجد فواتير</p>';
+}
+
+function approveInvoice(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const inv = invoices.find(i => i.id === id);
+    if (!inv) return;
+    if (!confirm('تأكيد إضافة ' + inv.finalAmount.toFixed(2) + ' دولار إلى حساب ' + inv.userName + '؟')) return;
+    inv.confirmed = true;
+    // إضافة الرصيد للمستخدم
+    const user = users.find(u => u.email === inv.userId);
+    if (user) {
+        user.balance = (user.balance || 0) + inv.finalAmount;
+        if (currentUser && currentUser.email === user.email) {
+            balance = user.balance;
+        }
+    }
+    saveData();
+    updateBalance();
+    renderInvoicesAdmin();
+    alert('✅ تم تأكيد الفاتورة وإضافة الرصيد');
+}
+
+function rejectInvoice(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد من رفض هذه الفاتورة؟')) return;
+    invoices = invoices.filter(i => i.id !== id);
+    saveData();
+    renderInvoicesAdmin();
+    alert('✅ تم رفض الفاتورة');
+}
+
+// ===== إدارة طرق الدفع =====
+function renderPaymentMethods() {
+    const container = document.getElementById('paymentMethodsGrid');
+    if (!container) return;
+    container.innerHTML = paymentMethods.map(m => `
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:15px;text-align:center;">
+            ${m.image ? `<img src="${m.image}" style="max-width:100px;max-height:80px;object-fit:contain;border-radius:8px;">` : '<div style="font-size:40px;color:var(--primary);">💳</div>'}
+            <h4 style="color:var(--text);margin:8px 0;">${m.name}</h4>
+            <div style="color:var(--text-dim);font-size:13px;">الرقم: ${m.number}</div>
+        </div>
+    `).join('');
+    
+    const adminContainer = document.getElementById('paymentMethodsListAdmin');
+    if (adminContainer) adminContainer.innerHTML = paymentMethods.map(m => `
+        <div class="admin-product-item">
+            <span>${m.image ? '🖼️' : '💳'} ${m.name} - ${m.number}</span>
+            <button class="btn btn-danger" onclick="deletePaymentMethod(${m.id})">🗑️ حذف</button>
+        </div>
+    `).join('');
+}
+
+function addPaymentMethod() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const name = document.getElementById('newPayName').value.trim();
+    const number = document.getElementById('newPayNumber').value.trim();
+    if (!name || !number) return alert('❌ أدخل جميع البيانات');
+    const fileInput = document.getElementById('newPayImage');
+    let imageData = '';
+    if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imageData = e.target.result;
+            savePaymentMethod(name, number, imageData);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    } else {
+        savePaymentMethod(name, number, '');
+    }
+}
+
+function savePaymentMethod(name, number, image) {
+    const id = Date.now();
+    paymentMethods.push({ id, name, number, image });
+    saveData(); renderPaymentMethods();
+    document.getElementById('newPayName').value = '';
+    document.getElementById('newPayNumber').value = '';
+    document.getElementById('newPayImage').value = '';
+    alert('✅ تم إضافة طريقة الدفع');
+}
+
+function deletePaymentMethod(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد؟')) return;
+    paymentMethods = paymentMethods.filter(m => m.id !== id);
+    saveData(); renderPaymentMethods();
+}
+
+// ===== إدارة الطلبات =====
+function renderOrders() {
+    const container = document.getElementById('ordersList');
+    if (!container) return;
+    container.innerHTML = orders.map(o => `
+        <div class="admin-order-item" style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--primary);">
+            <div>🛍️ ${o.productName}</div>
+            <div>💰 ${o.price} $</div>
+            <div>📅 ${o.date}</div>
+            ${o.userInfo ? `<div style="background:var(--bg-card);padding:5px 10px;border-radius:8px;margin-top:5px;font-size:13px;border:1px solid var(--primary);">📝 ${o.userInfo}</div>` : ''}
+            <div>الحالة: <span style="color:${o.status === 'مكتمل' ? 'var(--success)' : o.status === 'مرفوض' ? 'var(--danger)' : 'var(--warning)'};">${o.status || 'قيد التنفيذ'}</span></div>
+        </div>
+    `).join('') || '<p style="text-align:center;color:var(--text-dim);">لا توجد طلبات</p>';
+}
+
+function renderOrdersAdmin() {
+    const container = document.getElementById('ordersListAdmin');
+    if (!container) return;
+    container.innerHTML = orders.map(o => `
+        <div class="admin-order-item" style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--primary);">
+            <div>🛍️ ${o.productName}</div>
+            <div>💰 ${o.price} $</div>
+            <div>📅 ${o.date}</div>
+            <div>👤 ${o.userName || 'غير معروف'}</div>
+            ${o.userInfo ? `<div style="background:var(--bg-card);padding:5px 10px;border-radius:8px;margin-top:5px;font-size:13px;border:1px solid var(--primary);">📝 ${o.userInfo}</div>` : ''}
+            <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;">
+                <span style="color:${o.status === 'مكتمل' ? 'var(--success)' : o.status === 'مرفوض' ? 'var(--danger)' : 'var(--warning)'};">${o.status || 'قيد التنفيذ'}</span>
+                <button class="btn btn-success" onclick="updateOrderStatus(${o.id}, 'مكتمل')" style="font-size:11px;padding:4px 12px;">✅ مكتمل</button>
+                <button class="btn btn-danger" onclick="updateOrderStatus(${o.id}, 'مرفوض')" style="font-size:11px;padding:4px 12px;">❌ مرفوض</button>
+            </div>
+        </div>
+    `).join('') || '<p style="text-align:center;color:var(--text-dim);">لا توجد طلبات</p>';
+}
+
+function updateOrderStatus(orderId, status) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const order = orders.find(o => o.id === orderId);
+    if (!order) return;
+    order.status = status;
+    saveData(); renderOrders(); renderOrdersAdmin();
+    alert('✅ تم تغيير حالة الطلب إلى: ' + status);
+}
+
+// ===== إدارة المستخدمين =====
+function renderUsers() {
+    const container = document.getElementById('usersList');
+    if (!container) return;
+    container.innerHTML = users.map(u => `
+        <div class="admin-user-item" style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--info);">
+            <div><strong>${u.name || 'بدون اسم'}</strong> - ${u.email}</div>
+            <div style="font-size:12px;color:var(--text-dim);">📱 ${u.phone || 'لا يوجد'} | 📅 ${u.date || 'غير معروف'}</div>
+            <div style="font-size:12px;color:var(--text-dim);">💰 الرصيد: ${u.balance || 0} دولار</div>
+            <button class="btn btn-danger" onclick="deleteUser('${u.email}')" style="font-size:11px;padding:4px 12px;">🗑️ حذف</button>
+        </div>
+    `).join('') || '<p style="color:var(--text-dim);">لا يوجد مستخدمين مسجلين</p>';
+}
+
+function deleteUser(email) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد من حذف هذا المستخدم؟')) return;
+    users = users.filter(u => u.email !== email);
+    saveData(); renderUsers(); updateStats();
+}
+
+function updateStats() {
+    document.getElementById('statUsers').textContent = users.length;
+    document.getElementById('statOrders').textContent = orders.length;
+    document.getElementById('statRevenue').textContent = orders.reduce((sum, o) => sum + (o.price || 0), 0).toFixed(2);
+    document.getElementById('statInvoices').textContent = invoices.length;
+}
+
+// ===== تحديث الرصيد =====
 function updateBalance() {
     const displayBalance = convertCurrency(balance, 'usd', selectedCurrency);
     document.getElementById('headerBalance').textContent = displayBalance.toFixed(2);
@@ -594,74 +1423,131 @@ function updateBalance() {
     document.getElementById('currencySymbol').textContent = currency ? currency.symbol : 'دولار';
 }
 
-function convertCurrency(amount, from, to) { if (from === to) return amount; const rateFrom = exchangeRates[from] || 1; const rateTo = exchangeRates[to] || 1; return (amount / rateFrom) * rateTo; }
-
-function changeCurrency(code) { selectedCurrency = code; document.querySelectorAll('.currency-item').forEach(el => el.classList.remove('active')); document.querySelector(`.currency-item[data-currency="${code}"]`)?.classList.add('active'); updateBalance(); localStorage.setItem('selectedCurrency', code); }
-
-function renderCurrencies() {
-    const container = document.getElementById('currencyList');
-    if (container) container.innerHTML = currencies.map(c => `<div class="currency-item ${selectedCurrency === c.code ? 'active' : ''}" data-currency="${c.code}" onclick="changeCurrency('${c.code}')"><span>${c.symbol} ${c.name}</span><span class="rate">1 دولار = ${c.rate}</span></div>`).join('');
-    const adminContainer = document.getElementById('currencyListAdmin');
-    if (adminContainer) adminContainer.innerHTML = currencies.map(c => `<div class="admin-product-item"><span>${c.symbol} ${c.name} (1 دولار = ${c.rate})</span><button class="btn btn-danger" onclick="deleteCurrency(${c.id})">🗑️ حذف</button></div>`).join('');
+// ===== تحديث الواجهة =====
+function updateUI() {
+    const loginBtn = document.getElementById('loginBtnTop');
+    const logoutBtn = document.getElementById('logoutBtnTop');
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const profileName = document.getElementById('profileName');
+    const profileEmail = document.getElementById('profileEmail');
+    const adminMenuLink = document.getElementById('adminMenuLink');
+    const adminNavLink = document.getElementById('adminNavLink');
+    
+    if (currentUser) {
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+        userNameDisplay.textContent = '👋 ' + (currentUser.name || 'مستخدم');
+        profileName.textContent = currentUser.name || 'مستخدم';
+        profileEmail.textContent = currentUser.email || '';
+        const isAdminUser = isAdmin();
+        adminMenuLink.style.display = isAdminUser ? 'block' : 'none';
+        adminNavLink.style.display = isAdminUser ? 'block' : 'none';
+        if (currentUser.avatar) {
+            document.getElementById('avatarImage').style.display = 'block';
+            document.getElementById('avatarImage').src = currentUser.avatar;
+            document.getElementById('avatarText').style.display = 'none';
+        }
+    } else {
+        loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+        userNameDisplay.textContent = '';
+        profileName.textContent = 'زائر';
+        profileEmail.textContent = 'غير مسجل';
+        adminMenuLink.style.display = 'none';
+        adminNavLink.style.display = 'none';
+    }
+    updateBalance();
+    renderCategories();
+    renderProducts();
+    renderOrders();
+    renderPaymentMethods();
+    renderCurrencies();
+    renderUsers();
+    renderAdminList();
+    renderPlayers();
+    renderSubCategories();
+    renderInvoicesAdmin();
+    renderOrdersAdmin();
+    updateStats();
 }
 
-function addCurrency() {
-    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم إضافة عملات');
-    const name = document.getElementById('newCurrencyName').value.trim(), symbol = document.getElementById('newCurrencySymbol').value.trim(), rate = parseFloat(document.getElementById('newCurrencyRate').value);
-    if (!name || !symbol || !rate) return alert('❌ أدخل جميع البيانات');
-    const id = currencies.length > 0 ? Math.max(...currencies.map(c => c.id)) + 1 : 1, code = name.substring(0, 3).toLowerCase();
-    currencies.push({ id, name, symbol, rate, code }); exchangeRates[code] = rate; saveData(); renderCurrencies();
-    document.getElementById('newCurrencyName').value = ''; document.getElementById('newCurrencySymbol').value = ''; document.getElementById('newCurrencyRate').value = '';
-    alert('✅ تم إضافة العملة');
+// ===== تسجيل الدخول =====
+function showLogin() {
+    document.getElementById('loginFields').style.display = 'block';
+    document.getElementById('registerFields').style.display = 'none';
 }
 
-function deleteCurrency(id) { if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم حذف عملات'); if (!confirm('هل أنت متأكد؟')) return; currencies = currencies.filter(c => c.id !== id); saveData(); renderCurrencies(); }
-
-function renderUsers() {
-    const container = document.getElementById('usersList');
-    if (!container) return;
-    container.innerHTML = users.map(u => `<div class="admin-user-item"><div><strong>${u.name || 'بدون اسم'}</strong> - ${u.email}</div><div style="font-size:12px;color:var(--text-dim);">📱 ${u.phone || 'لا يوجد'} | 📅 ${u.date || 'غير معروف'}</div><div style="font-size:12px;color:var(--text-dim);">💰 الرصيد: ${u.balance || 0} دولار</div><button class="btn btn-danger" onclick="deleteUser('${u.email}')" style="font-size:11px;padding:4px 12px;">🗑️ حذف</button></div>`).join('') || '<p style="color:var(--text-dim);">لا يوجد مستخدمين مسجلين</p>';
-}
-
-function deleteUser(email) { if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم حذف مستخدمين'); if (!confirm('هل أنت متأكد من حذف هذا المستخدم؟')) return; users = users.filter(u => u.email !== email); saveData(); renderUsers(); updateStats(); }
-
-function updateStats() { document.getElementById('statUsers').textContent = users.length; document.getElementById('statOrders').textContent = orders.length; document.getElementById('statRevenue').textContent = orders.reduce((sum, o) => sum + (o.price || 0), 0).toFixed(2); }
-
-function showLogin() { document.getElementById('loginFields').style.display = 'block'; document.getElementById('registerFields').style.display = 'none'; }
-function showRegister() { document.getElementById('loginFields').style.display = 'none'; document.getElementById('registerFields').style.display = 'block'; }
-
-function sendVerificationCode() {
-    const email = document.getElementById('regEmail').value.trim();
-    if (!email || !email.includes('@')) return alert('❌ أدخل بريداً إلكترونياً صحيحاً');
-    verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    alert('📧 تم إرسال رمز التحقق إلى بريدك الإلكتروني. يرجى فحص صندوق الوارد.');
-    document.getElementById('regVerifyCode').style.display = 'block';
-    document.getElementById('sendCodeBtn').textContent = '✅ تم الإرسال';
+function showRegister() {
+    document.getElementById('loginFields').style.display = 'none';
+    document.getElementById('registerFields').style.display = 'block';
 }
 
 function register() {
-    const name = document.getElementById('regUsername').value.trim(), email = document.getElementById('regEmail').value.trim(), phone = document.getElementById('regPhone').value.trim(), password = document.getElementById('regPassword').value.trim(), code = document.getElementById('regVerifyCode').value.trim();
+    const name = document.getElementById('regUsername').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
     if (!name || !email || !phone || !password) return alert('❌ أدخل جميع البيانات');
     if (users.some(u => u.email === email)) return alert('❌ هذا الإيميل مسجل مسبقاً');
-    if (code !== verificationCode) return alert('❌ رمز التحقق غير صحيح');
     const newUser = { name, email, phone, password, balance: 0, date: new Date().toLocaleDateString('ar'), avatar: '' };
-    users.push(newUser); currentUser = newUser; saveData(); updateUI(); closeModal('loginModal');
-    alert('✅ تم إنشاء الحساب بنجاح!'); showPage('shop');
+    users.push(newUser);
+    currentUser = newUser;
+    saveData();
+    updateUI();
+    closeModal('loginModal');
+    alert('✅ تم إنشاء الحساب بنجاح!');
+    showPage('shop');
 }
 
 function login() {
-    const email = document.getElementById('loginEmail').value.trim(), password = document.getElementById('loginPassword').value.trim();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
     if (!email || !password) return alert('❌ أدخل الإيميل وكلمة المرور');
     const admin = admins.find(a => a.email === email && a.password === password);
-    if (admin) { currentUser = { name: admin.name || 'مدير', email: admin.email, isAdmin: true }; localStorage.setItem('currentUser', JSON.stringify(currentUser)); updateUI(); closeModal('loginModal'); alert('👋 مرحباً أيها المدير!'); showPage('admin'); return; }
+    if (admin) {
+        currentUser = { name: admin.name || 'مدير', email: admin.email, isAdmin: true };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        updateUI();
+        closeModal('loginModal');
+        alert('👋 مرحباً أيها المدير!');
+        showPage('admin');
+        return;
+    }
     const user = users.find(u => u.email === email && u.password === password);
-    if (user) { currentUser = user; saveData(); updateUI(); closeModal('loginModal'); alert('👋 مرحباً ' + user.name); showPage('shop'); return; }
+    if (user) {
+        currentUser = user;
+        saveData();
+        updateUI();
+        closeModal('loginModal');
+        alert('👋 مرحباً ' + user.name);
+        showPage('shop');
+        return;
+    }
     alert('❌ الإيميل أو كلمة المرور غير صحيحة، أو الحساب غير موجود');
 }
 
-function logout() { currentUser = null; localStorage.removeItem('currentUser'); updateUI(); alert('👋 تم تسجيل الخروج'); showPage('shop'); toggleSidebar(); }
-function showLoginModal() { document.getElementById('loginModal').classList.add('show'); showLogin(); document.getElementById('loginEmail').value = ''; document.getElementById('loginPassword').value = ''; }
-function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('currentUser');
+    updateUI();
+    alert('👋 تم تسجيل الخروج');
+    showPage('shop');
+    toggleSidebar();
+}
+
+function showLoginModal() {
+    document.getElementById('loginModal').classList.add('show');
+    showLogin();
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('show');
+    if (id === 'balanceModal' && timerInterval) {
+        clearInterval(timerInterval);
+    }
+}
 
 function uploadAvatar(event) {
     const file = event.target.files[0];
@@ -677,184 +1563,100 @@ function uploadAvatar(event) {
     reader.readAsDataURL(file);
 }
 
-function renderCategories() {
-    const container = document.getElementById('categoriesContainer');
+// ===== إدارة المدراء =====
+function renderAdminList() {
+    const container = document.getElementById('adminList');
     if (!container) return;
-    container.innerHTML = '';
-    categories.forEach(cat => {
-        const catProducts = products.filter(p => p.categoryId === cat.id);
-        const div = document.createElement('div');
-        div.className = 'category-card';
-        div.innerHTML = `<div class="category-image">${cat.icon}</div><div class="category-info"><h3>${cat.name}</h3><p>${catProducts.length} منتج</p><div class="products-grid">${catProducts.map(p => `<div class="product-card" onclick="showProductDetails(${p.id})"><div class="product-image">${p.image ? `<img src="${p.image}" alt="${p.name}">` : '📦'}</div><div class="product-info"><h4>${p.name}</h4><div class="price">${p.price} $</div><div class="rating">⭐⭐⭐⭐⭐</div></div></div>`).join('')}</div></div>`;
-        container.appendChild(div);
-    });
-    const categoryList = document.getElementById('categoryList');
-    if (categoryList) categoryList.innerHTML = categories.map(cat => `<div class="admin-product-item"><span>${cat.icon} ${cat.name}</span><button class="btn btn-danger" onclick="deleteCategory(${cat.id})">🗑️ حذف</button></div>`).join('');
-    updateSelects();
+    container.innerHTML = admins.map(a => `
+        <div class="admin-product-item">
+            <span>👑 ${a.name} - ${a.email}</span>
+            ${a.email !== 'admin@royal.com' ? `<button class="btn btn-danger" onclick="removeAdmin('${a.email}')">🗑️ حذف</button>` : '<span style="color:var(--primary);font-size:12px;">(المالك)</span>'}
+        </div>
+    `).join('');
 }
 
-function addCategory() {
-    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم إضافة أقسام');
-    const name = document.getElementById('newCategoryName').value.trim(), icon = document.getElementById('newCategoryIcon').value.trim() || '📁';
-    if (!name) return alert('❌ أدخل اسم القسم');
-    const id = categories.length > 0 ? Math.max(...categories.map(c => c.id)) + 1 : 1;
-    categories.push({ id, name, icon }); saveData(); renderCategories();
-    document.getElementById('newCategoryName').value = ''; document.getElementById('newCategoryIcon').value = ''; alert('✅ تم إضافة القسم');
+function addAdmin() {
+    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي');
+    const email = document.getElementById('newAdminEmail').value.trim();
+    const password = document.getElementById('newAdminPass').value.trim();
+    const name = document.getElementById('newAdminName').value.trim() || 'مدير';
+    if (!email || !password) return alert('❌ أدخل الإيميل وكلمة المرور');
+    if (admins.some(a => a.email === email)) return alert('❌ هذا الإيميل مدير بالفعل');
+    admins.push({ email, password, name });
+    saveData(); renderAdminList();
+    document.getElementById('newAdminEmail').value = '';
+    document.getElementById('newAdminPass').value = '';
+    document.getElementById('newAdminName').value = '';
+    alert('✅ تم إضافة المدير');
 }
 
-function deleteCategory(id) { if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم حذف أقسام'); if (!confirm('هل أنت متأكد من حذف هذا القسم؟')) return; categories = categories.filter(c => c.id !== id); products = products.filter(p => p.categoryId !== id); saveData(); renderCategories(); }
-
-function renderProducts() {
-    const container = document.getElementById('productList');
-    if (!container) return;
-    container.innerHTML = products.map(p => { const cat = categories.find(c => c.id === p.categoryId); return `<div class="admin-product-item"><span>${p.image ? '🖼️' : '📦'} ${p.name} - ${p.price} $ ${cat ? '(في ' + cat.name + ')' : ''} ${p.requirements ? '📝' : ''}</span><button class="btn btn-danger" onclick="deleteProduct(${p.id})">🗑️ حذف</button></div>`; }).join('');
+function removeAdmin(email) {
+    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي');
+    if (email === 'admin@royal.com') return alert('❌ لا يمكن حذف المدير الرئيسي');
+    if (!confirm('هل أنت متأكد من حذف هذا المدير؟')) return;
+    admins = admins.filter(a => a.email !== email);
+    saveData(); renderAdminList();
+    alert('✅ تم حذف المدير');
 }
 
-function addProduct() {
-    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم إضافة منتجات');
-    const categoryId = parseInt(document.getElementById('productCategorySelect').value);
-    const name = document.getElementById('newProductName').value.trim();
-    const price = parseFloat(document.getElementById('newProductPrice').value);
-    const requirements = document.getElementById('newProductRequirements').value.trim();
-    if (!name || !price) return alert('❌ أدخل اسم المنتج والسعر');
-    const fileInput = document.getElementById('newProductImage');
-    let imageData = '';
-    if (fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) { imageData = e.target.result; saveProduct(categoryId, name, price, imageData, requirements); };
-        reader.readAsDataURL(fileInput.files[0]);
-    } else { saveProduct(categoryId, name, price, '', requirements); }
+function changeAdminPassword() {
+    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي');
+    const newPass = document.getElementById('newAdminPassword').value.trim();
+    if (!newPass || newPass.length < 6) return alert('❌ كلمة المرور 6 أحرف على الأقل');
+    adminPassword = newPass;
+    const mainAdmin = admins.find(a => a.email === 'admin@royal.com');
+    if (mainAdmin) mainAdmin.password = newPass;
+    saveData();
+    document.getElementById('passwordChangeMsg').innerHTML = '<span style="color:var(--success);">✅ تم التغيير</span>';
+    document.getElementById('newAdminPassword').value = '';
+    alert('✅ تم تغيير كلمة المرور');
 }
 
-function saveProduct(categoryId, name, price, image, requirements) {
-    const id = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-    products.push({ id, categoryId, name, price, image, requirements });
-    saveData(); renderCategories(); renderProducts();
-    document.getElementById('newProductName').value = ''; document.getElementById('newProductPrice').value = ''; document.getElementById('newProductImage').value = ''; document.getElementById('newProductRequirements').value = '';
-    alert('✅ تم إضافة المنتج');
-}
-
-function deleteProduct(id) { if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم حذف منتجات'); if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return; products = products.filter(p => p.id !== id); saveData(); renderCategories(); renderProducts(); }
-
-function updateSelects() {
-    const select = document.getElementById('productCategorySelect');
-    if (select) select.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-}
-
-function showProductDetails(id) {
-    if (!currentUser) { showLoginModal(); return; }
-    const product = products.find(p => p.id === id);
-    if (!product) return;
-    const displayPrice = convertCurrency(product.price, 'usd', selectedCurrency);
-    const currency = currencies.find(c => c.code === selectedCurrency);
-    const symbol = currency ? currency.symbol : '$';
-    const modal = document.createElement('div');
-    modal.className = 'modal show';
-    modal.id = 'productModal';
-    modal.innerHTML = `<div class="modal-content"><span class="close" onclick="closeModal('productModal')">✕</span><h2>${product.name}</h2><div style="text-align:center;font-size:60px;margin:15px 0;">${product.image ? `<img src="${product.image}" style="max-width:100%;max-height:200px;border-radius:10px;">` : '📦'}</div><div style="text-align:center;font-size:24px;color:var(--primary);font-weight:bold;">${displayPrice.toFixed(2)} ${symbol}</div>${product.requirements ? `<div style="background:var(--bg-card);padding:10px;border-radius:10px;margin:10px 0;border:1px solid var(--primary);"><div style="font-size:13px;color:var(--text-dim);">📝 معلومات مطلوبة:</div><div style="font-size:14px;color:var(--primary);">${product.requirements}</div></div>` : ''}<div style="margin:10px 0;"><label style="color:var(--text-dim);font-size:13px;">✏️ أدخل المعلومات المطلوبة:</label><input type="text" id="productUserInfo" placeholder="${product.requirements || 'أدخل المعلومات المطلوبة'}" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;"></div><div class="modal-buttons"><button class="btn btn-success" onclick="buyProduct(${product.id})">🛒 شراء</button><button class="btn btn-danger" onclick="closeModal('productModal')">إلغاء</button></div></div>`;
-    document.body.appendChild(modal);
-}
-
-function buyProduct(id) {
-    if (!currentUser) { showLoginModal(); return; }
-    const product = products.find(p => p.id === id);
-    if (!product) return;
-    const userInfo = document.getElementById('productUserInfo')?.value.trim();
-    if (product.requirements && !userInfo) { alert('❌ يرجى إدخال المعلومات المطلوبة قبل الشراء'); return; }
-    if (balance < product.price) { alert('❌ رصيدك غير كافٍ! رصيدك: ' + balance + ' دولار'); return; }
-    closeModal('productModal');
-    const loading = document.getElementById('loadingScreen');
-    loading.classList.add('show');
-    setTimeout(() => {
-        balance -= product.price;
-        orders.push({ id: Date.now(), productId: product.id, productName: product.name, price: product.price, date: new Date().toLocaleDateString('ar'), status: 'قيد التنفيذ', userInfo: userInfo || 'لا يوجد', userName: currentUser.name || 'مستخدم' });
-        saveData(); updateBalance(); renderOrders(); loading.classList.remove('show'); createFireworks();
-        alert('✅ تم شراء ' + product.name + ' بنجاح!');
-        showPage('orders');
-    }, 3000);
-}
-
-function createFireworks() {
-    const emojis = ['🎉', '🎊', '✨', '🌟', '💫', '⭐', '🎆', '🎇'];
-    for (let i = 0; i < 20; i++) { setTimeout(() => { const el = document.createElement('div'); el.className = 'firework'; el.textContent = emojis[Math.floor(Math.random() * emojis.length)]; el.style.left = (Math.random() * 90 + 5) + '%'; el.style.top = (Math.random() * 60 + 10) + '%'; el.style.fontSize = (Math.random() * 30 + 20) + 'px'; document.body.appendChild(el); setTimeout(() => el.remove(), 1500); }, i * 100); }
-}
-
-function renderOrders() {
-    const container = document.getElementById('ordersList');
-    if (!container) return;
-    container.innerHTML = orders.map(o => `<div class="admin-order-item"><div>🛍️ ${o.productName}</div><div>💰 ${o.price} $</div><div>📅 ${o.date}</div>${o.userInfo ? `<div style="background:var(--bg-card);padding:5px 10px;border-radius:8px;margin-top:5px;font-size:13px;border:1px solid var(--primary);">📝 ${o.userInfo}</div>` : ''}<div>الحالة: <span style="color:${o.status === 'مكتمل' ? 'var(--success)' : o.status === 'مرفوض' ? 'var(--danger)' : 'var(--warning)'};">${o.status || 'قيد التنفيذ'}</span></div></div>`).join('') || '<p style="text-align:center;color:var(--text-dim);">لا توجد طلبات</p>';
-}
-
-function renderOrdersAdmin() {
-    const container = document.getElementById('ordersListAdmin');
-    if (!container) return;
-    container.innerHTML = orders.map(o => `<div class="admin-order-item"><div>🛍️ ${o.productName}</div><div>💰 ${o.price} $</div><div>📅 ${o.date}</div><div>👤 ${o.userName || 'غير معروف'}</div>${o.userInfo ? `<div style="background:var(--bg-card);padding:5px 10px;border-radius:8px;margin-top:5px;font-size:13px;border:1px solid var(--primary);">📝 ${o.userInfo}</div>` : ''}<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;"><span style="color:${o.status === 'مكتمل' ? 'var(--success)' : o.status === 'مرفوض' ? 'var(--danger)' : 'var(--warning)'};">${o.status || 'قيد التنفيذ'}</span><button class="btn btn-success" onclick="updateOrderStatus(${o.id}, 'مكتمل')" style="font-size:11px;padding:4px 12px;">✅ مكتمل</button><button class="btn btn-danger" onclick="updateOrderStatus(${o.id}, 'مرفوض')" style="font-size:11px;padding:4px 12px;">❌ مرفوض</button></div></div>`).join('') || '<p style="text-align:center;color:var(--text-dim);">لا توجد طلبات</p>';
-}
-
-function updateOrderStatus(orderId, status) {
-    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم تغيير حالة الطلبات');
-    const order = orders.find(o => o.id === orderId);
-    if (!order) return;
-    order.status = status;
-    saveData(); renderOrders(); renderOrdersAdmin();
-    alert('✅ تم تغيير حالة الطلب إلى: ' + status);
-}
-
-function renderPaymentMethods() {
-    const container = document.getElementById('paymentMethodsGrid');
-    if (!container) return;
-    container.innerHTML = paymentMethods.map(m => `<div class="payment-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:15px;text-align:center;"><div style="font-size:40px;color:var(--primary);">💳</div><h4 style="color:var(--text);margin:8px 0;">${m.name}</h4><div style="color:var(--text-dim);font-size:13px;">الرقم: ${m.number}</div></div>`).join('');
-    const adminContainer = document.getElementById('paymentMethodsListAdmin');
-    if (adminContainer) adminContainer.innerHTML = paymentMethods.map(m => `<div class="admin-product-item"><span>${m.name} - ${m.number}</span><button class="btn btn-danger" onclick="deletePaymentMethod(${m.id})">🗑️ حذف</button></div>`).join('');
-}
-
-function addPaymentMethod() {
-    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم إضافة طرق دفع');
-    const name = document.getElementById('newPayName').value.trim(), number = document.getElementById('newPayNumber').value.trim();
-    if (!name || !number) return alert('❌ أدخل جميع البيانات');
-    const id = paymentMethods.length > 0 ? Math.max(...paymentMethods.map(m => m.id)) + 1 : 1;
-    paymentMethods.push({ id, name, number }); saveData(); renderPaymentMethods();
-    document.getElementById('newPayName').value = ''; document.getElementById('newPayNumber').value = ''; alert('✅ تم إضافة طريقة الدفع');
-}
-
-function deletePaymentMethod(id) { if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم حذف طرق دفع'); if (!confirm('هل أنت متأكد؟')) return; paymentMethods = paymentMethods.filter(m => m.id !== id); saveData(); renderPaymentMethods(); }
-
-function showAddBalanceModal() { if (!currentUser) { showLoginModal(); return; } document.getElementById('balanceModal').classList.add('show'); document.getElementById('addBalanceAmount').value = ''; document.getElementById('addBalanceCode').value = ''; }
-
-function addBalance() {
-    const amount = parseFloat(document.getElementById('addBalanceAmount').value), code = document.getElementById('addBalanceCode').value.trim();
-    if (!amount || amount < 1) return alert('❌ أدخل مبلغاً صحيحاً');
-    if (!code) return alert('❌ أدخل رقم عملية التحويل');
-    document.getElementById('balanceError').textContent = '⏳ جاري التحقق من عملية التحويل...';
-    setTimeout(() => {
-        balance += amount;
-        if (currentUser) { const user = users.find(u => u.email === currentUser.email); if (user) user.balance = (user.balance || 0) + amount; }
-        saveData(); updateBalance(); closeModal('balanceModal'); document.getElementById('balanceError').textContent = '';
-        alert('✅ تم إضافة ' + amount + ' دولار إلى رصيدك!');
-    }, 2000);
-}
-
+// ===== العبارات المتحركة =====
 function updateMarquee() {
     const texts = document.getElementById('marqueeTexts').value.split('\n').filter(t => t.trim());
-    if (texts.length === 0) return alert('❌ أدخل عبارة واحدة على الأقل');
+    if (texts.length === 0) return alert('❌ أدخل عبارة واحدة');
     const content = document.getElementById('marqueeContent');
     content.innerHTML = texts.map(t => `<span><i class="fas fa-star"></i> ${t.trim()}</span>`).join('');
     localStorage.setItem('marqueeTexts', JSON.stringify(texts));
-    alert('✅ تم تحديث العبارات المتحركة');
+    alert('✅ تم تحديث العبارات');
 }
 
+// ===== لوحة التحكم =====
 function renderAdminPanel() {
-    renderUsers(); renderCategories(); renderProducts(); renderPaymentMethods(); renderCurrencies(); renderAdminList(); updateStats(); renderOrdersAdmin();
+    renderUsers();
+    renderCategories();
+    renderProducts();
+    renderPaymentMethods();
+    renderCurrencies();
+    renderAdminList();
+    renderPlayers();
+    renderSubCategories();
+    renderInvoicesAdmin();
+    renderOrdersAdmin();
+    updateStats();
+    loadColors();
+    document.getElementById('commissionRate').value = commissionRate;
     const marqueeTexts = JSON.parse(localStorage.getItem('marqueeTexts'));
     if (marqueeTexts) document.getElementById('marqueeTexts').value = marqueeTexts.join('\n');
 }
 
-loadData(); updateUI();
+// ===== تهيئة التطبيق =====
+loadData();
+updateUI();
+loadColors();
 const savedCurrency = localStorage.getItem('selectedCurrency');
-if (savedCurrency) { selectedCurrency = savedCurrency; document.querySelectorAll('.currency-item').forEach(el => { el.classList.toggle('active', el.dataset.currency === savedCurrency); }); }
+if (savedCurrency) {
+    selectedCurrency = savedCurrency;
+    document.querySelectorAll('.currency-item').forEach(el => {
+        el.classList.toggle('active', el.dataset.currency === savedCurrency);
+    });
+}
 const marqueeTexts = JSON.parse(localStorage.getItem('marqueeTexts'));
-if (marqueeTexts && marqueeTexts.length > 0) { const content = document.getElementById('marqueeContent'); content.innerHTML = marqueeTexts.map(t => `<span><i class="fas fa-star"></i> ${t}</span>`).join(''); }
-console.log('👑 رويال كارد جاهز!');
+if (marqueeTexts && marqueeTexts.length > 0) {
+    document.getElementById('marqueeContent').innerHTML = marqueeTexts.map(t => `<span><i class="fas fa-star"></i> ${t}</span>`).join('');
+}
+console.log('👑 رويال كارد - المتجر الأسطوري جاهز!');
 </script>
 </body>
 </html>
