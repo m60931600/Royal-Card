@@ -116,11 +116,10 @@
         .btn-back:hover { background: var(--primary); color: var(--text-dark); }
         
         /* ===== طرق الدفع ===== */
-        .payment-methods-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-        }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        @media (max-width: 768px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .grid-3 { grid-template-columns: 1fr; } }
+        
         .payment-method-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -140,42 +139,63 @@
         .payment-method-card .pm-name { font-size: 18px; font-weight: 700; color: var(--text); }
         .payment-method-card .pm-number { font-size: 14px; color: var(--text-dim); }
         
-        /* ===== صفحة الدفع ===== */
-        .payment-page {
+        /* ===== الأقسام ===== */
+        .category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 10px;
             text-align: center;
-            max-width: 500px;
-            margin: auto;
+            cursor: pointer;
+            transition: var(--transition);
         }
-        .payment-page .pp-image { width: 100%; max-height: 250px; object-fit: contain; border-radius: var(--radius); background: rgba(255,255,255,0.05); padding: 20px; margin-bottom: 20px; }
-        .payment-page .pp-image img { width: 100%; height: 100%; object-fit: contain; }
-        .payment-page .pp-name { font-size: 28px; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
-        .payment-page .pp-number { font-size: 16px; color: var(--text-dim); margin-bottom: 20px; }
-        .payment-page .pp-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        
-        /* ===== نافذة الفاتورة ===== */
-        .invoice-modal .modal-content { max-width: 450px; }
-        .invoice-modal .timer-circle {
-            width: 120px; height: 120px; border-radius: 50%;
-            border: 8px solid var(--border);
-            position: relative; margin: 15px auto;
-            display: flex; align-items: center; justify-content: center;
+        .category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-gold);
         }
-        .invoice-modal .timer-circle .timer-text { font-size: 28px; font-weight: 700; color: var(--primary); }
-        .invoice-modal .timer-circle .timer-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
-        .invoice-modal .timer-circle .timer-svg circle { fill: none; stroke: var(--primary); stroke-width: 8; stroke-dasharray: 314; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear; }
+        .category-card .cat-icon { font-size: 40px; display: block; margin-bottom: 8px; }
+        .category-card .cat-name { font-size: 16px; font-weight: 700; color: var(--text); }
+        .category-card .cat-count { font-size: 12px; color: var(--text-dim); }
         
-        .invoice-modal .invoice-amount-display {
-            background: var(--bg-card); padding: 15px; border-radius: var(--radius);
-            border: 2px solid var(--primary); margin: 15px 0;
+        .subcategory-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 10px;
             text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
         }
-        .invoice-modal .invoice-amount-display .label { color: var(--text-dim); font-size: 14px; }
-        .invoice-modal .invoice-amount-display .value { font-size: 32px; color: var(--primary); font-weight: 900; }
+        .subcategory-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-gold);
+        }
+        .subcategory-card .sub-icon { font-size: 35px; display: block; margin-bottom: 8px; }
+        .subcategory-card .sub-name { font-size: 15px; font-weight: 700; color: var(--text); }
         
-        .admin-panel { background: var(--bg-card); border: 2px solid var(--primary); border-radius: var(--radius); padding: 25px; margin-top: 20px; }
-        .admin-panel h3 { color: var(--primary); margin-bottom: 15px; font-size: 20px; }
-        .admin-product-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-left: 3px solid var(--primary); }
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            text-align: center;
+            padding: 15px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-gold);
+        }
+        .product-card .product-image { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; background: rgba(255,215,0,0.05); display: flex; align-items: center; justify-content: center; font-size: 40px; color: var(--primary); overflow: hidden; }
+        .product-card .product-image img { width: 100%; height: 100%; object-fit: cover; }
+        .product-card .product-info h4 { font-size: 14px; margin: 8px 0 2px; }
+        .product-card .product-info .price { color: var(--primary); font-weight: 700; font-size: 16px; }
         
+        /* ===== النوافذ المنبثقة ===== */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
         .modal.show { display: flex; }
         .modal-content { background: #1a1a2e; padding: 25px; border-radius: var(--radius); border: 2px solid var(--primary); max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; animation: modalIn 0.3s ease; }
@@ -183,9 +203,24 @@
         .modal-content .close { position: absolute; top: 10px; left: 18px; font-size: 28px; color: #fff; cursor: pointer; transition: var(--transition); }
         .modal-content .close:hover { color: var(--primary); transform: rotate(90deg); }
         .modal-content h2 { color: var(--primary); margin-bottom: 15px; text-align: center; }
-        .modal-content input, .modal-content select { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #333; background: #0a0a1a; color: #fff; margin-bottom: 10px; font-family: inherit; }
-        .modal-content input:focus, .modal-content select:focus { border-color: var(--primary); outline: none; }
+        .modal-content input, .modal-content select, .modal-content textarea { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #333; background: #0a0a1a; color: #fff; margin-bottom: 10px; font-family: inherit; }
+        .modal-content input:focus, .modal-content select:focus, .modal-content textarea:focus { border-color: var(--primary); outline: none; }
         .modal-content .modal-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
+        .modal-content .error-msg { color: var(--danger); font-size: 14px; text-align: center; margin: 5px 0; }
+        .modal-content .success-msg { color: var(--success); font-size: 14px; text-align: center; margin: 5px 0; }
+        .modal-content .timer-circle { width: 120px; height: 120px; border-radius: 50%; border: 8px solid var(--border); position: relative; margin: 15px auto; display: flex; align-items: center; justify-content: center; }
+        .modal-content .timer-circle .timer-text { font-size: 28px; font-weight: 700; color: var(--primary); }
+        .modal-content .timer-circle .timer-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+        .modal-content .timer-circle .timer-svg circle { fill: none; stroke: var(--primary); stroke-width: 8; stroke-dasharray: 314; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear; }
+        .modal-content .invoice-amount-display { background: var(--bg-card); padding: 15px; border-radius: var(--radius); border: 2px solid var(--primary); margin: 15px 0; text-align: center; }
+        .modal-content .invoice-amount-display .label { color: var(--text-dim); font-size: 14px; }
+        .modal-content .invoice-amount-display .value { font-size: 32px; color: var(--primary); font-weight: 900; }
+        
+        .admin-panel { background: var(--bg-card); border: 2px solid var(--primary); border-radius: var(--radius); padding: 25px; margin-top: 20px; }
+        .admin-panel h3 { color: var(--primary); margin-bottom: 15px; font-size: 20px; }
+        .admin-product-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-left: 3px solid var(--primary); }
+        .admin-user-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; border-left: 3px solid var(--info); }
+        .admin-request-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; border-left: 3px solid var(--warning); }
         
         .loading-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; justify-content: center; align-items: center; flex-direction: column; }
         .loading-screen.show { display: flex; }
@@ -201,12 +236,27 @@
         .breadcrumb .current { color: var(--primary); font-weight: 700; }
         .breadcrumb .sep { color: var(--text-dim); }
         
+        /* ===== إشعارات الإدارة ===== */
+        .notification-badge {
+            background: var(--danger);
+            color: #fff;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-right: 5px;
+        }
+        
         @media (max-width: 768px) {
             .sidebar { width: 280px; right: -290px; }
             .hamburger { top: 42px; left: 10px; padding: 8px 10px; }
             .top-bar { top: 38px; padding: 8px 12px; }
             .top-bar .balance { font-size: 13px; }
             .top-bar .balance span { font-size: 16px; }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .grid-3 { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -272,7 +322,7 @@
         <li onclick="showPage('balance')"><i class="fas fa-wallet"></i> الرصيد</li>
         <li onclick="showPage('payment')"><i class="fas fa-credit-card"></i> الدفع</li>
         <li onclick="showPage('orders')"><i class="fas fa-list"></i> طلباتي</li>
-        <li onclick="showPage('admin')" id="adminMenuLink" style="display:none;"><i class="fas fa-cog"></i> إدارة الموقع</li>
+        <li onclick="showPage('admin')" id="adminMenuLink" style="display:none;"><i class="fas fa-cog"></i> إدارة الموقع <span id="adminNotificationBadge" class="notification-badge" style="display:none;">0</span></li>
     </ul>
     <div class="currency-section">
         <h4>💱 العملات</h4>
@@ -312,26 +362,21 @@
                     <button class="btn btn-secondary" onclick="showPage('balance')">💰 رصيدي</button>
                     <button class="btn btn-secondary" onclick="showPage('orders')">📋 طلباتي</button>
                 </div>
-                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;margin-top:30px;">
-                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);">
+                <div class="grid-3" style="margin-top:30px;">
+                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);text-align:center;">
                         <div style="font-size:30px;color:var(--primary);">⭐</div>
                         <div style="font-weight:bold;margin-top:5px;">4.9/5</div>
                         <div style="font-size:12px;color:var(--text-dim);">تقييم العملاء</div>
                     </div>
-                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);">
+                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);text-align:center;">
                         <div style="font-size:30px;color:var(--primary);">✅</div>
                         <div style="font-weight:bold;margin-top:5px;">100%</div>
                         <div style="font-size:12px;color:var(--text-dim);">ضمان الجودة</div>
                     </div>
-                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);">
+                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);text-align:center;">
                         <div style="font-size:30px;color:var(--primary);">⚡</div>
                         <div style="font-weight:bold;margin-top:5px;">فوري</div>
                         <div style="font-size:12px;color:var(--text-dim);">توصيل الخدمة</div>
-                    </div>
-                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);">
-                        <div style="font-size:30px;color:var(--primary);">🛡️</div>
-                        <div style="font-weight:bold;margin-top:5px;">آمن</div>
-                        <div style="font-size:12px;color:var(--text-dim);">مدفوعات محمية</div>
                     </div>
                 </div>
             </div>
@@ -341,17 +386,7 @@
     <!-- ===== صفحة طرق الدفع ===== -->
     <section id="page-payment" class="page">
         <h2 class="section-title">💳 طرق الدفع</h2>
-        <div id="paymentMethodsGrid" class="payment-methods-grid"></div>
-    </section>
-
-    <!-- ===== صفحة الدفع لطريقة معينة ===== -->
-    <section id="page-payment-detail" class="page">
-        <div class="breadcrumb">
-            <button class="btn btn-back" onclick="showPage('payment')">🏠 طرق الدفع</button>
-            <span class="sep">›</span>
-            <span id="paymentDetailName" class="current"></span>
-        </div>
-        <div class="payment-page" id="paymentDetailContent"></div>
+        <div id="paymentMethodsGrid" class="grid-3"></div>
     </section>
 
     <!-- ===== صفحة الرصيد ===== -->
@@ -361,7 +396,7 @@
             <i class="fas fa-wallet" style="font-size:60px;color:var(--primary);"></i>
             <div style="font-size:36px;color:var(--primary);font-weight:bold;margin:15px 0;" id="balancePageAmount">0</div>
             <div style="color:var(--text-dim);">رصيدك الحالي</div>
-            <button class="btn btn-primary mt-20" onclick="showPage('payment')">💰 إضافة رصيد</button>
+            <button class="btn btn-primary mt-20" onclick="showAddBalanceModal()">💰 إضافة رصيد</button>
         </div>
     </section>
 
@@ -375,9 +410,10 @@
     <section id="page-admin" class="page">
         <h2 class="section-title">🔧 لوحة التحكم</h2>
         
+        <!-- الإحصائيات -->
         <div class="admin-panel">
             <h3>📊 الإحصائيات</h3>
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;">
+            <div class="grid-3">
                 <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
                     <div style="font-size:28px;color:var(--primary);" id="statUsers">0</div>
                     <div style="color:var(--text-dim);font-size:13px;">👥 المستخدمين</div>
@@ -387,38 +423,100 @@
                     <div style="color:var(--text-dim);font-size:13px;">📦 الطلبات</div>
                 </div>
                 <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
-                    <div style="font-size:28px;color:var(--primary);" id="statInvoices">0</div>
-                    <div style="color:var(--text-dim);font-size:13px;">📄 الفواتير</div>
+                    <div style="font-size:28px;color:var(--primary);" id="statRequests">0</div>
+                    <div style="color:var(--text-dim);font-size:13px;">📄 طلبات الرصيد</div>
                 </div>
             </div>
         </div>
 
-        <!-- إدارة العمولة -->
+        <!-- طلبات إضافة الرصيد -->
         <div class="admin-panel">
-            <h3>💰 إعدادات العمولة</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;">
-                    <label>نسبة العمولة (%)</label>
-                    <input type="number" id="commissionRate" value="1" min="0" max="100" step="0.1" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <button class="btn btn-primary" onclick="updateCommission()">تحديث</button>
+            <h3>📄 طلبات إضافة الرصيد <span id="requestsBadge" class="notification-badge" style="display:none;">0</span></h3>
+            <div id="balanceRequestsList"></div>
+        </div>
+
+        <!-- إدارة الألوان -->
+        <div class="admin-panel">
+            <h3>🎨 تخصيص الألوان</h3>
+            <div class="grid-3">
+                <div><label style="font-size:12px;">اللون الأساسي</label><input type="color" id="colorPrimary" value="#ffd700" oninput="updateColors()" style="width:100%;height:40px;border-radius:8px;border:1px solid #333;background:#0a0a1a;cursor:pointer;"></div>
+                <div><label style="font-size:12px;">الخلفية</label><input type="color" id="colorBg" value="#0a0a1a" oninput="updateColors()" style="width:100%;height:40px;border-radius:8px;border:1px solid #333;background:#0a0a1a;cursor:pointer;"></div>
+                <div><label style="font-size:12px;">لون البطاقات</label><input type="color" id="colorCard" value="#1a1f2f" oninput="updateColors()" style="width:100%;height:40px;border-radius:8px;border:1px solid #333;background:#0a0a1a;cursor:pointer;"></div>
             </div>
-            <div id="commissionMsg" style="margin-top:10px;"></div>
+        </div>
+
+        <!-- إدارة الأقسام الرئيسية -->
+        <div class="admin-panel">
+            <h3>📂 إدارة الأقسام الرئيسية</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+                <div style="flex:1;min-width:120px;">
+                    <label>اسم القسم</label>
+                    <input type="text" id="newCategoryName" placeholder="اسم القسم" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
+                </div>
+                <div style="flex:1;min-width:120px;">
+                    <label>الأيقونة</label>
+                    <input type="text" id="newCategoryIcon" placeholder="🎮" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
+                </div>
+                <button class="btn btn-primary" onclick="addCategory()">➕ إضافة</button>
+            </div>
+            <div id="categoryList" style="margin-top:15px;"></div>
+        </div>
+
+        <!-- إدارة الأقسام الفرعية -->
+        <div class="admin-panel">
+            <h3>📂 إدارة الأقسام الفرعية</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+                <div style="flex:1;min-width:120px;">
+                    <label>القسم الرئيسي</label>
+                    <select id="subCategoryParentSelect" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;"></select>
+                </div>
+                <div style="flex:1;min-width:120px;">
+                    <label>اسم القسم الفرعي</label>
+                    <input type="text" id="newSubCategoryName" placeholder="اسم القسم الفرعي" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
+                </div>
+                <button class="btn btn-primary" onclick="addSubCategory()">➕ إضافة</button>
+            </div>
+            <div id="subCategoryList" style="margin-top:15px;"></div>
+        </div>
+
+        <!-- إدارة المنتجات -->
+        <div class="admin-panel">
+            <h3>📦 إدارة المنتجات</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+                <div style="flex:1;min-width:100px;">
+                    <label>القسم الفرعي</label>
+                    <select id="productSubCategorySelect" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;"></select>
+                </div>
+                <div style="flex:1;min-width:100px;">
+                    <label>اسم المنتج</label>
+                    <input type="text" id="newProductName" placeholder="اسم المنتج" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
+                </div>
+                <div style="flex:1;min-width:80px;">
+                    <label>السعر ($)</label>
+                    <input type="number" id="newProductPrice" placeholder="السعر" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
+                </div>
+                <div style="flex:1;min-width:100px;">
+                    <label>صورة المنتج</label>
+                    <input type="file" id="newProductImage" accept="image/*" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
+                </div>
+                <button class="btn btn-primary" onclick="addProduct()">➕ إضافة</button>
+            </div>
+            <div id="productList" style="margin-top:15px;"></div>
         </div>
 
         <!-- إدارة طرق الدفع -->
         <div class="admin-panel">
             <h3>💳 إدارة طرق الدفع</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;">
+                <div style="flex:1;min-width:100px;">
                     <label>اسم الطريقة</label>
                     <input type="text" id="newPayName" placeholder="شنكاشي" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
-                <div style="flex:1;">
+                <div style="flex:1;min-width:100px;">
                     <label>الرقم/الحساب</label>
                     <input type="text" id="newPayNumber" placeholder="رقم الحساب" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
-                <div style="flex:1;">
+                <div style="flex:1;min-width:100px;">
                     <label>صورة</label>
                     <input type="file" id="newPayImage" accept="image/*" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
@@ -427,10 +525,10 @@
             <div id="paymentMethodsListAdmin" style="margin-top:15px;"></div>
         </div>
 
-        <!-- إدارة الفواتير -->
+        <!-- إدارة المستخدمين -->
         <div class="admin-panel">
-            <h3>📄 إدارة الفواتير</h3>
-            <div id="invoicesListAdmin"></div>
+            <h3>👥 إدارة المستخدمين</h3>
+            <div id="usersList"></div>
         </div>
 
         <!-- إدارة الطلبات -->
@@ -439,25 +537,19 @@
             <div id="ordersListAdmin"></div>
         </div>
 
-        <!-- إدارة المستخدمين -->
-        <div class="admin-panel">
-            <h3>👥 إدارة المستخدمين</h3>
-            <div id="usersList"></div>
-        </div>
-
         <!-- إدارة المدراء -->
         <div class="admin-panel">
             <h3>👑 إدارة المدراء</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;">
+                <div style="flex:1;min-width:100px;">
                     <label>الإيميل</label>
                     <input type="email" id="newAdminEmail" placeholder="admin@example.com" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
-                <div style="flex:1;">
+                <div style="flex:1;min-width:100px;">
                     <label>كلمة المرور</label>
                     <input type="password" id="newAdminPass" placeholder="كلمة المرور" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
-                <div style="flex:1;">
+                <div style="flex:1;min-width:100px;">
                     <label>الاسم</label>
                     <input type="text" id="newAdminName" placeholder="اسم المدير" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
@@ -470,7 +562,7 @@
         <div class="admin-panel">
             <h3>🔑 تغيير كلمة مرور الإدارة</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;">
+                <div style="flex:1;min-width:150px;">
                     <label>كلمة المرور الجديدة</label>
                     <input type="password" id="newAdminPassword" placeholder="كلمة المرور الجديدة" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
@@ -518,69 +610,20 @@
     </div>
 </div>
 
-<!-- ===== نافذة الفاتورة ===== -->
-<div class="modal invoice-modal" id="invoiceModal">
+<!-- ===== نافذة إضافة رصيد ===== -->
+<div class="modal" id="balanceModal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal('invoiceModal')">✕</span>
-        <h2>📄 إنشاء فاتورة</h2>
-        <div id="invoiceError" class="error-msg" style="color:var(--danger);font-size:14px;text-align:center;margin:5px 0;"></div>
-        <div id="invoiceSuccess" class="success-msg" style="color:var(--success);font-size:14px;text-align:center;margin:5px 0;"></div>
-        
-        <div id="invoiceStep1">
-            <label style="color:var(--text-dim);font-size:14px;display:block;margin-bottom:5px;">💰 المبلغ بالدولار</label>
-            <input type="number" id="invoiceAmount" placeholder="المبلغ" min="1" step="0.01">
-            
-            <div class="invoice-amount-display">
-                <div class="label">💰 المبلغ الذي سيتم استلامه</div>
-                <div class="value" id="invoiceFinalAmount">0.00 دولار</div>
-                <div style="font-size:13px;color:var(--text-dim);" id="invoiceCommissionDisplay">(بعد خصم 1% عمولة)</div>
-            </div>
-            
-            <div class="modal-buttons">
-                <button class="btn btn-primary" onclick="createInvoice()">إنشاء فاتورة</button>
-                <button class="btn btn-danger" onclick="closeModal('invoiceModal')">إلغاء</button>
-            </div>
+        <span class="close" onclick="closeModal('balanceModal')">✕</span>
+        <h2>💰 إضافة رصيد</h2>
+        <div id="balanceError" class="error-msg"></div>
+        <div id="balanceSuccess" class="success-msg"></div>
+        <input type="number" id="balanceAmount" placeholder="المبلغ بالدولار" min="1">
+        <input type="text" id="balanceTransferCode" placeholder="رقم عملية التحويل">
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="requestBalance()">إرسال طلب</button>
+            <button class="btn btn-danger" onclick="closeModal('balanceModal')">إلغاء</button>
         </div>
-        
-        <div id="invoiceStep2" style="display:none;">
-            <div style="text-align:center;margin:10px 0;">
-                <div style="font-size:14px;color:var(--text-dim);">⏳ الوقت المتبقي</div>
-                <div class="timer-circle">
-                    <svg class="timer-svg" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="45" stroke-dasharray="282.7" stroke-dashoffset="0" id="timerCircle"/>
-                    </svg>
-                    <div class="timer-text" id="timerText">30:00</div>
-                </div>
-            </div>
-            
-            <div class="invoice-amount-display">
-                <div class="label">💰 المبلغ المراد تحويله</div>
-                <div class="value" id="invoiceAmountDisplay">0.00 دولار</div>
-            </div>
-            
-            <div class="invoice-amount-display" style="border-color:var(--success);">
-                <div class="label">💰 سيتم إضافة</div>
-                <div class="value" id="invoiceFinalAmountDisplay" style="color:var(--success);">0.00 دولار</div>
-            </div>
-            
-            <label style="color:var(--text-dim);font-size:14px;display:block;margin-bottom:5px;">🔢 رقم عملية التحويل</label>
-            <input type="text" id="invoiceTransferCode" placeholder="أدخل رقم عملية التحويل">
-            
-            <div class="modal-buttons">
-                <button class="btn btn-success" onclick="confirmInvoice()" id="confirmInvoiceBtn">✅ تأكيد الدفع</button>
-                <button class="btn btn-danger" onclick="cancelInvoice()">❌ إلغاء</button>
-            </div>
-            <div id="invoiceStatus" style="text-align:center;margin-top:10px;font-size:14px;"></div>
-        </div>
-    </div>
-</div>
-
-<!-- ===== نافذة تفاصيل المنتج ===== -->
-<div class="modal" id="productModal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('productModal')">✕</span>
-        <h2 id="productModalTitle">المنتج</h2>
-        <div id="productModalBody"></div>
+        <div id="balanceStatus" style="text-align:center;margin-top:10px;font-size:14px;"></div>
     </div>
 </div>
 
@@ -589,8 +632,11 @@
 let currentUser = null;
 let balance = 0;
 let paymentMethods = [];
-let invoices = [];
+let categories = [];
+let subCategories = [];
+let products = [];
 let orders = [];
+let balanceRequests = [];
 let users = [];
 let admins = [];
 let currencies = [];
@@ -598,9 +644,7 @@ let selectedCurrency = 'usd';
 let exchangeRates = { usd: 1, syp: 130 };
 let adminPassword = 'Admin@2024';
 let commissionRate = 1;
-let currentInvoice = null;
-let timerInterval = null;
-let invoiceTimeout = null;
+let isSidebarOpen = false;
 
 // ===== تحميل البيانات =====
 function loadData() {
@@ -609,8 +653,14 @@ function loadData() {
         paymentMethods = JSON.parse(localStorage.getItem('paymentMethods')) || [
             { id: 1, name: 'شنكاشي', number: '0991234567', image: '' }
         ];
-        invoices = JSON.parse(localStorage.getItem('invoices')) || [];
+        categories = JSON.parse(localStorage.getItem('categories')) || [
+            { id: 1, name: '🎮 ألعاب', icon: '🎮' },
+            { id: 2, name: '📱 تطبيقات', icon: '📱' }
+        ];
+        subCategories = JSON.parse(localStorage.getItem('subCategories')) || [];
+        products = JSON.parse(localStorage.getItem('products')) || [];
         orders = JSON.parse(localStorage.getItem('orders')) || [];
+        balanceRequests = JSON.parse(localStorage.getItem('balanceRequests')) || [];
         users = JSON.parse(localStorage.getItem('users')) || [];
         admins = JSON.parse(localStorage.getItem('admins')) || [];
         currencies = JSON.parse(localStorage.getItem('currencies')) || [
@@ -628,24 +678,17 @@ function loadData() {
         }
         const userData = localStorage.getItem('currentUser');
         if (userData) currentUser = JSON.parse(userData);
-        
-        // تنظيف الفواتير المنتهية
-        const now = Date.now();
-        invoices = invoices.filter(inv => {
-            if (inv.expiry && inv.expiry < now && !inv.confirmed) {
-                return false;
-            }
-            return true;
-        });
-        localStorage.setItem('invoices', JSON.stringify(invoices));
     } catch(e) { console.log('خطأ', e); }
 }
 
 function saveData() {
     localStorage.setItem('balance', balance);
     localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
-    localStorage.setItem('invoices', JSON.stringify(invoices));
+    localStorage.setItem('categories', JSON.stringify(categories));
+    localStorage.setItem('subCategories', JSON.stringify(subCategories));
+    localStorage.setItem('products', JSON.stringify(products));
     localStorage.setItem('orders', JSON.stringify(orders));
+    localStorage.setItem('balanceRequests', JSON.stringify(balanceRequests));
     localStorage.setItem('users', JSON.stringify(users));
     localStorage.setItem('admins', JSON.stringify(admins));
     localStorage.setItem('currencies', JSON.stringify(currencies));
@@ -675,9 +718,13 @@ window.onload = function() {
 };
 
 function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('active');
-    document.getElementById('sidebarOverlay').classList.toggle('active');
-    document.getElementById('hamburger').classList.toggle('active');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const hamburger = document.getElementById('hamburger');
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+    hamburger.classList.toggle('active');
+    isSidebarOpen = sidebar.classList.contains('active');
 }
 
 // ===== عرض الصفحات =====
@@ -700,7 +747,10 @@ function showPage(page) {
     if (page === 'payment') renderPaymentMethods();
     if (page === 'orders') renderOrders();
     if (page === 'balance') updateBalance();
-    toggleSidebar();
+    // إغلاق القائمة الجانبية عند التنقل (لا تفتح تلقائياً)
+    if (isSidebarOpen) {
+        toggleSidebar();
+    }
 }
 
 function isAdmin() {
@@ -724,7 +774,6 @@ function convertCurrency(amount, from, to) {
     return (amount / rateFrom) * rateTo;
 }
 
-// ===== تحديث الرصيد =====
 function updateBalance() {
     const displayBalance = convertCurrency(balance, 'usd', selectedCurrency);
     document.getElementById('headerBalance').textContent = displayBalance.toFixed(2);
@@ -733,15 +782,160 @@ function updateBalance() {
     document.getElementById('currencySymbol').textContent = currency ? currency.symbol : 'دولار';
 }
 
-// ===== إدارة العمولة =====
-function updateCommission() {
+// ===== إدارة الألوان =====
+function updateColors() {
+    const primary = document.getElementById('colorPrimary').value;
+    const bg = document.getElementById('colorBg').value;
+    const card = document.getElementById('colorCard').value;
+    document.documentElement.style.setProperty('--primary', primary);
+    document.documentElement.style.setProperty('--bg', bg);
+    document.documentElement.style.setProperty('--bg-card', card);
+    localStorage.setItem('colors', JSON.stringify({ primary, bg, card }));
+}
+
+function loadColors() {
+    try {
+        const colors = JSON.parse(localStorage.getItem('colors'));
+        if (colors) {
+            document.getElementById('colorPrimary').value = colors.primary;
+            document.getElementById('colorBg').value = colors.bg;
+            document.getElementById('colorCard').value = colors.card;
+            updateColors();
+        }
+    } catch(e) {}
+}
+
+// ===== إدارة الأقسام =====
+function renderCategories() {
+    const container = document.getElementById('categoryList');
+    if (!container) return;
+    container.innerHTML = categories.map(cat => `
+        <div class="admin-product-item">
+            <span>${cat.icon} ${cat.name}</span>
+            <button class="btn btn-danger" onclick="deleteCategory(${cat.id})">🗑️ حذف</button>
+        </div>
+    `).join('') || '<p style="color:var(--text-dim);">لا توجد أقسام</p>';
+    updateSelects();
+}
+
+function addCategory() {
     if (!isAdmin()) return alert('🔒 فقط المدراء');
-    const rate = parseFloat(document.getElementById('commissionRate').value);
-    if (isNaN(rate) || rate < 0) return alert('❌ أدخل نسبة صحيحة');
-    commissionRate = rate;
+    const name = document.getElementById('newCategoryName').value.trim();
+    const icon = document.getElementById('newCategoryIcon').value.trim() || '📁';
+    if (!name) return alert('❌ أدخل اسم القسم');
+    const id = Date.now();
+    categories.push({ id, name, icon });
     saveData();
-    document.getElementById('commissionMsg').innerHTML = '<span style="color:var(--success);">✅ تم تحديث العمولة إلى ' + rate + '%</span>';
-    alert('✅ تم تحديث العمولة');
+    renderCategories();
+    document.getElementById('newCategoryName').value = '';
+    document.getElementById('newCategoryIcon').value = '';
+    alert('✅ تم إضافة القسم');
+}
+
+function deleteCategory(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد؟')) return;
+    categories = categories.filter(c => c.id !== id);
+    subCategories = subCategories.filter(s => s.parentId !== id);
+    saveData();
+    renderCategories();
+    renderSubCategories();
+}
+
+// ===== إدارة الأقسام الفرعية =====
+function renderSubCategories() {
+    const container = document.getElementById('subCategoryList');
+    if (!container) return;
+    container.innerHTML = subCategories.map(s => {
+        const parent = categories.find(c => c.id === s.parentId);
+        return `<div class="admin-product-item">
+            <span>📂 ${s.name} ${parent ? '(في ' + parent.name + ')' : ''}</span>
+            <button class="btn btn-danger" onclick="deleteSubCategory(${s.id})">🗑️ حذف</button>
+        </div>`;
+    }).join('') || '<p style="color:var(--text-dim);">لا توجد أقسام فرعية</p>';
+    updateSelects();
+}
+
+function addSubCategory() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const parentId = parseInt(document.getElementById('subCategoryParentSelect').value);
+    const name = document.getElementById('newSubCategoryName').value.trim();
+    if (!name) return alert('❌ أدخل اسم القسم الفرعي');
+    const id = Date.now();
+    subCategories.push({ id, parentId, name });
+    saveData();
+    renderSubCategories();
+    document.getElementById('newSubCategoryName').value = '';
+    alert('✅ تم إضافة القسم الفرعي');
+}
+
+function deleteSubCategory(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد؟')) return;
+    subCategories = subCategories.filter(s => s.id !== id);
+    products = products.filter(p => p.subCategoryId !== id);
+    saveData();
+    renderSubCategories();
+    renderProducts();
+}
+
+// ===== إدارة المنتجات =====
+function renderProducts() {
+    const container = document.getElementById('productList');
+    if (!container) return;
+    container.innerHTML = products.map(p => {
+        const sub = subCategories.find(s => s.id === p.subCategoryId);
+        return `<div class="admin-product-item">
+            <span>${p.image ? '🖼️' : '📦'} ${p.name} - ${p.price} $ ${sub ? '(في ' + sub.name + ')' : ''}</span>
+            <button class="btn btn-danger" onclick="deleteProduct(${p.id})">🗑️ حذف</button>
+        </div>`;
+    }).join('') || '<p style="color:var(--text-dim);">لا توجد منتجات</p>';
+}
+
+function addProduct() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    const subCategoryId = parseInt(document.getElementById('productSubCategorySelect').value);
+    const name = document.getElementById('newProductName').value.trim();
+    const price = parseFloat(document.getElementById('newProductPrice').value);
+    if (!name || !price) return alert('❌ أدخل اسم المنتج والسعر');
+    const fileInput = document.getElementById('newProductImage');
+    let imageData = '';
+    if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imageData = e.target.result;
+            saveProduct(subCategoryId, name, price, imageData);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    } else {
+        saveProduct(subCategoryId, name, price, '');
+    }
+}
+
+function saveProduct(subCategoryId, name, price, image) {
+    const id = Date.now();
+    products.push({ id, subCategoryId, name, price, image });
+    saveData();
+    renderProducts();
+    document.getElementById('newProductName').value = '';
+    document.getElementById('newProductPrice').value = '';
+    document.getElementById('newProductImage').value = '';
+    alert('✅ تم إضافة المنتج');
+}
+
+function deleteProduct(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد؟')) return;
+    products = products.filter(p => p.id !== id);
+    saveData();
+    renderProducts();
+}
+
+function updateSelects() {
+    const parentSelect = document.getElementById('subCategoryParentSelect');
+    if (parentSelect) parentSelect.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    const subSelect = document.getElementById('productSubCategorySelect');
+    if (subSelect) subSelect.innerHTML = subCategories.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
 }
 
 // ===== إدارة طرق الدفع =====
@@ -765,24 +959,6 @@ function renderPaymentMethods() {
             </div>
         `).join('');
     }
-}
-
-function showPaymentDetail(id) {
-    if (!currentUser) { showLoginModal(); return; }
-    const method = paymentMethods.find(m => m.id === id);
-    if (!method) return;
-    
-    document.getElementById('paymentDetailName').textContent = method.name;
-    document.getElementById('paymentDetailContent').innerHTML = `
-        <div class="pp-image">${method.image ? `<img src="${method.image}" alt="${method.name}">` : '<div style="font-size:80px;color:var(--primary);padding:40px;">💳</div>'}</div>
-        <div class="pp-name">${method.name}</div>
-        <div class="pp-number">📞 ${method.number}</div>
-        <div class="pp-buttons">
-            <button class="btn btn-primary" onclick="openInvoiceModal()">📄 إنشاء فاتورة</button>
-            <button class="btn btn-danger" onclick="showPage('payment')">🔙 رجوع</button>
-        </div>
-    `;
-    showPage('payment-detail');
 }
 
 function addPaymentMethod() {
@@ -823,168 +999,120 @@ function deletePaymentMethod(id) {
     renderPaymentMethods();
 }
 
-// ===== الفواتير =====
-function openInvoiceModal() {
+// ===== نظام طلب الرصيد =====
+function showAddBalanceModal() {
     if (!currentUser) { showLoginModal(); return; }
-    document.getElementById('invoiceModal').classList.add('show');
-    document.getElementById('invoiceStep1').style.display = 'block';
-    document.getElementById('invoiceStep2').style.display = 'none';
-    document.getElementById('invoiceAmount').value = '';
-    document.getElementById('invoiceTransferCode').value = '';
-    document.getElementById('invoiceStatus').textContent = '';
-    document.getElementById('invoiceError').textContent = '';
-    document.getElementById('invoiceSuccess').textContent = '';
-    currentInvoice = null;
-    if (timerInterval) clearInterval(timerInterval);
-    if (invoiceTimeout) clearTimeout(invoiceTimeout);
+    document.getElementById('balanceModal').classList.add('show');
+    document.getElementById('balanceAmount').value = '';
+    document.getElementById('balanceTransferCode').value = '';
+    document.getElementById('balanceStatus').textContent = '';
+    document.getElementById('balanceError').textContent = '';
+    document.getElementById('balanceSuccess').textContent = '';
 }
 
-function createInvoice() {
-    const amount = parseFloat(document.getElementById('invoiceAmount').value);
+function requestBalance() {
+    const amount = parseFloat(document.getElementById('balanceAmount').value);
+    const code = document.getElementById('balanceTransferCode').value.trim();
     if (!amount || amount < 1) return alert('❌ أدخل مبلغاً صحيحاً');
+    if (!code) return alert('❌ أدخل رقم عملية التحويل');
     
-    const commissionAmount = amount * (commissionRate / 100);
-    const finalAmount = amount - commissionAmount;
-    
-    const expiry = Date.now() + 30 * 60 * 1000;
-    currentInvoice = {
+    const request = {
         id: Date.now(),
-        amount: amount,
-        finalAmount: finalAmount,
-        expiry: expiry,
         userId: currentUser.email,
         userName: currentUser.name,
-        confirmed: false,
-        transferCode: null,
-        paymentMethod: document.getElementById('paymentDetailName').textContent || 'غير محدد'
+        amount: amount,
+        transferCode: code,
+        date: new Date().toLocaleString('ar'),
+        status: 'pending'
     };
-    
-    document.getElementById('invoiceAmountDisplay').textContent = amount.toFixed(2) + ' دولار';
-    document.getElementById('invoiceFinalAmountDisplay').textContent = finalAmount.toFixed(2) + ' دولار';
-    
-    document.getElementById('invoiceStep1').style.display = 'none';
-    document.getElementById('invoiceStep2').style.display = 'block';
-    document.getElementById('invoiceStatus').textContent = '⏳ يرجى إدخال رقم عملية التحويل';
-    document.getElementById('invoiceStatus').style.color = 'var(--warning)';
-    
-    // بدء العداد الدائري
-    let timeLeft = 30 * 60;
-    const totalTime = 30 * 60;
-    if (timerInterval) clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        const mins = Math.floor(timeLeft / 60);
-        const secs = timeLeft % 60;
-        document.getElementById('timerText').textContent = String(mins).padStart(2,'0') + ':' + String(secs).padStart(2,'0');
-        
-        // تحديث الدائرة
-        const progress = 1 - (timeLeft / totalTime);
-        const circumference = 282.7;
-        const offset = circumference * progress;
-        document.getElementById('timerCircle').style.strokeDashoffset = offset;
-        
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            document.getElementById('timerText').textContent = '00:00';
-            document.getElementById('invoiceStatus').textContent = '❌ انتهى الوقت!';
-            document.getElementById('invoiceStatus').style.color = 'var(--danger)';
-            document.getElementById('confirmInvoiceBtn').disabled = true;
-            currentInvoice = null;
-            // حذف الفاتورة من النظام
-            invoices = invoices.filter(inv => inv.id !== currentInvoice?.id);
-            saveData();
-        }
-    }, 1000);
-    
-    invoices.push(currentInvoice);
-    saveData();
-    document.getElementById('confirmInvoiceBtn').disabled = false;
-}
-
-function confirmInvoice() {
-    if (!currentInvoice) return alert('❌ لا توجد فاتورة نشطة');
-    const code = document.getElementById('invoiceTransferCode').value.trim();
-    if (!code) return alert('❌ أدخل رقم عملية التحويل');
-    if (Date.now() > currentInvoice.expiry) {
-        alert('❌ انتهت صلاحية الفاتورة');
-        return;
-    }
-    
-    currentInvoice.transferCode = code;
-    currentInvoice.confirmed = 'pending';
+    balanceRequests.push(request);
     saveData();
     
-    document.getElementById('invoiceStatus').textContent = '⏳ جاري التحقق من عملية التحويل...';
-    document.getElementById('invoiceStatus').style.color = 'var(--warning)';
-    document.getElementById('confirmInvoiceBtn').disabled = true;
+    document.getElementById('balanceStatus').textContent = '✅ تم إرسال طلبك بنجاح! سيتم إضافة الرصيد بعد التأكيد من الإدارة.';
+    document.getElementById('balanceStatus').style.color = 'var(--success)';
+    document.getElementById('balanceAmount').value = '';
+    document.getElementById('balanceTransferCode').value = '';
     
-    setTimeout(() => {
-        alert('✅ تم استلام رقم التحويل. سيتم إضافة الرصيد بعد التأكيد اليدوي من قبل الإدارة.');
-        closeModal('invoiceModal');
-    }, 1500);
+    // تحديث الإشعارات
+    updateNotifications();
+    setTimeout(() => closeModal('balanceModal'), 3000);
 }
 
-function cancelInvoice() {
-    if (!confirm('هل أنت متأكد من إلغاء الفاتورة؟')) return;
-    if (currentInvoice) {
-        invoices = invoices.filter(inv => inv.id !== currentInvoice.id);
-        saveData();
-    }
-    if (timerInterval) clearInterval(timerInterval);
-    closeModal('invoiceModal');
-}
-
-// ===== إدارة الفواتير في لوحة التحكم =====
-function renderInvoicesAdmin() {
-    const container = document.getElementById('invoicesListAdmin');
+// ===== إدارة طلبات الرصيد =====
+function renderBalanceRequests() {
+    const container = document.getElementById('balanceRequestsList');
     if (!container) return;
-    container.innerHTML = invoices.map(inv => {
-        const status = inv.confirmed === true ? 'مكتمل' : inv.confirmed === 'pending' ? 'قيد المراجعة' : 'معلق';
-        const statusColor = inv.confirmed === true ? 'var(--success)' : inv.confirmed === 'pending' ? 'var(--warning)' : 'var(--danger)';
-        return `<div class="admin-product-item">
+    const pending = balanceRequests.filter(r => r.status === 'pending');
+    container.innerHTML = pending.map(r => `
+        <div class="admin-request-item">
             <div>
-                <div>👤 ${inv.userName} (${inv.userId})</div>
-                <div>💰 ${inv.amount} دولار → ${inv.finalAmount.toFixed(2)} دولار (بعد العمولة)</div>
-                <div>📅 ${new Date(inv.expiry).toLocaleString('ar')}</div>
-                <div>📝 ${inv.transferCode ? 'رقم التحويل: ' + inv.transferCode : 'لم يتم الإدخال'}</div>
-                <div style="color:${statusColor};">الحالة: ${status}</div>
+                <div>👤 ${r.userName} (${r.userId})</div>
+                <div>💰 ${r.amount} دولار</div>
+                <div>🔢 ${r.transferCode}</div>
+                <div>📅 ${r.date}</div>
+                <div style="color:var(--warning);">⏳ قيد المراجعة</div>
             </div>
-            ${inv.confirmed === 'pending' ? `
-                <div>
-                    <button class="btn btn-success" onclick="approveInvoice(${inv.id})" style="font-size:11px;padding:4px 10px;">✅ تأكيد</button>
-                    <button class="btn btn-danger" onclick="rejectInvoice(${inv.id})" style="font-size:11px;padding:4px 10px;">❌ رفض</button>
-                </div>
-            ` : ''}
-        </div>`;
-    }).join('') || '<p style="color:var(--text-dim);">لا توجد فواتير</p>';
+            <div style="display:flex;gap:5px;flex-wrap:wrap;">
+                <button class="btn btn-success" onclick="approveBalanceRequest(${r.id})" style="font-size:11px;padding:4px 12px;">✅ تأكيد</button>
+                <button class="btn btn-danger" onclick="rejectBalanceRequest(${r.id})" style="font-size:11px;padding:4px 12px;">❌ رفض</button>
+            </div>
+        </div>
+    `).join('') || '<p style="color:var(--text-dim);">لا توجد طلبات</p>';
+    
+    const badge = document.getElementById('requestsBadge');
+    if (pending.length > 0) {
+        badge.style.display = 'inline-block';
+        badge.textContent = pending.length;
+    } else {
+        badge.style.display = 'none';
+    }
 }
 
-function approveInvoice(id) {
+function approveBalanceRequest(id) {
     if (!isAdmin()) return alert('🔒 فقط المدراء');
-    const inv = invoices.find(i => i.id === id);
-    if (!inv) return;
-    if (!confirm('تأكيد إضافة ' + inv.finalAmount.toFixed(2) + ' دولار إلى حساب ' + inv.userName + '؟')) return;
-    inv.confirmed = true;
-    const user = users.find(u => u.email === inv.userId);
+    const request = balanceRequests.find(r => r.id === id);
+    if (!request) return;
+    if (!confirm('تأكيد إضافة ' + request.amount + ' دولار إلى حساب ' + request.userName + '؟')) return;
+    
+    request.status = 'approved';
+    // إضافة الرصيد للمستخدم
+    const user = users.find(u => u.email === request.userId);
     if (user) {
-        user.balance = (user.balance || 0) + inv.finalAmount;
+        user.balance = (user.balance || 0) + request.amount;
         if (currentUser && currentUser.email === user.email) {
             balance = user.balance;
         }
     }
     saveData();
     updateBalance();
-    renderInvoicesAdmin();
-    alert('✅ تم تأكيد الفاتورة وإضافة الرصيد');
+    renderBalanceRequests();
+    updateStats();
+    updateNotifications();
+    alert('✅ تم تأكيد الطلب وإضافة الرصيد');
 }
 
-function rejectInvoice(id) {
+function rejectBalanceRequest(id) {
     if (!isAdmin()) return alert('🔒 فقط المدراء');
-    if (!confirm('هل أنت متأكد من رفض هذه الفاتورة؟')) return;
-    invoices = invoices.filter(i => i.id !== id);
+    if (!confirm('هل أنت متأكد من رفض هذا الطلب؟')) return;
+    const request = balanceRequests.find(r => r.id === id);
+    if (request) request.status = 'rejected';
     saveData();
-    renderInvoicesAdmin();
-    alert('✅ تم رفض الفاتورة');
+    renderBalanceRequests();
+    updateStats();
+    updateNotifications();
+    alert('✅ تم رفض الطلب');
+}
+
+// ===== الإشعارات =====
+function updateNotifications() {
+    const pending = balanceRequests.filter(r => r.status === 'pending');
+    const badge = document.getElementById('adminNotificationBadge');
+    if (pending.length > 0) {
+        badge.style.display = 'inline-block';
+        badge.textContent = pending.length;
+    } else {
+        badge.style.display = 'none';
+    }
 }
 
 // ===== إدارة الطلبات =====
@@ -1035,10 +1163,11 @@ function renderUsers() {
     const container = document.getElementById('usersList');
     if (!container) return;
     container.innerHTML = users.map(u => `
-        <div style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--info);">
+        <div class="admin-user-item">
             <div><strong>${u.name || 'بدون اسم'}</strong> - ${u.email}</div>
             <div style="font-size:12px;color:var(--text-dim);">📱 ${u.phone || 'لا يوجد'} | 📅 ${u.date || 'غير معروف'}</div>
             <div style="font-size:12px;color:var(--text-dim);">💰 الرصيد: ${u.balance || 0} دولار</div>
+            <div style="font-size:12px;color:var(--text-dim);">📦 الطلبات: ${orders.filter(o => o.userName === u.name).length}</div>
             <button class="btn btn-danger" onclick="deleteUser('${u.email}')" style="font-size:11px;padding:4px 12px;">🗑️ حذف</button>
         </div>
     `).join('') || '<p style="color:var(--text-dim);">لا يوجد مستخدمين مسجلين</p>';
@@ -1056,7 +1185,7 @@ function deleteUser(email) {
 function updateStats() {
     document.getElementById('statUsers').textContent = users.length;
     document.getElementById('statOrders').textContent = orders.length;
-    document.getElementById('statInvoices').textContent = invoices.length;
+    document.getElementById('statRequests').textContent = balanceRequests.filter(r => r.status === 'pending').length;
 }
 
 // ===== تحديث الواجهة =====
@@ -1083,6 +1212,8 @@ function updateUI() {
             document.getElementById('avatarImage').src = currentUser.avatar;
             document.getElementById('avatarText').style.display = 'none';
         }
+        // تحديث الإشعارات للمدير
+        if (isAdminUser) updateNotifications();
     } else {
         loginBtn.style.display = 'inline-block';
         logoutBtn.style.display = 'none';
@@ -1097,8 +1228,11 @@ function updateUI() {
     renderOrders();
     renderUsers();
     renderAdminList();
-    renderInvoicesAdmin();
+    renderBalanceRequests();
     renderOrdersAdmin();
+    renderCategories();
+    renderSubCategories();
+    renderProducts();
     updateStats();
 }
 
@@ -1163,7 +1297,7 @@ function logout() {
     updateUI();
     alert('👋 تم تسجيل الخروج');
     showPage('home');
-    toggleSidebar();
+    if (isSidebarOpen) toggleSidebar();
 }
 
 function showLoginModal() {
@@ -1175,9 +1309,6 @@ function showLoginModal() {
 
 function closeModal(id) {
     document.getElementById(id).classList.remove('show');
-    if (id === 'invoiceModal' && timerInterval) {
-        clearInterval(timerInterval);
-    }
 }
 
 function uploadAvatar(event) {
@@ -1260,9 +1391,13 @@ function renderAdminPanel() {
     renderUsers();
     renderPaymentMethods();
     renderAdminList();
-    renderInvoicesAdmin();
+    renderBalanceRequests();
     renderOrdersAdmin();
+    renderCategories();
+    renderSubCategories();
+    renderProducts();
     updateStats();
+    loadColors();
     document.getElementById('commissionRate').value = commissionRate;
     const marqueeTexts = JSON.parse(localStorage.getItem('marqueeTexts'));
     if (marqueeTexts) document.getElementById('marqueeTexts').value = marqueeTexts.join('\n');
@@ -1271,6 +1406,7 @@ function renderAdminPanel() {
 // ===== تهيئة التطبيق =====
 loadData();
 updateUI();
+loadColors();
 const savedCurrency = localStorage.getItem('selectedCurrency');
 if (savedCurrency) {
     selectedCurrency = savedCurrency;
@@ -1286,4 +1422,3 @@ console.log('👑 رويال كارد جاهز!');
 </script>
 </body>
 </html>
-
