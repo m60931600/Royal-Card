@@ -2,355 +2,370 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رويال كارد 👑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>رويال كارد 👑 - المتجر الأسطوري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== متغيرات قابلة للتغيير ===== */
+        /* ===== إعدادات أساسية ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #ffd700;
             --primary-dark: #c9a800;
+            --primary-light: #fff3b0;
+            --primary-glow: rgba(255,215,0,0.3);
             --bg: #0a0a1a;
-            --card-bg: rgba(255,255,255,0.05);
+            --bg-card: rgba(255,255,255,0.05);
+            --bg-hover: rgba(255,215,0,0.1);
             --text: #ffffff;
             --text-dim: #aaaaaa;
-            --border: rgba(255,215,0,0.2);
-            --radius: 20px;
+            --text-dark: #1a1a2e;
+            --border: rgba(255,215,0,0.15);
+            --radius: 16px;
             --shadow: 0 10px 40px rgba(0,0,0,0.5);
+            --shadow-gold: 0 0 40px rgba(255,215,0,0.2);
+            --success: #4caf50;
+            --danger: #ff4444;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-gold: linear-gradient(135deg, #ffd700, #f5b342, #ffd700);
+        }
+        body {
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); min-height: 100vh; }
+        /* ===== خلفية النجوم ===== */
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite alternate; }
+        @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
         
-        /* ===== شريط العبارات المتحركة ===== */
+        /* ===== شاشة الترحيب ===== */
+        .splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 9999;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .splash-screen.hide { opacity: 0; transform: scale(1.1); pointer-events: none; }
+        .splash-screen .logo { font-size: 80px; animation: pulse 1.5s ease-in-out infinite; text-shadow: 0 0 60px var(--primary-glow); }
+        .splash-screen h1 { font-size: 36px; font-weight: 900; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 10px; animation: fadeInUp 1s ease; }
+        .splash-screen .sub { color: var(--text-dim); font-size: 16px; margin-top: 5px; animation: fadeInUp 1.2s ease; }
+        .splash-screen .loader { margin-top: 30px; width: 50px; height: 50px; border: 4px solid var(--bg-card); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* ===== شريط العبارات ===== */
         .marquee-bar {
-            background: linear-gradient(90deg, var(--primary-dark), var(--primary), var(--primary-dark));
-            color: #000;
-            padding: 8px 0;
-            font-weight: bold;
-            overflow: hidden;
-            white-space: nowrap;
-            position: sticky;
-            top: 0;
-            z-index: 999;
+            background: var(--gradient-gold); background-size: 200% 200%;
+            animation: shimmer 3s ease-in-out infinite;
+            color: var(--text-dark); padding: 8px 0; font-weight: 700;
+            overflow: hidden; white-space: nowrap; position: sticky; top: 0; z-index: 1001;
         }
-        .marquee-bar .marquee-content {
-            display: inline-block;
-            animation: marquee 20s linear infinite;
-        }
-        .marquee-bar span { margin: 0 30px; }
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
+        @keyframes shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .marquee-bar .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
+        .marquee-bar span { margin: 0 40px; font-size: 14px; }
+        .marquee-bar span i { margin: 0 5px; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         
         /* ===== شريط الرصيد ===== */
         .top-bar {
-            background: rgba(10,10,26,0.95);
-            padding: 10px 20px;
+            background: rgba(10,10,26,0.95); padding: 10px 20px;
             border-bottom: 2px solid var(--primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            position: sticky;
-            top: 38px;
-            z-index: 998;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 10px; position: sticky; top: 38px; z-index: 1000;
+            backdrop-filter: blur(10px);
         }
-        .top-bar .balance { color: var(--primary); font-size: 16px; }
-        .top-bar .balance span { font-weight: bold; font-size: 20px; }
+        .top-bar .balance { color: var(--primary); font-size: 16px; font-weight: 600; }
+        .top-bar .balance span { font-weight: 900; font-size: 22px; background: rgba(255,215,0,0.1); padding: 2px 12px; border-radius: 20px; }
         .top-bar .btn-add {
-            background: var(--primary);
-            color: #000;
-            border: none;
-            border-radius: 30px;
-            padding: 5px 15px;
-            font-weight: bold;
-            cursor: pointer;
+            background: var(--gradient-gold); color: var(--text-dark); border: none;
+            border-radius: 30px; padding: 6px 18px; font-weight: 700; cursor: pointer;
+            transition: var(--transition); font-size: 13px;
         }
+        .top-bar .btn-add:hover { transform: scale(1.05); box-shadow: var(--shadow-gold); }
         
-        /* ===== التنقل ===== */
+        /* ===== ثلاث خطوط ===== */
+        .hamburger {
+            position: fixed; top: 45px; left: 15px; z-index: 1002; cursor: pointer;
+            background: var(--bg-card); border: 2px solid var(--primary); border-radius: 12px;
+            padding: 10px 12px; display: flex; flex-direction: column; gap: 5px;
+            transition: var(--transition); box-shadow: var(--shadow);
+        }
+        .hamburger:hover { border-color: var(--primary-light); box-shadow: var(--shadow-gold); }
+        .hamburger span { display: block; width: 28px; height: 3px; background: var(--primary); border-radius: 5px; transition: var(--transition); }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; transform: scale(0); }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        
+        /* ===== القائمة الجانبية ===== */
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; display: none; }
+        .sidebar-overlay.active { display: block; }
+        .sidebar {
+            position: fixed; top: 0; right: -320px; width: 300px; height: 100%;
+            background: var(--bg); border-left: 3px solid var(--primary); z-index: 1002;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20px; overflow-y: auto; box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+        }
+        .sidebar.active { right: 0; }
+        .sidebar .sidebar-close { background: none; border: none; color: var(--text); font-size: 28px; cursor: pointer; float: left; transition: var(--transition); }
+        .sidebar .sidebar-close:hover { color: var(--primary); transform: rotate(90deg); }
+        .sidebar .profile-section { text-align: center; padding: 20px 0 15px; border-bottom: 2px solid var(--border); margin-bottom: 15px; }
+        .sidebar .profile-avatar {
+            width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary);
+            margin: 0 auto 10px; overflow: hidden; background: var(--bg-card);
+            display: flex; align-items: center; justify-content: center; font-size: 40px; color: var(--primary);
+            cursor: pointer; transition: var(--transition); position: relative;
+        }
+        .sidebar .profile-avatar:hover { border-color: var(--primary-light); box-shadow: var(--shadow-gold); }
+        .sidebar .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .sidebar .profile-name { font-size: 20px; font-weight: 700; color: var(--primary); }
+        .sidebar .profile-email { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+        .sidebar .menu-items { list-style: none; padding: 0; }
+        .sidebar .menu-items li {
+            padding: 12px 15px; border-radius: var(--radius); cursor: pointer;
+            transition: var(--transition); display: flex; align-items: center; gap: 12px;
+            color: var(--text); margin-bottom: 3px; border: 1px solid transparent;
+        }
+        .sidebar .menu-items li:hover { background: var(--bg-hover); border-color: var(--primary); color: var(--primary); }
+        .sidebar .menu-items li i { width: 22px; font-size: 18px; color: var(--primary); }
+        .sidebar .currency-section { margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--border); }
+        .sidebar .currency-section h4 { color: var(--text-dim); font-size: 13px; margin-bottom: 8px; }
+        .sidebar .currency-section .currency-item { padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: var(--transition); display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+        .sidebar .currency-section .currency-item:hover { background: var(--bg-hover); }
+        .sidebar .currency-section .currency-item.active { background: var(--bg-hover); border: 1px solid var(--primary); }
+        .sidebar .logout-btn { margin-top: 20px; padding: 12px; background: rgba(255,68,68,0.15); border: 1px solid var(--danger); border-radius: var(--radius); color: var(--danger); text-align: center; cursor: pointer; transition: var(--transition); font-weight: 600; }
+        .sidebar .logout-btn:hover { background: var(--danger); color: #fff; }
+        
+        /* ===== التنقل السفلي ===== */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10,10,26,0.98);
-            border-top: 2px solid var(--primary);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-            z-index: 999;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(10,10,26,0.98); border-top: 2px solid var(--primary);
+            display: flex; justify-content: space-around; padding: 8px 0; z-index: 999;
+            backdrop-filter: blur(10px);
         }
         .bottom-nav a {
-            color: var(--text-dim);
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 11px;
-            cursor: pointer;
-            padding: 4px 10px;
-            border-radius: 12px;
-            transition: 0.3s;
-            background: transparent;
-            border: none;
+            color: var(--text-dim); text-decoration: none;
+            display: flex; flex-direction: column; align-items: center;
+            font-size: 10px; cursor: pointer; padding: 4px 8px;
+            border-radius: 12px; transition: var(--transition);
+            background: transparent; border: none; flex: 1;
         }
-        .bottom-nav a i { font-size: 22px; }
-        .bottom-nav a:hover, .bottom-nav a.active {
-            color: var(--primary);
-            background: rgba(255,215,0,0.1);
-        }
+        .bottom-nav a i { font-size: 22px; transition: var(--transition); }
+        .bottom-nav a:hover, .bottom-nav a.active { color: var(--primary); }
+        .bottom-nav a.active i { transform: translateY(-2px); }
         
-        /* ===== أزرار جانبية يمين ===== */
-        .side-buttons {
-            position: fixed;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 900;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .side-buttons .side-btn {
-            background: var(--primary);
-            color: #000;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(255,215,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .side-buttons .side-btn:hover { transform: scale(1.1); }
-        .side-buttons .side-btn.custom { background: #1a1a2e; color: var(--primary); border: 2px solid var(--primary); }
-        
-        /* ===== باقي التنسيقات ===== */
-        .container { max-width: 800px; margin: auto; padding: 20px 15px 80px; }
-        .section-title { text-align: center; font-size: 28px; color: var(--primary); margin-bottom: 25px; }
-        
-        .page { display: none; animation: fadeIn 0.4s; }
+        /* ===== المحتوى ===== */
+        .container { max-width: 900px; margin: auto; padding: 20px 15px 80px; position: relative; z-index: 1; }
+        .section-title { text-align: center; font-size: 28px; color: var(--primary); margin-bottom: 25px; position: relative; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 3px; background: var(--gradient-gold); margin: 8px auto 0; border-radius: 10px; }
+        .page { display: none; animation: fadeIn 0.5s ease; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
+        /* ===== أزرار ===== */
         .btn {
-            padding: 10px 22px;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            padding: 10px 24px; border: none; border-radius: 30px;
+            font-weight: 700; cursor: pointer; transition: var(--transition);
+            display: inline-flex; align-items: center; gap: 8px; font-size: 14px;
         }
-        .btn-primary { background: var(--primary); color: #000; }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,215,0,0.3); }
-        .btn-danger { background: #ff4444; color: #fff; }
-        .btn-success { background: #4caf50; color: #fff; }
+        .btn-primary { background: var(--gradient-gold); color: var(--text-dark); }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: var(--shadow-gold); }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover { background: #cc0000; }
+        .btn-success { background: var(--success); color: #fff; }
+        .btn-success:hover { background: #388e3c; }
+        .btn-secondary { background: var(--bg-card); color: var(--text); border: 2px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-block { width: 100%; justify-content: center; }
         
-        /* ===== الأقسام ===== */
+        /* ===== البطاقات ===== */
         .category-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            margin-bottom: 25px;
-            cursor: pointer;
-            transition: 0.3s;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius); overflow: hidden; margin-bottom: 25px;
+            transition: var(--transition); cursor: pointer;
         }
-        .category-card:hover { border-color: var(--primary); transform: translateY(-3px); }
-        .category-card .category-image {
-            height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
-            color: var(--primary);
-            background: #1a1a2e;
-        }
+        .category-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: var(--shadow-gold); }
+        .category-card .category-image { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 60px; color: var(--primary); background: rgba(255,215,0,0.05); }
         .category-card .category-info { padding: 15px 20px; }
-        .category-card .category-info h3 { color: var(--primary); }
+        .category-card .category-info h3 { color: var(--primary); font-size: 22px; }
         .category-card .category-info p { color: var(--text-dim); font-size: 14px; }
-        
-        /* ===== المنتجات ===== */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
+        .category-card .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
         .product-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            overflow: hidden;
-            text-align: center;
-            padding: 15px;
-            cursor: pointer;
-            transition: 0.3s;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius); overflow: hidden; text-align: center;
+            padding: 15px; transition: var(--transition); cursor: pointer;
         }
-        .product-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-        .product-card .product-image { font-size: 40px; color: var(--primary); margin-bottom: 8px; }
-        .product-card .product-info h4 { font-size: 14px; }
-        .product-card .product-info .price { color: var(--primary); font-weight: bold; font-size: 16px; }
-        .product-card .product-info .max-qty { color: var(--text-dim); font-size: 11px; }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow-gold); }
+        .product-card .product-image { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; background: rgba(255,215,0,0.05); display: flex; align-items: center; justify-content: center; font-size: 40px; color: var(--primary); overflow: hidden; }
+        .product-card .product-image img { width: 100%; height: 100%; object-fit: cover; }
+        .product-card .product-info h4 { font-size: 14px; margin: 8px 0 2px; }
+        .product-card .product-info .price { color: var(--primary); font-weight: 700; font-size: 16px; }
+        .product-card .product-info .rating { color: var(--warning); font-size: 12px; margin: 3px 0; }
         
         /* ===== النوافذ المنبثقة ===== */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 20px;
         }
         .modal.show { display: flex; }
         .modal-content {
-            background: #1a1a2e;
-            padding: 25px;
-            border-radius: var(--radius);
-            border: 2px solid var(--primary);
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
+            background: #1a1a2e; padding: 25px; border-radius: var(--radius);
+            border: 2px solid var(--primary); max-width: 500px; width: 100%;
+            max-height: 90vh; overflow-y: auto; position: relative;
+            animation: modalIn 0.3s ease;
         }
-        .modal-content .close {
-            position: absolute;
-            top: 10px; left: 18px;
-            font-size: 28px;
-            color: #fff;
-            cursor: pointer;
-        }
-        .modal-content .close:hover { color: var(--primary); }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .modal-content .close { position: absolute; top: 10px; left: 18px; font-size: 28px; color: #fff; cursor: pointer; transition: var(--transition); }
+        .modal-content .close:hover { color: var(--primary); transform: rotate(90deg); }
         .modal-content h2 { color: var(--primary); margin-bottom: 15px; text-align: center; }
-        .modal-content input, .modal-content select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid #333;
-            background: #0a0a1a;
-            color: #fff;
-            margin-bottom: 10px;
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #333;
+            background: #0a0a1a; color: #fff; margin-bottom: 10px; font-family: inherit;
         }
+        .modal-content input:focus, .modal-content select:focus, .modal-content textarea:focus { border-color: var(--primary); outline: none; }
         .modal-content .modal-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
+        .modal-content .error-msg { color: var(--danger); font-size: 14px; text-align: center; margin: 5px 0; }
+        .modal-content .success-msg { color: var(--success); font-size: 14px; text-align: center; margin: 5px 0; }
         
         /* ===== لوحة التحكم ===== */
-        .admin-panel {
-            background: var(--card-bg);
-            border: 2px solid var(--primary);
-            border-radius: var(--radius);
-            padding: 25px;
-            margin-top: 20px;
-        }
-        .admin-panel h3 { color: var(--primary); margin-bottom: 15px; }
+        .admin-panel { background: var(--bg-card); border: 2px solid var(--primary); border-radius: var(--radius); padding: 25px; margin-top: 20px; }
+        .admin-panel h3 { color: var(--primary); margin-bottom: 15px; font-size: 20px; }
         .admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
-        .admin-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 15px;
-        }
-        .admin-card input, .admin-card select {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            border-radius: 10px;
-            border: 1px solid #333;
-            background: #0a0a1a;
-            color: #fff;
-        }
+        .admin-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 15px; padding: 15px; }
+        .admin-card input, .admin-card select { width: 100%; padding: 8px; margin: 5px 0; border-radius: 10px; border: 1px solid #333; background: #0a0a1a; color: #fff; }
+        .admin-product-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-left: 3px solid var(--primary); }
+        .admin-user-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; border-left: 3px solid var(--info); }
         
-        /* ===== تسجيل الدخول ===== */
-        .login-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 15px 0;
+        /* ===== ساعة الانتظار ===== */
+        .loading-screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 3000; justify-content: center; align-items: center; flex-direction: column;
         }
-        .login-buttons .google { background: #db4437; color: #fff; }
-        .login-buttons .facebook { background: #4267B2; color: #fff; }
-        .login-buttons .normal { background: #333; color: #fff; }
+        .loading-screen.show { display: flex; }
+        .loading-screen .clock { font-size: 80px; color: var(--primary); animation: pulse 1.5s ease-in-out infinite; }
+        .loading-screen h3 { color: var(--primary); margin-top: 15px; font-size: 24px; }
+        .loading-screen p { color: var(--text-dim); margin-top: 5px; }
         
-        .user-info {
-            text-align: center;
-            padding: 15px;
-            background: var(--card-bg);
-            border-radius: 15px;
-            border: 1px solid var(--primary);
-            margin: 10px 0;
-        }
-        .user-info .logout-btn {
-            background: #ff4444;
-            color: #fff;
-            border: none;
-            padding: 5px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
+        /* ===== ألعاب نارية ===== */
+        .firework { position: fixed; pointer-events: none; z-index: 3001; font-size: 30px; animation: fireworkUp 1.5s ease-out forwards; }
+        @keyframes fireworkUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-200px) scale(0); } }
         
         /* ===== التجاوب ===== */
         @media (max-width: 768px) {
             .products-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
             .admin-grid { grid-template-columns: 1fr; }
-            .side-buttons { right: 5px; }
-            .side-buttons .side-btn { width: 40px; height: 40px; font-size: 16px; }
+            .sidebar { width: 280px; right: -290px; }
+            .hamburger { top: 42px; left: 10px; padding: 8px 10px; }
+            .top-bar { top: 38px; padding: 8px 12px; }
+            .top-bar .balance { font-size: 13px; }
+            .top-bar .balance span { font-size: 16px; }
+        }
+        @media (max-width: 480px) {
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+            .category-card .category-image { height: 120px; font-size: 40px; }
+            .section-title { font-size: 22px; }
+            .splash-screen h1 { font-size: 28px; }
         }
     </style>
 </head>
 <body>
 
-<!-- ===== العبارات المتحركة ===== -->
-<div class="marquee-bar" id="marqueeBar">
+<!-- ===== خلفية النجوم ===== -->
+<div class="stars" id="stars"></div>
+
+<!-- ===== شاشة الترحيب ===== -->
+<div class="splash-screen" id="splashScreen">
+    <div class="logo">👑</div>
+    <h1>رويال كارد</h1>
+    <div class="sub">المتجر الأسطوري</div>
+    <div class="loader"></div>
+</div>
+
+<!-- ===== شاشة التحميل (ساعة الانتظار) ===== -->
+<div class="loading-screen" id="loadingScreen">
+    <div class="clock">⏳</div>
+    <h3>الطلب قيد التنفيذ...</h3>
+    <p>يرجى الانتظار</p>
+</div>
+
+<!-- ===== شريط العبارات المتحركة ===== -->
+<div class="marquee-bar">
     <div class="marquee-content" id="marqueeContent">
-        <span>🔥 عروض حصرية بأسعار خيالية</span>
-        <span>⭐ خدمة فورية 24/7</span>
-        <span>💰 أفضل الأسعار في السوق</span>
-        <span>🚀 تسوق الآن واستمتع بالخصومات</span>
+        <span><i class="fas fa-fire"></i> عروض حصرية بأسعار خيالية</span>
+        <span><i class="fas fa-star"></i> خدمة فورية 24/7</span>
+        <span><i class="fas fa-coins"></i> أفضل الأسعار في السوق</span>
+        <span><i class="fas fa-rocket"></i> تسوق الآن واستمتع بالخصومات</span>
+        <span><i class="fas fa-shield-alt"></i> ضمان الجودة 100%</span>
     </div>
 </div>
 
 <!-- ===== شريط الرصيد ===== -->
 <div class="top-bar">
     <div class="balance">
-        <i class="fas fa-wallet"></i> رصيدي: <span id="headerBalance">0</span> <span id="currencySymbol">ريال</span>
+        <i class="fas fa-wallet"></i> رصيدي: <span id="headerBalance">0</span> <span id="currencySymbol">دولار</span>
     </div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
         <button class="btn-add" onclick="showPage('payment')"><i class="fas fa-plus"></i> إضافة</button>
         <span id="userNameDisplay" style="color:var(--primary);font-weight:bold;"></span>
-        <button id="loginBtnTop" class="btn-add" onclick="showLoginModal()" style="background:var(--primary);color:#000;">تسجيل الدخول</button>
-        <button id="logoutBtnTop" class="btn-add" onclick="logout()" style="background:#ff4444;color:#fff;display:none;">تسجيل خروج</button>
+        <button id="loginBtnTop" class="btn-add" onclick="showLoginModal()">تسجيل الدخول</button>
+        <button id="logoutBtnTop" class="btn-add" onclick="logout()" style="background:#ff4444;color:#fff;display:none;">خروج</button>
     </div>
 </div>
 
-<!-- ===== أزرار جانبية يمين ===== -->
-<div class="side-buttons" id="sideButtons">
-    <button class="side-btn" onclick="alert('💬 مرحباً! كيف يمكنني مساعدتك؟')" title="الدعم">
-        <i class="fas fa-headset"></i>
-    </button>
-    <button class="side-btn" onclick="alert('🎁 عروض خاصة متاحة حالياً!')" title="العروض">
-        <i class="fas fa-gift"></i>
-    </button>
-    <button class="side-btn custom" onclick="alert('📢 قناة التليجرام: @RoyalStore')" title="التليجرام">
-        <i class="fab fa-telegram-plane"></i>
-    </button>
-    <button class="side-btn custom" onclick="alert('📧 للتواصل: support@royalstore.com')" title="البريد">
-        <i class="fas fa-envelope"></i>
-    </button>
+<!-- ===== ثلاث خطوط (القائمة الجانبية) ===== -->
+<button class="hamburger" id="hamburger" onclick="toggleSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<!-- ===== خلفية القائمة ===== -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- ===== القائمة الجانبية ===== -->
+<div class="sidebar" id="sidebar">
+    <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+    
+    <div class="profile-section">
+        <div class="profile-avatar" id="profileAvatar" onclick="document.getElementById('avatarInput').click()">
+            <span id="avatarText">👤</span>
+            <img id="avatarImage" style="display:none;" alt="صورة الملف الشخصي">
+            <input type="file" id="avatarInput" accept="image/*" style="display:none;" onchange="uploadAvatar(event)">
+        </div>
+        <div class="profile-name" id="profileName">زائر</div>
+        <div class="profile-email" id="profileEmail">غير مسجل</div>
+    </div>
+    
+    <ul class="menu-items" id="menuItems">
+        <li onclick="showPage('shop')"><i class="fas fa-store"></i> المتجر</li>
+        <li onclick="showPage('balance')"><i class="fas fa-wallet"></i> الرصيد</li>
+        <li onclick="showPage('payment')"><i class="fas fa-credit-card"></i> الدفع</li>
+        <li onclick="showPage('orders')"><i class="fas fa-list"></i> طلباتي</li>
+        <li onclick="showPage('admin')" id="adminMenuLink" style="display:none;"><i class="fas fa-cog"></i> إدارة الموقع</li>
+    </ul>
+    
+    <div class="currency-section">
+        <h4>💱 العملات</h4>
+        <div id="currencyList">
+            <div class="currency-item active" data-currency="usd" onclick="changeCurrency('usd')">
+                <span>🇺🇸 دولار أمريكي</span>
+                <span class="rate">1 = 1</span>
+            </div>
+            <div class="currency-item" data-currency="syp" onclick="changeCurrency('syp')">
+                <span>🇸🇾 ليرة سورية</span>
+                <span class="rate" id="sypRate">1 = 130</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</div>
 </div>
 
 <!-- ===== التنقل السفلي ===== -->
@@ -359,12 +374,12 @@
     <a onclick="showPage('balance')"><i class="fas fa-wallet"></i> الرصيد</a>
     <a onclick="showPage('payment')"><i class="fas fa-credit-card"></i> الدفع</a>
     <a onclick="showPage('orders')"><i class="fas fa-list"></i> طلباتي</a>
-    <a onclick="showPage('admin')" style="color:var(--primary);"><i class="fas fa-cog"></i> إدارة</a>
+    <a onclick="showPage('admin')" id="adminNavLink" style="color:var(--primary);display:none;"><i class="fas fa-cog"></i> إدارة</a>
 </nav>
 
 <div class="container">
 
-    <!-- ===== صفحة المتجر (الرئيسية) ===== -->
+    <!-- ===== صفحة المتجر ===== -->
     <section id="page-shop" class="page active">
         <h2 class="section-title">🛍️ المتجر الأسطوري</h2>
         <div id="categoriesContainer"></div>
@@ -373,7 +388,7 @@
     <!-- ===== صفحة الرصيد ===== -->
     <section id="page-balance" class="page">
         <h2 class="section-title">💰 الرصيد</h2>
-        <div style="text-align:center;background:var(--card-bg);border:2px solid var(--primary);border-radius:var(--radius);padding:30px;max-width:400px;margin:auto;">
+        <div style="text-align:center;background:var(--bg-card);border:2px solid var(--primary);border-radius:var(--radius);padding:30px;max-width:400px;margin:auto;">
             <i class="fas fa-wallet" style="font-size:60px;color:var(--primary);"></i>
             <div style="font-size:36px;color:var(--primary);font-weight:bold;margin:15px 0;" id="balancePageAmount">0</div>
             <div style="color:var(--text-dim);">رصيدك الحالي</div>
@@ -384,7 +399,7 @@
     <!-- ===== صفحة الدفع ===== -->
     <section id="page-payment" class="page">
         <h2 class="section-title">💳 طرق الدفع</h2>
-        <div class="payment-grid" id="paymentMethodsGrid"></div>
+        <div id="paymentMethodsGrid"></div>
         <div style="text-align:center;margin-top:20px;">
             <button class="btn btn-primary" onclick="showAddBalanceModal()">💰 إضافة رصيد</button>
         </div>
@@ -400,26 +415,40 @@
     <section id="page-admin" class="page">
         <h2 class="section-title">🔧 لوحة التحكم</h2>
         
-        <!-- إدارة العبارات المتحركة -->
+        <!-- إحصائيات -->
+        <div class="admin-panel">
+            <h3>📊 الإحصائيات</h3>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;">
+                <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
+                    <div style="font-size:28px;color:var(--primary);" id="statUsers">0</div>
+                    <div style="color:var(--text-dim);font-size:13px;">👥 المستخدمين</div>
+                </div>
+                <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
+                    <div style="font-size:28px;color:var(--primary);" id="statOrders">0</div>
+                    <div style="color:var(--text-dim);font-size:13px;">📦 الطلبات</div>
+                </div>
+                <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
+                    <div style="font-size:28px;color:var(--primary);" id="statRevenue">0</div>
+                    <div style="color:var(--text-dim);font-size:13px;">💰 الأرباح</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- إدارة العبارات -->
         <div class="admin-panel">
             <h3>📝 العبارات المتحركة</h3>
             <textarea id="marqueeTexts" rows="3" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">🔥 عروض حصرية بأسعار خيالية
 ⭐ خدمة فورية 24/7
 💰 أفضل الأسعار في السوق
-🚀 تسوق الآن واستمتع بالخصومات</textarea>
+🚀 تسوق الآن واستمتع بالخصومات
+🛡️ ضمان الجودة 100%</textarea>
             <button class="btn btn-primary mt-20" onclick="updateMarquee()">تحديث العبارات</button>
         </div>
         
-        <!-- إدارة الأزرار الجانبية -->
+        <!-- إدارة المستخدمين -->
         <div class="admin-panel">
-            <h3>🔘 الأزرار الجانبية</h3>
-            <div id="sideButtonsList"></div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
-                <input type="text" id="newSideBtnIcon" placeholder="رمز (مثل: fa-headset)" style="padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                <input type="text" id="newSideBtnAction" placeholder="الإجراء (مثل: alert('نص')" style="padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                <input type="text" id="newSideBtnTitle" placeholder="العنوان" style="padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                <button class="btn btn-primary" onclick="addSideButton()">➕ إضافة زر</button>
-            </div>
+            <h3>👥 إدارة المستخدمين</h3>
+            <div id="usersList"></div>
         </div>
         
         <!-- إدارة الأقسام -->
@@ -431,10 +460,10 @@
                     <input type="text" id="newCategoryName" placeholder="اسم القسم">
                 </div>
                 <div style="flex:1;">
-                    <label>الأيقونة (رمز)</label>
-                    <input type="text" id="newCategoryIcon" placeholder="مثل: 🎮">
+                    <label>الأيقونة</label>
+                    <input type="text" id="newCategoryIcon" placeholder="🎮">
                 </div>
-                <button class="btn btn-primary" onclick="addCategory()">➕ إضافة قسم</button>
+                <button class="btn btn-primary" onclick="addCategory()">➕ إضافة</button>
             </div>
             <div id="categoryList" style="margin-top:15px;"></div>
         </div>
@@ -452,16 +481,54 @@
                     <input type="text" id="newProductName" placeholder="اسم المنتج">
                 </div>
                 <div style="flex:1;">
-                    <label>السعر</label>
+                    <label>السعر ($)</label>
                     <input type="number" id="newProductPrice" placeholder="السعر">
                 </div>
                 <div style="flex:1;">
-                    <label>الأيقونة</label>
-                    <input type="text" id="newProductIcon" placeholder="مثل: 🎁">
+                    <label>صورة المنتج</label>
+                    <input type="file" id="newProductImage" accept="image/*">
                 </div>
-                <button class="btn btn-primary" onclick="addProduct()">➕ إضافة منتج</button>
+                <button class="btn btn-primary" onclick="addProduct()">➕ إضافة</button>
             </div>
             <div id="productList" style="margin-top:15px;"></div>
+        </div>
+        
+        <!-- إدارة العملات -->
+        <div class="admin-panel">
+            <h3>💱 إدارة العملات</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+                <div style="flex:1;">
+                    <label>اسم العملة</label>
+                    <input type="text" id="newCurrencyName" placeholder="مثل: ليرة سورية">
+                </div>
+                <div style="flex:1;">
+                    <label>الرمز</label>
+                    <input type="text" id="newCurrencySymbol" placeholder="🇸🇾">
+                </div>
+                <div style="flex:1;">
+                    <label>سعر الصرف (1 دولار = )</label>
+                    <input type="number" id="newCurrencyRate" placeholder="130">
+                </div>
+                <button class="btn btn-primary" onclick="addCurrency()">➕ إضافة</button>
+            </div>
+            <div id="currencyListAdmin" style="margin-top:15px;"></div>
+        </div>
+        
+        <!-- إدارة طرق الدفع -->
+        <div class="admin-panel">
+            <h3>💳 إدارة طرق الدفع</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+                <div style="flex:1;">
+                    <label>اسم الطريقة</label>
+                    <input type="text" id="newPayName" placeholder="شنكاشي">
+                </div>
+                <div style="flex:1;">
+                    <label>الرقم/الحساب</label>
+                    <input type="text" id="newPayNumber" placeholder="رقم الحساب">
+                </div>
+                <button class="btn btn-primary" onclick="addPaymentMethod()">➕ إضافة</button>
+            </div>
+            <div id="paymentMethodsListAdmin" style="margin-top:15px;"></div>
         </div>
     </section>
 </div>
@@ -471,18 +538,32 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('loginModal')">✕</span>
         <h2>🔑 تسجيل الدخول</h2>
-        <div style="text-align:center;color:var(--text-dim);margin-bottom:15px;">سجل الدخول لتتمكن من الشراء</div>
-        <div class="login-buttons">
-            <button class="btn google" onclick="loginWith('google')"><i class="fab fa-google"></i> Google</button>
-            <button class="btn facebook" onclick="loginWith('facebook')"><i class="fab fa-facebook"></i> Facebook</button>
+        <div id="loginError" class="error-msg"></div>
+        <div id="loginSuccess" class="success-msg"></div>
+        
+        <div id="loginFields">
+            <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
+            <input type="password" id="loginPassword" placeholder="كلمة المرور">
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="login()">تسجيل الدخول</button>
+                <button class="btn btn-secondary" onclick="showRegister()">إنشاء حساب</button>
+            </div>
         </div>
-        <hr style="border-color:var(--border);margin:15px 0;">
-        <div style="text-align:center;color:var(--text-dim);font-size:14px;">أو سجل ببيانات بسيطة</div>
-        <input type="text" id="loginUsername" placeholder="اسم المستخدم">
-        <input type="password" id="loginPassword" placeholder="كلمة السر">
-        <div class="modal-buttons">
-            <button class="btn btn-primary" onclick="loginNormal()">تسجيل الدخول</button>
-            <button class="btn btn-secondary" onclick="registerNormal()">إنشاء حساب</button>
+        
+        <div id="registerFields" style="display:none;">
+            <input type="text" id="regUsername" placeholder="اسم المستخدم">
+            <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
+            <input type="tel" id="regPhone" placeholder="رقم الهاتف">
+            <input type="password" id="regPassword" placeholder="كلمة المرور">
+            <input type="text" id="regVerifyCode" placeholder="رمز التحقق (سيُرسل إلى بريدك)" style="display:none;">
+            <div id="registerError" class="error-msg"></div>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="register()">إنشاء حساب</button>
+                <button class="btn btn-secondary" onclick="showLogin()">عودة للتسجيل</button>
+            </div>
+            <div style="text-align:center;margin-top:10px;">
+                <button class="btn btn-secondary" onclick="sendVerificationCode()" id="sendCodeBtn" style="font-size:12px;">📧 إرسال رمز التحقق</button>
+            </div>
         </div>
     </div>
 </div>
@@ -492,7 +573,9 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('balanceModal')">✕</span>
         <h2>💰 إضافة رصيد</h2>
-        <input type="number" id="addBalanceAmount" placeholder="المبلغ" min="1">
+        <input type="number" id="addBalanceAmount" placeholder="المبلغ بالدولار" min="1">
+        <input type="text" id="addBalanceCode" placeholder="رقم عملية التحويل">
+        <div id="balanceError" class="error-msg"></div>
         <div class="modal-buttons">
             <button class="btn btn-primary" onclick="addBalance()">إضافة</button>
             <button class="btn btn-secondary" onclick="closeModal('balanceModal')">إلغاء</button>
@@ -508,29 +591,51 @@ let categories = [];
 let products = [];
 let orders = [];
 let paymentMethods = [];
+let users = [];
+let admins = [];
+let currencies = [];
+let selectedCurrency = 'usd';
+let exchangeRates = { usd: 1, syp: 130 };
+let pendingOrder = null;
+let verificationCode = null;
 
-// تحميل البيانات من localStorage
+// ===== تحميل البيانات =====
 function loadData() {
     try {
-        balance = parseInt(localStorage.getItem('balance')) || 0;
+        balance = parseFloat(localStorage.getItem('balance')) || 0;
         categories = JSON.parse(localStorage.getItem('categories')) || [
             { id: 1, name: '🎮 ألعاب', icon: '🎮' },
             { id: 2, name: '📱 تطبيقات', icon: '📱' },
             { id: 3, name: '🎬 اشتراكات', icon: '🎬' }
         ];
         products = JSON.parse(localStorage.getItem('products')) || [
-            { id: 1, categoryId: 1, name: 'لعبة الأسطورة', price: 25, icon: '⚔️' },
-            { id: 2, categoryId: 2, name: 'تطبيق VIP', price: 15, icon: '⭐' },
-            { id: 3, categoryId: 3, name: 'نتفلكس شهر', price: 30, icon: '🎥' }
+            { id: 1, categoryId: 1, name: 'لعبة الأسطورة', price: 25, image: '' },
+            { id: 2, categoryId: 2, name: 'تطبيق VIP', price: 15, image: '' },
+            { id: 3, categoryId: 3, name: 'نتفلكس شهر', price: 30, image: '' }
         ];
         orders = JSON.parse(localStorage.getItem('orders')) || [];
         paymentMethods = JSON.parse(localStorage.getItem('paymentMethods')) || [
-            { id: 1, name: 'كاش', number: '0991234567', code: 'CASH123' }
+            { id: 1, name: 'شنكاشي', number: '0991234567' }
         ];
-        // تحديث المعرفات
-        if (categories.length === 0) categories = [{ id: 1, name: '🎮 ألعاب', icon: '🎮' }];
-        if (products.length === 0) products = [{ id: 1, categoryId: 1, name: 'منتج تجريبي', price: 10, icon: '🎁' }];
-    } catch(e) { console.log('خطأ في تحميل البيانات'); }
+        users = JSON.parse(localStorage.getItem('users')) || [];
+        admins = JSON.parse(localStorage.getItem('admins')) || [];
+        currencies = JSON.parse(localStorage.getItem('currencies')) || [
+            { id: 1, name: 'دولار أمريكي', symbol: '🇺🇸', rate: 1, code: 'usd' },
+            { id: 2, name: 'ليرة سورية', symbol: '🇸🇾', rate: 130, code: 'syp' }
+        ];
+        exchangeRates = JSON.parse(localStorage.getItem('exchangeRates')) || { usd: 1, syp: 130 };
+        
+        // تأكد من وجود مستخدم مشرف افتراضي
+        const adminExists = admins.some(a => a.email === 'admin@royal.com');
+        if (!adminExists && admins.length === 0) {
+            admins.push({ email: 'admin@royal.com', password: 'Admin@2024', name: 'المدير الرئيسي' });
+            localStorage.setItem('admins', JSON.stringify(admins));
+        }
+        
+        // تحميل المستخدم الحالي
+        const userData = localStorage.getItem('currentUser');
+        if (userData) currentUser = JSON.parse(userData);
+    } catch(e) { console.log('خطأ في تحميل البيانات', e); }
 }
 
 function saveData() {
@@ -539,74 +644,127 @@ function saveData() {
     localStorage.setItem('products', JSON.stringify(products));
     localStorage.setItem('orders', JSON.stringify(orders));
     localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('admins', JSON.stringify(admins));
+    localStorage.setItem('currencies', JSON.stringify(currencies));
+    localStorage.setItem('exchangeRates', JSON.stringify(exchangeRates));
+    if (currentUser) localStorage.setItem('currentUser', JSON.stringify(currentUser));
 }
 
-// ===== تسجيل الدخول =====
-function loginWith(provider) {
-    currentUser = { name: 'مستخدم ' + provider, provider: provider };
-    localStorage.setItem('user', JSON.stringify(currentUser));
+// ===== شاشة الترحيب =====
+window.onload = function() {
+    createStars();
+    loadData();
     updateUI();
-    closeModal('loginModal');
-    alert('👋 مرحباً ' + currentUser.name);
+    setTimeout(() => {
+        document.getElementById('splashScreen').classList.add('hide');
+    }, 2000);
+};
+
+function createStars() {
+    const container = document.getElementById('stars');
+    for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.width = Math.random() * 3 + 1 + 'px';
+        star.style.height = star.style.width;
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+        star.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(star);
+    }
 }
 
-function loginNormal() {
-    const name = document.getElementById('loginUsername').value.trim();
-    const pass = document.getElementById('loginPassword').value.trim();
-    if (!name || !pass) return alert('❌ أدخل اسم المستخدم وكلمة السر');
-    currentUser = { name: name, provider: 'normal' };
-    localStorage.setItem('user', JSON.stringify(currentUser));
-    updateUI();
-    closeModal('loginModal');
-    alert('👋 مرحباً ' + currentUser.name);
+// ===== القائمة الجانبية =====
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('active');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+    document.getElementById('hamburger').classList.toggle('active');
 }
 
-function registerNormal() {
-    const name = document.getElementById('loginUsername').value.trim();
-    const pass = document.getElementById('loginPassword').value.trim();
-    if (!name || !pass) return alert('❌ أدخل اسم المستخدم وكلمة السر');
-    localStorage.setItem('user_' + name, pass);
-    currentUser = { name: name, provider: 'normal' };
-    localStorage.setItem('user', JSON.stringify(currentUser));
-    updateUI();
-    closeModal('loginModal');
-    alert('✅ تم إنشاء الحساب! مرحباً ' + currentUser.name);
+// ===== عرض الصفحات =====
+function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page-' + page);
+    if (target) target.classList.add('active');
+    
+    document.querySelectorAll('.bottom-nav a').forEach(a => a.classList.remove('active'));
+    document.querySelectorAll('.bottom-nav a').forEach(a => {
+        if (a.onclick && a.onclick.toString().includes(page)) {
+            a.classList.add('active');
+        }
+    });
+    
+    document.querySelectorAll('.menu-items li').forEach(a => a.classList.remove('active'));
+    document.querySelectorAll('.menu-items li').forEach(a => {
+        if (a.onclick && a.onclick.toString().includes(page)) {
+            a.classList.add('active');
+        }
+    });
+    
+    if (page === 'admin') {
+        if (!isAdmin()) {
+            alert('⚠️ هذه الصفحة مخصصة للمدراء فقط!');
+            showPage('shop');
+            return;
+        }
+        renderAdminPanel();
+    }
+    
+    if (page === 'shop') renderCategories();
+    if (page === 'orders') renderOrders();
+    if (page === 'payment') renderPaymentMethods();
+    if (page === 'balance') updateBalance();
+    
+    toggleSidebar();
 }
 
-function logout() {
-    currentUser = null;
-    localStorage.removeItem('user');
-    updateUI();
-    alert('👋 تم تسجيل الخروج');
-}
-
-function showLoginModal() {
-    document.getElementById('loginModal').classList.add('show');
-}
-
-function closeModal(id) {
-    document.getElementById(id).classList.remove('show');
+// ===== التحقق من المدير =====
+function isAdmin() {
+    if (!currentUser) return false;
+    return admins.some(a => a.email === currentUser.email);
 }
 
 // ===== تحديث الواجهة =====
 function updateUI() {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-        currentUser = JSON.parse(userData);
-    }
-    
     const loginBtn = document.getElementById('loginBtnTop');
     const logoutBtn = document.getElementById('logoutBtnTop');
     const userNameDisplay = document.getElementById('userNameDisplay');
+    const profileName = document.getElementById('profileName');
+    const profileEmail = document.getElementById('profileEmail');
+    const adminMenuLink = document.getElementById('adminMenuLink');
+    const adminNavLink = document.getElementById('adminNavLink');
     
     if (currentUser) {
         loginBtn.style.display = 'none';
         logoutBtn.style.display = 'inline-block';
-        userNameDisplay.textContent = '👋 ' + currentUser.name;
+        userNameDisplay.textContent = '👋 ' + (currentUser.name || 'مستخدم');
+        profileName.textContent = currentUser.name || 'مستخدم';
+        profileEmail.textContent = currentUser.email || '';
+        
+        if (isAdmin()) {
+            adminMenuLink.style.display = 'block';
+            adminNavLink.style.display = 'block';
+        } else {
+            adminMenuLink.style.display = 'none';
+            adminNavLink.style.display = 'none';
+        }
+        
+        // تحميل الصورة الشخصية
+        if (currentUser.avatar) {
+            document.getElementById('avatarImage').style.display = 'block';
+            document.getElementById('avatarImage').src = currentUser.avatar;
+            document.getElementById('avatarText').style.display = 'none';
+        }
     } else {
         loginBtn.style.display = 'inline-block';
         logoutBtn.style.display = 'none';
         userNameDisplay.textContent = '';
+        profileName.textContent = 'زائر';
+        profileEmail.textContent = 'غير مسجل';
+        adminMenuLink.style.display = 'none';
+        adminNavLink.style.display = 'none';
     }
     
     updateBalance();
@@ -614,45 +772,229 @@ function updateUI() {
     renderProducts();
     renderOrders();
     renderPaymentMethods();
-    renderSideButtons();
+    renderCurrencies();
+    renderUsers();
+    updateStats();
 }
 
 function updateBalance() {
-    document.getElementById('headerBalance').textContent = balance;
-    document.getElementById('balancePageAmount').textContent = balance;
+    const displayBalance = convertCurrency(balance, 'usd', selectedCurrency);
+    document.getElementById('headerBalance').textContent = displayBalance.toFixed(2);
+    document.getElementById('balancePageAmount').textContent = displayBalance.toFixed(2);
+    const currency = currencies.find(c => c.code === selectedCurrency);
+    document.getElementById('currencySymbol').textContent = currency ? currency.symbol : 'دولار';
 }
 
-function showPage(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
-    document.querySelectorAll('.bottom-nav a').forEach(a => a.classList.remove('active'));
-    document.querySelectorAll('.bottom-nav a').forEach(a => {
-        if (a.onclick && a.onclick.toString().includes(page)) {
-            a.classList.add('active');
-        }
-    });
+function convertCurrency(amount, from, to) {
+    if (from === to) return amount;
+    const rateFrom = exchangeRates[from] || 1;
+    const rateTo = exchangeRates[to] || 1;
+    return (amount / rateFrom) * rateTo;
 }
 
-// ===== إدارة الرصيد =====
-function showAddBalanceModal() {
-    if (!currentUser) return alert('🔒 يرجى تسجيل الدخول أولاً');
-    document.getElementById('balanceModal').classList.add('show');
-}
-
-function addBalance() {
-    const amount = parseInt(document.getElementById('addBalanceAmount').value);
-    if (!amount || amount < 1) return alert('❌ أدخل مبلغاً صحيحاً');
-    balance += amount;
-    saveData();
+// ===== العملات =====
+function changeCurrency(code) {
+    selectedCurrency = code;
+    document.querySelectorAll('.currency-item').forEach(el => el.classList.remove('active'));
+    document.querySelector(`.currency-item[data-currency="${code}"]`)?.classList.add('active');
     updateBalance();
-    closeModal('balanceModal');
-    document.getElementById('addBalanceAmount').value = '';
-    alert('✅ تم إضافة ' + amount + ' ريال إلى رصيدك');
+    localStorage.setItem('selectedCurrency', code);
+}
+
+function renderCurrencies() {
+    const container = document.getElementById('currencyList');
+    if (container) {
+        container.innerHTML = currencies.map(c => `
+            <div class="currency-item ${selectedCurrency === c.code ? 'active' : ''}" 
+                 data-currency="${c.code}" onclick="changeCurrency('${c.code}')">
+                <span>${c.symbol} ${c.name}</span>
+                <span class="rate">1 دولار = ${c.rate}</span>
+            </div>
+        `).join('');
+    }
+    
+    const adminContainer = document.getElementById('currencyListAdmin');
+    if (adminContainer) {
+        adminContainer.innerHTML = currencies.map(c => `
+            <div class="admin-product-item">
+                <span>${c.symbol} ${c.name} (1 دولار = ${c.rate})</span>
+                <button class="btn btn-danger" onclick="deleteCurrency(${c.id})">🗑️ حذف</button>
+            </div>
+        `).join('');
+    }
+}
+
+function addCurrency() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم إضافة عملات');
+    const name = document.getElementById('newCurrencyName').value.trim();
+    const symbol = document.getElementById('newCurrencySymbol').value.trim();
+    const rate = parseFloat(document.getElementById('newCurrencyRate').value);
+    if (!name || !symbol || !rate) return alert('❌ أدخل جميع البيانات');
+    const id = currencies.length > 0 ? Math.max(...currencies.map(c => c.id)) + 1 : 1;
+    const code = name.substring(0, 3).toLowerCase();
+    currencies.push({ id, name, symbol, rate, code });
+    exchangeRates[code] = rate;
+    saveData();
+    renderCurrencies();
+    document.getElementById('newCurrencyName').value = '';
+    document.getElementById('newCurrencySymbol').value = '';
+    document.getElementById('newCurrencyRate').value = '';
+    alert('✅ تم إضافة العملة');
+}
+
+function deleteCurrency(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم حذف عملات');
+    if (!confirm('هل أنت متأكد؟')) return;
+    currencies = currencies.filter(c => c.id !== id);
+    saveData();
+    renderCurrencies();
+}
+
+// ===== المستخدمين =====
+function renderUsers() {
+    const container = document.getElementById('usersList');
+    if (!container) return;
+    container.innerHTML = users.map(u => `
+        <div class="admin-user-item">
+            <div><strong>${u.name || 'بدون اسم'}</strong> - ${u.email}</div>
+            <div style="font-size:12px;color:var(--text-dim);">📱 ${u.phone || 'لا يوجد'} | 📅 ${u.date || 'غير معروف'}</div>
+            <div style="font-size:12px;color:var(--text-dim);">💰 الرصيد: ${u.balance || 0} دولار</div>
+            <button class="btn btn-danger" onclick="deleteUser('${u.email}')" style="font-size:11px;padding:4px 12px;">🗑️ حذف</button>
+        </div>
+    `).join('') || '<p style="color:var(--text-dim);">لا يوجد مستخدمين مسجلين</p>';
+}
+
+function deleteUser(email) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم حذف مستخدمين');
+    if (!confirm('هل أنت متأكد من حذف هذا المستخدم؟')) return;
+    users = users.filter(u => u.email !== email);
+    saveData();
+    renderUsers();
+    updateStats();
+}
+
+function updateStats() {
+    document.getElementById('statUsers').textContent = users.length;
+    document.getElementById('statOrders').textContent = orders.length;
+    const totalRevenue = orders.reduce((sum, o) => sum + (o.price || 0), 0);
+    document.getElementById('statRevenue').textContent = totalRevenue.toFixed(2);
+}
+
+// ===== تسجيل الدخول =====
+function showLogin() {
+    document.getElementById('loginFields').style.display = 'block';
+    document.getElementById('registerFields').style.display = 'none';
+}
+
+function showRegister() {
+    document.getElementById('loginFields').style.display = 'none';
+    document.getElementById('registerFields').style.display = 'block';
+}
+
+function sendVerificationCode() {
+    const email = document.getElementById('regEmail').value.trim();
+    if (!email || !email.includes('@')) return alert('❌ أدخل بريداً إلكترونياً صحيحاً');
+    verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    alert('📧 تم إرسال رمز التحقق إلى ' + email + '\nالرمز: ' + verificationCode);
+    document.getElementById('regVerifyCode').style.display = 'block';
+    document.getElementById('sendCodeBtn').textContent = '✅ تم الإرسال';
+}
+
+function register() {
+    const name = document.getElementById('regUsername').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
+    const code = document.getElementById('regVerifyCode').value.trim();
+    
+    if (!name || !email || !phone || !password) return alert('❌ أدخل جميع البيانات');
+    if (users.some(u => u.email === email)) return alert('❌ هذا الإيميل مسجل مسبقاً');
+    if (code !== verificationCode) return alert('❌ رمز التحقق غير صحيح');
+    
+    const newUser = { name, email, phone, password, balance: 0, date: new Date().toLocaleDateString('ar'), avatar: '' };
+    users.push(newUser);
+    currentUser = newUser;
+    saveData();
+    updateUI();
+    closeModal('loginModal');
+    alert('✅ تم إنشاء الحساب بنجاح!');
+    showPage('shop');
+}
+
+function login() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    if (!email || !password) return alert('❌ أدخل الإيميل وكلمة المرور');
+    
+    // التحقق من المديرين أولاً
+    const admin = admins.find(a => a.email === email && a.password === password);
+    if (admin) {
+        currentUser = { name: admin.name || 'مدير', email: admin.email, isAdmin: true };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        updateUI();
+        closeModal('loginModal');
+        alert('👋 مرحباً أيها المدير!');
+        showPage('admin');
+        return;
+    }
+    
+    // التحقق من المستخدمين العاديين
+    const user = users.find(u => u.email === email && u.password === password);
+    if (user) {
+        currentUser = user;
+        saveData();
+        updateUI();
+        closeModal('loginModal');
+        alert('👋 مرحباً ' + user.name);
+        showPage('shop');
+        return;
+    }
+    
+    alert('❌ الإيميل أو كلمة المرور غير صحيحة، أو الحساب غير موجود');
+}
+
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('currentUser');
+    updateUI();
+    alert('👋 تم تسجيل الخروج');
+    showPage('shop');
+    toggleSidebar();
+}
+
+function showLoginModal() {
+    document.getElementById('loginModal').classList.add('show');
+    showLogin();
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('show');
+}
+
+// ===== رفع الصورة الشخصية =====
+function uploadAvatar(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const dataUrl = e.target.result;
+        document.getElementById('avatarImage').style.display = 'block';
+        document.getElementById('avatarImage').src = dataUrl;
+        document.getElementById('avatarText').style.display = 'none';
+        if (currentUser) {
+            currentUser.avatar = dataUrl;
+            saveData();
+        }
+    };
+    reader.readAsDataURL(file);
 }
 
 // ===== إدارة الأقسام =====
 function renderCategories() {
     const container = document.getElementById('categoriesContainer');
+    if (!container) return;
     container.innerHTML = '';
     categories.forEach(cat => {
         const catProducts = products.filter(p => p.categoryId === cat.id);
@@ -665,11 +1007,14 @@ function renderCategories() {
                 <p>${catProducts.length} منتج</p>
                 <div class="products-grid">
                     ${catProducts.map(p => `
-                        <div class="product-card" onclick="buyProduct(${p.id})">
-                            <div class="product-image">${p.icon}</div>
+                        <div class="product-card" onclick="showProductDetails(${p.id})">
+                            <div class="product-image">
+                                ${p.image ? `<img src="${p.image}" alt="${p.name}">` : '📦'}
+                            </div>
                             <div class="product-info">
                                 <h4>${p.name}</h4>
-                                <div class="price">${p.price} ريال</div>
+                                <div class="price">${p.price} $</div>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
                             </div>
                         </div>
                     `).join('')}
@@ -678,7 +1023,7 @@ function renderCategories() {
         `;
         container.appendChild(div);
     });
-    // تحديث قائمة الأقسام في لوحة التحكم
+    
     const categoryList = document.getElementById('categoryList');
     if (categoryList) {
         categoryList.innerHTML = categories.map(cat => `
@@ -688,12 +1033,11 @@ function renderCategories() {
             </div>
         `).join('');
     }
-    // تحديث القوائم المنسدلة
     updateSelects();
 }
 
 function addCategory() {
-    if (!currentUser) return alert('🔒 يرجى تسجيل الدخول');
+    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم إضافة أقسام');
     const name = document.getElementById('newCategoryName').value.trim();
     const icon = document.getElementById('newCategoryIcon').value.trim() || '📁';
     if (!name) return alert('❌ أدخل اسم القسم');
@@ -703,9 +1047,11 @@ function addCategory() {
     renderCategories();
     document.getElementById('newCategoryName').value = '';
     document.getElementById('newCategoryIcon').value = '';
+    alert('✅ تم إضافة القسم');
 }
 
 function deleteCategory(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم حذف أقسام');
     if (!confirm('هل أنت متأكد من حذف هذا القسم؟')) return;
     categories = categories.filter(c => c.id !== id);
     products = products.filter(p => p.categoryId !== id);
@@ -715,38 +1061,54 @@ function deleteCategory(id) {
 
 // ===== إدارة المنتجات =====
 function renderProducts() {
-    const productList = document.getElementById('productList');
-    if (productList) {
-        productList.innerHTML = products.map(p => {
-            const cat = categories.find(c => c.id === p.categoryId);
-            return `
-                <div class="admin-product-item">
-                    <span>${p.icon} ${p.name} - ${p.price} ريال ${cat ? '(في ' + cat.name + ')' : ''}</span>
-                    <button class="btn btn-danger" onclick="deleteProduct(${p.id})">🗑️ حذف</button>
-                </div>
-            `;
-        }).join('');
-    }
+    const container = document.getElementById('productList');
+    if (!container) return;
+    container.innerHTML = products.map(p => {
+        const cat = categories.find(c => c.id === p.categoryId);
+        return `
+            <div class="admin-product-item">
+                <span>${p.image ? '🖼️' : '📦'} ${p.name} - ${p.price} $ ${cat ? '(في ' + cat.name + ')' : ''}</span>
+                <button class="btn btn-danger" onclick="deleteProduct(${p.id})">🗑️ حذف</button>
+            </div>
+        `;
+    }).join('');
 }
 
 function addProduct() {
-    if (!currentUser) return alert('🔒 يرجى تسجيل الدخول');
+    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم إضافة منتجات');
     const categoryId = parseInt(document.getElementById('productCategorySelect').value);
     const name = document.getElementById('newProductName').value.trim();
     const price = parseFloat(document.getElementById('newProductPrice').value);
-    const icon = document.getElementById('newProductIcon').value.trim() || '🎁';
     if (!name || !price) return alert('❌ أدخل اسم المنتج والسعر');
+    
+    const fileInput = document.getElementById('newProductImage');
+    let imageData = '';
+    if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imageData = e.target.result;
+            saveProduct(categoryId, name, price, imageData);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    } else {
+        saveProduct(categoryId, name, price, '');
+    }
+}
+
+function saveProduct(categoryId, name, price, image) {
     const id = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-    products.push({ id, categoryId, name, price, icon });
+    products.push({ id, categoryId, name, price, image });
     saveData();
     renderCategories();
     renderProducts();
     document.getElementById('newProductName').value = '';
     document.getElementById('newProductPrice').value = '';
-    document.getElementById('newProductIcon').value = '';
+    document.getElementById('newProductImage').value = '';
+    alert('✅ تم إضافة المنتج');
 }
 
 function deleteProduct(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم حذف منتجات');
     if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
     products = products.filter(p => p.id !== id);
     saveData();
@@ -754,53 +1116,45 @@ function deleteProduct(id) {
     renderProducts();
 }
 
-// ===== تحديث القوائم المنسدلة =====
 function updateSelects() {
-    const selects = ['productCategorySelect', 'deleteCategorySelect', 'subCategoryParentSelect', 'deleteSubCategorySelect', 'deleteProductCategorySelect'];
-    selects.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            const val = el.value;
-            el.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-            if (val) el.value = val;
-        }
-    });
-}
-
-// ===== إدارة طرق الدفع =====
-function renderPaymentMethods() {
-    const grids = ['paymentMethodsGrid', 'paymentMethodsGrid2'];
-    grids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.innerHTML = paymentMethods.map(m => `
-                <div class="payment-card">
-                    <div class="payment-image"><i class="fas fa-credit-card"></i></div>
-                    <h4>${m.name}</h4>
-                    <div class="payment-info">الرقم: ${m.number}</div>
-                    <div class="payment-code">${m.code}</div>
-                </div>
-            `).join('');
-        }
-    });
-}
-
-// ===== إدارة الطلبات =====
-function renderOrders() {
-    const el = document.getElementById('ordersList');
-    if (el) {
-        el.innerHTML = orders.map(o => `
-            <div class="admin-order-item">
-                <div>🛍️ ${o.productName}</div>
-                <div>💰 ${o.price} ريال</div>
-                <div>📅 ${o.date}</div>
-                <div>الحالة: <span class="status-pending">قيد المراجعة</span></div>
-            </div>
-        `).join('') || '<p style="text-align:center;color:var(--text-dim);">لا توجد طلبات</p>';
+    const select = document.getElementById('productCategorySelect');
+    if (select) {
+        select.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
     }
 }
 
-// ===== شراء منتج =====
+// ===== تفاصيل المنتج والشراء =====
+function showProductDetails(id) {
+    if (!currentUser) {
+        showLoginModal();
+        return;
+    }
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+    
+    const displayPrice = convertCurrency(product.price, 'usd', selectedCurrency);
+    const currency = currencies.find(c => c.code === selectedCurrency);
+    const symbol = currency ? currency.symbol : '$';
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal show';
+    modal.id = 'productModal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('productModal')">✕</span>
+            <h2>${product.name}</h2>
+            <div style="text-align:center;font-size:60px;margin:15px 0;">${product.image ? `<img src="${product.image}" style="max-width:100%;max-height:200px;border-radius:10px;">` : '📦'}</div>
+            <div style="text-align:center;font-size:24px;color:var(--primary);font-weight:bold;">${displayPrice.toFixed(2)} ${symbol}</div>
+            <div style="text-align:center;color:var(--text-dim);margin:10px 0;">⭐⭐⭐⭐⭐ (4.9)</div>
+            <div class="modal-buttons">
+                <button class="btn btn-success" onclick="buyProduct(${product.id})">🛒 شراء</button>
+                <button class="btn btn-danger" onclick="closeModal('productModal')">إلغاء</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
 function buyProduct(id) {
     if (!currentUser) {
         showLoginModal();
@@ -808,24 +1162,148 @@ function buyProduct(id) {
     }
     const product = products.find(p => p.id === id);
     if (!product) return;
+    
+    const displayPrice = convertCurrency(product.price, 'usd', selectedCurrency);
+    
     if (balance < product.price) {
-        alert('❌ رصيدك غير كافٍ! رصيدك: ' + balance + ' ريال');
+        alert('❌ رصيدك غير كافٍ! رصيدك: ' + balance + ' دولار');
         return;
     }
-    if (!confirm('هل تريد شراء ' + product.name + ' بسعر ' + product.price + ' ريال؟')) return;
-    balance -= product.price;
-    orders.push({
-        id: Date.now(),
-        productId: product.id,
-        productName: product.name,
-        price: product.price,
-        date: new Date().toLocaleDateString('ar'),
-        status: 'pending'
-    });
+    
+    closeModal('productModal');
+    
+    // عرض شاشة الانتظار
+    const loading = document.getElementById('loadingScreen');
+    loading.classList.add('show');
+    
+    // محاكاة معالجة الطلب
+    setTimeout(() => {
+        balance -= product.price;
+        orders.push({
+            id: Date.now(),
+            productId: product.id,
+            productName: product.name,
+            price: product.price,
+            date: new Date().toLocaleDateString('ar'),
+            status: 'قيد التنفيذ'
+        });
+        saveData();
+        updateBalance();
+        renderOrders();
+        loading.classList.remove('show');
+        
+        // ألعاب نارية
+        createFireworks();
+        alert('✅ تم شراء ' + product.name + ' بنجاح!');
+        showPage('orders');
+    }, 3000);
+}
+
+// ===== ألعاب نارية =====
+function createFireworks() {
+    const emojis = ['🎉', '🎊', '✨', '🌟', '💫', '⭐', '🎆', '🎇'];
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const el = document.createElement('div');
+            el.className = 'firework';
+            el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            el.style.left = (Math.random() * 90 + 5) + '%';
+            el.style.top = (Math.random() * 60 + 10) + '%';
+            el.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1500);
+        }, i * 100);
+    }
+}
+
+// ===== إدارة الطلبات =====
+function renderOrders() {
+    const container = document.getElementById('ordersList');
+    if (!container) return;
+    container.innerHTML = orders.map(o => `
+        <div class="admin-order-item">
+            <div>🛍️ ${o.productName}</div>
+            <div>💰 ${o.price} $</div>
+            <div>📅 ${o.date}</div>
+            <div>الحالة: <span style="color:var(--warning);">${o.status || 'قيد التنفيذ'}</span></div>
+        </div>
+    `).join('') || '<p style="text-align:center;color:var(--text-dim);">لا توجد طلبات</p>';
+}
+
+// ===== إدارة طرق الدفع =====
+function renderPaymentMethods() {
+    const container = document.getElementById('paymentMethodsGrid');
+    if (!container) return;
+    container.innerHTML = paymentMethods.map(m => `
+        <div class="payment-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:15px;text-align:center;">
+            <div style="font-size:40px;color:var(--primary);">💳</div>
+            <h4 style="color:var(--text);margin:8px 0;">${m.name}</h4>
+            <div style="color:var(--text-dim);font-size:13px;">الرقم: ${m.number}</div>
+        </div>
+    `).join('');
+    
+    const adminContainer = document.getElementById('paymentMethodsListAdmin');
+    if (adminContainer) {
+        adminContainer.innerHTML = paymentMethods.map(m => `
+            <div class="admin-product-item">
+                <span>${m.name} - ${m.number}</span>
+                <button class="btn btn-danger" onclick="deletePaymentMethod(${m.id})">🗑️ حذف</button>
+            </div>
+        `).join('');
+    }
+}
+
+function addPaymentMethod() {
+    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم إضافة طرق دفع');
+    const name = document.getElementById('newPayName').value.trim();
+    const number = document.getElementById('newPayNumber').value.trim();
+    if (!name || !number) return alert('❌ أدخل جميع البيانات');
+    const id = paymentMethods.length > 0 ? Math.max(...paymentMethods.map(m => m.id)) + 1 : 1;
+    paymentMethods.push({ id, name, number });
     saveData();
-    updateBalance();
-    renderOrders();
-    alert('✅ تم شراء ' + product.name + ' بنجاح!');
+    renderPaymentMethods();
+    document.getElementById('newPayName').value = '';
+    document.getElementById('newPayNumber').value = '';
+    alert('✅ تم إضافة طريقة الدفع');
+}
+
+function deletePaymentMethod(id) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم حذف طرق دفع');
+    if (!confirm('هل أنت متأكد؟')) return;
+    paymentMethods = paymentMethods.filter(m => m.id !== id);
+    saveData();
+    renderPaymentMethods();
+}
+
+// ===== إضافة رصيد =====
+function showAddBalanceModal() {
+    if (!currentUser) {
+        showLoginModal();
+        return;
+    }
+    document.getElementById('balanceModal').classList.add('show');
+    document.getElementById('addBalanceAmount').value = '';
+    document.getElementById('addBalanceCode').value = '';
+}
+
+function addBalance() {
+    const amount = parseFloat(document.getElementById('addBalanceAmount').value);
+    const code = document.getElementById('addBalanceCode').value.trim();
+    if (!amount || amount < 1) return alert('❌ أدخل مبلغاً صحيحاً');
+    if (!code) return alert('❌ أدخل رقم عملية التحويل');
+    
+    // محاكاة التحقق من التحويل
+    document.getElementById('balanceError').textContent = '⏳ جاري التحقق من عملية التحويل...';
+    
+    setTimeout(() => {
+        // في الواقع هنا ستتحقق من حسابك
+        balance += amount;
+        saveData();
+        updateBalance();
+        closeModal('balanceModal');
+        document.getElementById('balanceError').textContent = '';
+        alert('✅ تم إضافة ' + amount + ' دولار إلى رصيدك!');
+    }, 2000);
 }
 
 // ===== إدارة العبارات المتحركة =====
@@ -833,61 +1311,48 @@ function updateMarquee() {
     const texts = document.getElementById('marqueeTexts').value.split('\n').filter(t => t.trim());
     if (texts.length === 0) return alert('❌ أدخل عبارة واحدة على الأقل');
     const content = document.getElementById('marqueeContent');
-    content.innerHTML = texts.map(t => `<span>${t.trim()}</span>`).join('');
+    content.innerHTML = texts.map(t => `<span><i class="fas fa-star"></i> ${t.trim()}</span>`).join('');
     localStorage.setItem('marqueeTexts', JSON.stringify(texts));
     alert('✅ تم تحديث العبارات المتحركة');
 }
 
-// ===== إدارة الأزرار الجانبية =====
-function renderSideButtons() {
-    const container = document.getElementById('sideButtons');
-    if (!container) return;
-    // نترك الأزرار الافتراضية
-    const sideButtons = JSON.parse(localStorage.getItem('sideButtons')) || [];
-    // نضيف الأزرار المخصصة
-    sideButtons.forEach(btn => {
-        // نتحقق من عدم وجودها مكررة
-        const exists = container.querySelector(`[data-custom="${btn.id}"]`);
-        if (!exists) {
-            const button = document.createElement('button');
-            button.className = 'side-btn custom';
-            button.setAttribute('data-custom', btn.id);
-            button.innerHTML = `<i class="${btn.icon}"></i>`;
-            button.title = btn.title;
-            button.onclick = new Function(btn.action);
-            container.appendChild(button);
-        }
+// ===== لوحة التحكم =====
+function renderAdminPanel() {
+    renderUsers();
+    renderCategories();
+    renderProducts();
+    renderPaymentMethods();
+    renderCurrencies();
+    updateStats();
+    
+    // تحميل العبارات المحفوظة
+    const marqueeTexts = JSON.parse(localStorage.getItem('marqueeTexts'));
+    if (marqueeTexts) {
+        document.getElementById('marqueeTexts').value = marqueeTexts.join('\n');
+    }
+}
+
+// ===== تهيئة التطبيق =====
+loadData();
+updateUI();
+
+// تحميل العملة المختارة
+const savedCurrency = localStorage.getItem('selectedCurrency');
+if (savedCurrency) {
+    selectedCurrency = savedCurrency;
+    document.querySelectorAll('.currency-item').forEach(el => {
+        el.classList.toggle('active', el.dataset.currency === savedCurrency);
     });
 }
 
-function addSideButton() {
-    const icon = document.getElementById('newSideBtnIcon').value.trim();
-    const action = document.getElementById('newSideBtnAction').value.trim();
-    const title = document.getElementById('newSideBtnTitle').value.trim() || 'زر مخصص';
-    if (!icon || !action) return alert('❌ أدخل الرمز والإجراء');
-    
-    const sideButtons = JSON.parse(localStorage.getItem('sideButtons')) || [];
-    const id = Date.now();
-    sideButtons.push({ id, icon, action, title });
-    localStorage.setItem('sideButtons', JSON.stringify(sideButtons));
-    renderSideButtons();
-    document.getElementById('newSideBtnIcon').value = '';
-    document.getElementById('newSideBtnAction').value = '';
-    document.getElementById('newSideBtnTitle').value = '';
-    alert('✅ تم إضافة الزر الجانبي');
+// تحميل العبارات المتحركة
+const marqueeTexts = JSON.parse(localStorage.getItem('marqueeTexts'));
+if (marqueeTexts && marqueeTexts.length > 0) {
+    const content = document.getElementById('marqueeContent');
+    content.innerHTML = marqueeTexts.map(t => `<span><i class="fas fa-star"></i> ${t}</span>`).join('');
 }
 
-// ===== التحميل =====
-window.onload = function() {
-    loadData();
-    // تحميل العبارات المتحركة
-    const marqueeTexts = JSON.parse(localStorage.getItem('marqueeTexts'));
-    if (marqueeTexts && marqueeTexts.length > 0) {
-        const content = document.getElementById('marqueeContent');
-        content.innerHTML = marqueeTexts.map(t => `<span>${t}</span>`).join('');
-    }
-    updateUI();
-};
+console.log('👑 رويال كارد - المتجر الأسطوري جاهز!');
 </script>
 </body>
 </html>
