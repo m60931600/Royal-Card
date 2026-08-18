@@ -39,13 +39,9 @@
             overflow-x: hidden;
             position: relative;
         }
-        
-        /* ===== خلفية النجوم ===== */
         .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
         .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite alternate; }
         @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
-        
-        /* ===== شاشة الترحيب ===== */
         .splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg); display: flex; flex-direction: column;
@@ -60,8 +56,6 @@
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* ===== شريط العبارات ===== */
         .marquee-bar {
             background: var(--gradient-gold); background-size: 200% 200%;
             animation: shimmer 3s ease-in-out infinite;
@@ -73,8 +67,6 @@
         .marquee-bar span { margin: 0 40px; font-size: 14px; }
         .marquee-bar span i { margin: 0 5px; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        
-        /* ===== شريط الرصيد ===== */
         .top-bar {
             background: rgba(10,10,26,0.95); padding: 10px 20px;
             border-bottom: 2px solid var(--primary);
@@ -90,8 +82,6 @@
             transition: var(--transition); font-size: 13px;
         }
         .top-bar .btn-add:hover { transform: scale(1.05); box-shadow: var(--shadow-gold); }
-        
-        /* ===== ثلاث خطوط ===== */
         .hamburger {
             position: fixed; top: 45px; left: 15px; z-index: 1002; cursor: pointer;
             background: var(--bg-card); border: 2px solid var(--primary); border-radius: 12px;
@@ -103,8 +93,6 @@
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; transform: scale(0); }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-        
-        /* ===== القائمة الجانبية ===== */
         .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; display: none; }
         .sidebar-overlay.active { display: block; }
         .sidebar {
@@ -142,8 +130,6 @@
         .sidebar .currency-section .currency-item.active { background: var(--bg-hover); border: 1px solid var(--primary); }
         .sidebar .logout-btn { margin-top: 20px; padding: 12px; background: rgba(255,68,68,0.15); border: 1px solid var(--danger); border-radius: var(--radius); color: var(--danger); text-align: center; cursor: pointer; transition: var(--transition); font-weight: 600; }
         .sidebar .logout-btn:hover { background: var(--danger); color: #fff; }
-        
-        /* ===== التنقل السفلي ===== */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
             background: rgba(10,10,26,0.98); border-top: 2px solid var(--primary);
@@ -160,16 +146,12 @@
         .bottom-nav a i { font-size: 22px; transition: var(--transition); }
         .bottom-nav a:hover, .bottom-nav a.active { color: var(--primary); }
         .bottom-nav a.active i { transform: translateY(-2px); }
-        
-        /* ===== المحتوى ===== */
         .container { max-width: 900px; margin: auto; padding: 20px 15px 80px; position: relative; z-index: 1; }
         .section-title { text-align: center; font-size: 28px; color: var(--primary); margin-bottom: 25px; position: relative; }
         .section-title::after { content: ''; display: block; width: 60px; height: 3px; background: var(--gradient-gold); margin: 8px auto 0; border-radius: 10px; }
         .page { display: none; animation: fadeIn 0.5s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* ===== أزرار ===== */
         .btn {
             padding: 10px 24px; border: none; border-radius: 30px;
             font-weight: 700; cursor: pointer; transition: var(--transition);
@@ -184,8 +166,6 @@
         .btn-secondary { background: var(--bg-card); color: var(--text); border: 2px solid var(--border); }
         .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
         .btn-block { width: 100%; justify-content: center; }
-        
-        /* ===== البطاقات ===== */
         .category-card {
             background: var(--bg-card); border: 1px solid var(--border);
             border-radius: var(--radius); overflow: hidden; margin-bottom: 25px;
@@ -208,8 +188,6 @@
         .product-card .product-info h4 { font-size: 14px; margin: 8px 0 2px; }
         .product-card .product-info .price { color: var(--primary); font-weight: 700; font-size: 16px; }
         .product-card .product-info .rating { color: var(--warning); font-size: 12px; margin: 3px 0; }
-        
-        /* ===== النوافذ المنبثقة ===== */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 20px;
@@ -233,8 +211,6 @@
         .modal-content .modal-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
         .modal-content .error-msg { color: var(--danger); font-size: 14px; text-align: center; margin: 5px 0; }
         .modal-content .success-msg { color: var(--success); font-size: 14px; text-align: center; margin: 5px 0; }
-        
-        /* ===== لوحة التحكم ===== */
         .admin-panel { background: var(--bg-card); border: 2px solid var(--primary); border-radius: var(--radius); padding: 25px; margin-top: 20px; }
         .admin-panel h3 { color: var(--primary); margin-bottom: 15px; font-size: 20px; }
         .admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
@@ -242,8 +218,6 @@
         .admin-card input, .admin-card select { width: 100%; padding: 8px; margin: 5px 0; border-radius: 10px; border: 1px solid #333; background: #0a0a1a; color: #fff; }
         .admin-product-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-left: 3px solid var(--primary); }
         .admin-user-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; border-left: 3px solid var(--info); }
-        
-        /* ===== ساعة الانتظار ===== */
         .loading-screen {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); z-index: 3000; justify-content: center; align-items: center; flex-direction: column;
@@ -252,12 +226,8 @@
         .loading-screen .clock { font-size: 80px; color: var(--primary); animation: pulse 1.5s ease-in-out infinite; }
         .loading-screen h3 { color: var(--primary); margin-top: 15px; font-size: 24px; }
         .loading-screen p { color: var(--text-dim); margin-top: 5px; }
-        
-        /* ===== ألعاب نارية ===== */
         .firework { position: fixed; pointer-events: none; z-index: 3001; font-size: 30px; animation: fireworkUp 1.5s ease-out forwards; }
         @keyframes fireworkUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-200px) scale(0); } }
-        
-        /* ===== التجاوب ===== */
         @media (max-width: 768px) {
             .products-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
             .admin-grid { grid-template-columns: 1fr; }
@@ -277,10 +247,7 @@
 </head>
 <body>
 
-<!-- ===== خلفية النجوم ===== -->
 <div class="stars" id="stars"></div>
-
-<!-- ===== شاشة الترحيب ===== -->
 <div class="splash-screen" id="splashScreen">
     <div class="logo">👑</div>
     <h1>رويال كارد</h1>
@@ -288,14 +255,12 @@
     <div class="loader"></div>
 </div>
 
-<!-- ===== شاشة التحميل (ساعة الانتظار) ===== -->
 <div class="loading-screen" id="loadingScreen">
     <div class="clock">⏳</div>
     <h3>الطلب قيد التنفيذ...</h3>
     <p>يرجى الانتظار</p>
 </div>
 
-<!-- ===== شريط العبارات المتحركة ===== -->
 <div class="marquee-bar">
     <div class="marquee-content" id="marqueeContent">
         <span><i class="fas fa-fire"></i> عروض حصرية بأسعار خيالية</span>
@@ -306,7 +271,6 @@
     </div>
 </div>
 
-<!-- ===== شريط الرصيد ===== -->
 <div class="top-bar">
     <div class="balance">
         <i class="fas fa-wallet"></i> رصيدي: <span id="headerBalance">0</span> <span id="currencySymbol">دولار</span>
@@ -319,17 +283,14 @@
     </div>
 </div>
 
-<!-- ===== ثلاث خطوط (القائمة الجانبية) ===== -->
 <button class="hamburger" id="hamburger" onclick="toggleSidebar()">
     <span></span>
     <span></span>
     <span></span>
 </button>
 
-<!-- ===== خلفية القائمة ===== -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-<!-- ===== القائمة الجانبية ===== -->
 <div class="sidebar" id="sidebar">
     <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
     
@@ -368,7 +329,6 @@
     <div class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</div>
 </div>
 
-<!-- ===== التنقل السفلي ===== -->
 <nav class="bottom-nav">
     <a class="active" onclick="showPage('shop')"><i class="fas fa-store"></i> المتجر</a>
     <a onclick="showPage('balance')"><i class="fas fa-wallet"></i> الرصيد</a>
@@ -379,13 +339,11 @@
 
 <div class="container">
 
-    <!-- ===== صفحة المتجر ===== -->
     <section id="page-shop" class="page active">
         <h2 class="section-title">🛍️ المتجر الأسطوري</h2>
         <div id="categoriesContainer"></div>
     </section>
 
-    <!-- ===== صفحة الرصيد ===== -->
     <section id="page-balance" class="page">
         <h2 class="section-title">💰 الرصيد</h2>
         <div style="text-align:center;background:var(--bg-card);border:2px solid var(--primary);border-radius:var(--radius);padding:30px;max-width:400px;margin:auto;">
@@ -396,7 +354,6 @@
         </div>
     </section>
 
-    <!-- ===== صفحة الدفع ===== -->
     <section id="page-payment" class="page">
         <h2 class="section-title">💳 طرق الدفع</h2>
         <div id="paymentMethodsGrid"></div>
@@ -405,17 +362,14 @@
         </div>
     </section>
 
-    <!-- ===== صفحة طلباتي ===== -->
     <section id="page-orders" class="page">
         <h2 class="section-title">📋 طلباتي</h2>
         <div id="ordersList"></div>
     </section>
 
-    <!-- ===== صفحة الإدارة ===== -->
     <section id="page-admin" class="page">
         <h2 class="section-title">🔧 لوحة التحكم</h2>
         
-        <!-- إحصائيات -->
         <div class="admin-panel">
             <h3>📊 الإحصائيات</h3>
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;">
@@ -433,8 +387,41 @@
                 </div>
             </div>
         </div>
+
+        <!-- تغيير كلمة مرور الإدارة -->
+        <div class="admin-panel">
+            <h3>🔑 تغيير كلمة مرور الإدارة</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+                <div style="flex:1;">
+                    <label>كلمة المرور الجديدة</label>
+                    <input type="password" id="newAdminPassword" placeholder="كلمة المرور الجديدة">
+                </div>
+                <button class="btn btn-primary" onclick="changeAdminPassword()">تغيير كلمة المرور</button>
+            </div>
+            <div id="passwordChangeMsg" style="margin-top:10px;"></div>
+        </div>
+
+        <!-- إضافة مدراء جدد -->
+        <div class="admin-panel">
+            <h3>👑 إضافة مدير جديد</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+                <div style="flex:1;">
+                    <label>الإيميل</label>
+                    <input type="email" id="newAdminEmail" placeholder="admin@example.com">
+                </div>
+                <div style="flex:1;">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="newAdminPass" placeholder="كلمة المرور">
+                </div>
+                <div style="flex:1;">
+                    <label>الاسم</label>
+                    <input type="text" id="newAdminName" placeholder="اسم المدير">
+                </div>
+                <button class="btn btn-primary" onclick="addAdmin()">➕ إضافة مدير</button>
+            </div>
+            <div id="adminList" style="margin-top:15px;"></div>
+        </div>
         
-        <!-- إدارة العبارات -->
         <div class="admin-panel">
             <h3>📝 العبارات المتحركة</h3>
             <textarea id="marqueeTexts" rows="3" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">🔥 عروض حصرية بأسعار خيالية
@@ -445,13 +432,11 @@
             <button class="btn btn-primary mt-20" onclick="updateMarquee()">تحديث العبارات</button>
         </div>
         
-        <!-- إدارة المستخدمين -->
         <div class="admin-panel">
             <h3>👥 إدارة المستخدمين</h3>
             <div id="usersList"></div>
         </div>
         
-        <!-- إدارة الأقسام -->
         <div class="admin-panel">
             <h3>📂 إدارة الأقسام</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
@@ -468,7 +453,6 @@
             <div id="categoryList" style="margin-top:15px;"></div>
         </div>
         
-        <!-- إدارة المنتجات -->
         <div class="admin-panel">
             <h3>📦 إدارة المنتجات</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
@@ -493,7 +477,6 @@
             <div id="productList" style="margin-top:15px;"></div>
         </div>
         
-        <!-- إدارة العملات -->
         <div class="admin-panel">
             <h3>💱 إدارة العملات</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
@@ -514,7 +497,6 @@
             <div id="currencyListAdmin" style="margin-top:15px;"></div>
         </div>
         
-        <!-- إدارة طرق الدفع -->
         <div class="admin-panel">
             <h3>💳 إدارة طرق الدفع</h3>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
@@ -530,10 +512,15 @@
             </div>
             <div id="paymentMethodsListAdmin" style="margin-top:15px;"></div>
         </div>
+
+        <!-- إدارة الطلبات -->
+        <div class="admin-panel">
+            <h3>📋 إدارة الطلبات</h3>
+            <div id="ordersListAdmin"></div>
+        </div>
     </section>
 </div>
 
-<!-- ===== نافذة تسجيل الدخول ===== -->
 <div class="modal" id="loginModal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('loginModal')">✕</span>
@@ -555,7 +542,7 @@
             <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
             <input type="tel" id="regPhone" placeholder="رقم الهاتف">
             <input type="password" id="regPassword" placeholder="كلمة المرور">
-            <input type="text" id="regVerifyCode" placeholder="رمز التحقق (سيُرسل إلى بريدك)" style="display:none;">
+            <input type="text" id="regVerifyCode" placeholder="رمز التحقق" style="display:none;">
             <div id="registerError" class="error-msg"></div>
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="register()">إنشاء حساب</button>
@@ -568,7 +555,6 @@
     </div>
 </div>
 
-<!-- ===== نافذة إضافة رصيد ===== -->
 <div class="modal" id="balanceModal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('balanceModal')">✕</span>
@@ -580,6 +566,14 @@
             <button class="btn btn-primary" onclick="addBalance()">إضافة</button>
             <button class="btn btn-secondary" onclick="closeModal('balanceModal')">إلغاء</button>
         </div>
+    </div>
+</div>
+
+<div class="modal" id="orderStatusModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('orderStatusModal')">✕</span>
+        <h2>📋 تغيير حالة الطلب</h2>
+        <div id="orderStatusContent"></div>
     </div>
 </div>
 
@@ -596,8 +590,8 @@ let admins = [];
 let currencies = [];
 let selectedCurrency = 'usd';
 let exchangeRates = { usd: 1, syp: 130 };
-let pendingOrder = null;
 let verificationCode = null;
+let adminPassword = 'Admin@2024';
 
 // ===== تحميل البيانات =====
 function loadData() {
@@ -624,15 +618,15 @@ function loadData() {
             { id: 2, name: 'ليرة سورية', symbol: '🇸🇾', rate: 130, code: 'syp' }
         ];
         exchangeRates = JSON.parse(localStorage.getItem('exchangeRates')) || { usd: 1, syp: 130 };
+        adminPassword = localStorage.getItem('adminPassword') || 'Admin@2024';
         
         // تأكد من وجود مستخدم مشرف افتراضي
         const adminExists = admins.some(a => a.email === 'admin@royal.com');
         if (!adminExists && admins.length === 0) {
-            admins.push({ email: 'admin@royal.com', password: 'Admin@2024', name: 'المدير الرئيسي' });
+            admins.push({ email: 'admin@royal.com', password: adminPassword, name: 'المدير الرئيسي' });
             localStorage.setItem('admins', JSON.stringify(admins));
         }
         
-        // تحميل المستخدم الحالي
         const userData = localStorage.getItem('currentUser');
         if (userData) currentUser = JSON.parse(userData);
     } catch(e) { console.log('خطأ في تحميل البيانات', e); }
@@ -648,6 +642,7 @@ function saveData() {
     localStorage.setItem('admins', JSON.stringify(admins));
     localStorage.setItem('currencies', JSON.stringify(currencies));
     localStorage.setItem('exchangeRates', JSON.stringify(exchangeRates));
+    localStorage.setItem('adminPassword', adminPassword);
     if (currentUser) localStorage.setItem('currentUser', JSON.stringify(currentUser));
 }
 
@@ -726,6 +721,64 @@ function isAdmin() {
     return admins.some(a => a.email === currentUser.email);
 }
 
+// ===== تغيير كلمة مرور الإدارة =====
+function changeAdminPassword() {
+    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي يمكنه تغيير كلمة المرور');
+    const newPass = document.getElementById('newAdminPassword').value.trim();
+    if (!newPass || newPass.length < 6) return alert('❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+    
+    adminPassword = newPass;
+    // تحديث كلمة مرور المدير الرئيسي
+    const mainAdmin = admins.find(a => a.email === 'admin@royal.com');
+    if (mainAdmin) {
+        mainAdmin.password = newPass;
+    }
+    saveData();
+    document.getElementById('passwordChangeMsg').innerHTML = '<span style="color:var(--success);">✅ تم تغيير كلمة مرور الإدارة بنجاح!</span>';
+    document.getElementById('newAdminPassword').value = '';
+    alert('✅ تم تغيير كلمة مرور الإدارة بنجاح!');
+}
+
+// ===== إضافة مدير جديد =====
+function addAdmin() {
+    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي يمكنه إضافة مدراء');
+    const email = document.getElementById('newAdminEmail').value.trim();
+    const password = document.getElementById('newAdminPass').value.trim();
+    const name = document.getElementById('newAdminName').value.trim() || 'مدير';
+    
+    if (!email || !password) return alert('❌ أدخل الإيميل وكلمة المرور');
+    if (admins.some(a => a.email === email)) return alert('❌ هذا الإيميل مدير بالفعل');
+    
+    admins.push({ email, password, name });
+    saveData();
+    renderAdminList();
+    document.getElementById('newAdminEmail').value = '';
+    document.getElementById('newAdminPass').value = '';
+    document.getElementById('newAdminName').value = '';
+    alert('✅ تم إضافة المدير بنجاح!');
+}
+
+function renderAdminList() {
+    const container = document.getElementById('adminList');
+    if (!container) return;
+    container.innerHTML = admins.map(a => `
+        <div class="admin-product-item">
+            <span>👑 ${a.name} - ${a.email}</span>
+            ${a.email !== 'admin@royal.com' ? `<button class="btn btn-danger" onclick="removeAdmin('${a.email}')">🗑️ حذف</button>` : '<span style="color:var(--primary);font-size:12px;">(المالك)</span>'}
+        </div>
+    `).join('');
+}
+
+function removeAdmin(email) {
+    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي يمكنه حذف مدراء');
+    if (email === 'admin@royal.com') return alert('❌ لا يمكن حذف المدير الرئيسي');
+    if (!confirm('هل أنت متأكد من حذف هذا المدير؟')) return;
+    admins = admins.filter(a => a.email !== email);
+    saveData();
+    renderAdminList();
+    alert('✅ تم حذف المدير');
+}
+
 // ===== تحديث الواجهة =====
 function updateUI() {
     const loginBtn = document.getElementById('loginBtnTop');
@@ -743,15 +796,10 @@ function updateUI() {
         profileName.textContent = currentUser.name || 'مستخدم';
         profileEmail.textContent = currentUser.email || '';
         
-        if (isAdmin()) {
-            adminMenuLink.style.display = 'block';
-            adminNavLink.style.display = 'block';
-        } else {
-            adminMenuLink.style.display = 'none';
-            adminNavLink.style.display = 'none';
-        }
+        const isAdminUser = isAdmin();
+        adminMenuLink.style.display = isAdminUser ? 'block' : 'none';
+        adminNavLink.style.display = isAdminUser ? 'block' : 'none';
         
-        // تحميل الصورة الشخصية
         if (currentUser.avatar) {
             document.getElementById('avatarImage').style.display = 'block';
             document.getElementById('avatarImage').src = currentUser.avatar;
@@ -774,7 +822,9 @@ function updateUI() {
     renderPaymentMethods();
     renderCurrencies();
     renderUsers();
+    renderAdminList();
     updateStats();
+    renderOrdersAdmin();
 }
 
 function updateBalance() {
@@ -895,7 +945,8 @@ function sendVerificationCode() {
     const email = document.getElementById('regEmail').value.trim();
     if (!email || !email.includes('@')) return alert('❌ أدخل بريداً إلكترونياً صحيحاً');
     verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    alert('📧 تم إرسال رمز التحقق إلى ' + email + '\nالرمز: ' + verificationCode);
+    // محاكاة إرسال رمز التحقق (بدون عرض الرمز)
+    alert('📧 تم إرسال رمز التحقق إلى بريدك الإلكتروني. يرجى فحص صندوق الوارد.');
     document.getElementById('regVerifyCode').style.display = 'block';
     document.getElementById('sendCodeBtn').textContent = '✅ تم الإرسال';
 }
@@ -1163,8 +1214,6 @@ function buyProduct(id) {
     const product = products.find(p => p.id === id);
     if (!product) return;
     
-    const displayPrice = convertCurrency(product.price, 'usd', selectedCurrency);
-    
     if (balance < product.price) {
         alert('❌ رصيدك غير كافٍ! رصيدك: ' + balance + ' دولار');
         return;
@@ -1172,11 +1221,9 @@ function buyProduct(id) {
     
     closeModal('productModal');
     
-    // عرض شاشة الانتظار
     const loading = document.getElementById('loadingScreen');
     loading.classList.add('show');
     
-    // محاكاة معالجة الطلب
     setTimeout(() => {
         balance -= product.price;
         orders.push({
@@ -1191,15 +1238,12 @@ function buyProduct(id) {
         updateBalance();
         renderOrders();
         loading.classList.remove('show');
-        
-        // ألعاب نارية
         createFireworks();
         alert('✅ تم شراء ' + product.name + ' بنجاح!');
         showPage('orders');
     }, 3000);
 }
 
-// ===== ألعاب نارية =====
 function createFireworks() {
     const emojis = ['🎉', '🎊', '✨', '🌟', '💫', '⭐', '🎆', '🎇'];
     for (let i = 0; i < 20; i++) {
@@ -1225,9 +1269,38 @@ function renderOrders() {
             <div>🛍️ ${o.productName}</div>
             <div>💰 ${o.price} $</div>
             <div>📅 ${o.date}</div>
-            <div>الحالة: <span style="color:var(--warning);">${o.status || 'قيد التنفيذ'}</span></div>
+            <div>الحالة: <span style="color:${o.status === 'مكتمل' ? 'var(--success)' : o.status === 'مرفوض' ? 'var(--danger)' : 'var(--warning)'};">${o.status || 'قيد التنفيذ'}</span></div>
         </div>
     `).join('') || '<p style="text-align:center;color:var(--text-dim);">لا توجد طلبات</p>';
+}
+
+function renderOrdersAdmin() {
+    const container = document.getElementById('ordersListAdmin');
+    if (!container) return;
+    container.innerHTML = orders.map(o => `
+        <div class="admin-order-item">
+            <div>🛍️ ${o.productName}</div>
+            <div>💰 ${o.price} $</div>
+            <div>📅 ${o.date}</div>
+            <div>👤 ${o.userName || 'غير معروف'}</div>
+            <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;">
+                <span style="color:${o.status === 'مكتمل' ? 'var(--success)' : o.status === 'مرفوض' ? 'var(--danger)' : 'var(--warning)'};">${o.status || 'قيد التنفيذ'}</span>
+                <button class="btn btn-success" onclick="updateOrderStatus(${o.id}, 'مكتمل')" style="font-size:11px;padding:4px 12px;">✅ مكتمل</button>
+                <button class="btn btn-danger" onclick="updateOrderStatus(${o.id}, 'مرفوض')" style="font-size:11px;padding:4px 12px;">❌ مرفوض</button>
+            </div>
+        </div>
+    `).join('') || '<p style="text-align:center;color:var(--text-dim);">لا توجد طلبات</p>';
+}
+
+function updateOrderStatus(orderId, status) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء يمكنهم تغيير حالة الطلبات');
+    const order = orders.find(o => o.id === orderId);
+    if (!order) return;
+    order.status = status;
+    saveData();
+    renderOrders();
+    renderOrdersAdmin();
+    alert('✅ تم تغيير حالة الطلب إلى: ' + status);
 }
 
 // ===== إدارة طرق الدفع =====
@@ -1292,12 +1365,16 @@ function addBalance() {
     if (!amount || amount < 1) return alert('❌ أدخل مبلغاً صحيحاً');
     if (!code) return alert('❌ أدخل رقم عملية التحويل');
     
-    // محاكاة التحقق من التحويل
     document.getElementById('balanceError').textContent = '⏳ جاري التحقق من عملية التحويل...';
     
     setTimeout(() => {
-        // في الواقع هنا ستتحقق من حسابك
+        // هنا ستتحقق من حسابك يدوياً
         balance += amount;
+        // تحديث رصيد المستخدم في قائمة المستخدمين
+        if (currentUser) {
+            const user = users.find(u => u.email === currentUser.email);
+            if (user) user.balance = (user.balance || 0) + amount;
+        }
         saveData();
         updateBalance();
         closeModal('balanceModal');
@@ -1323,9 +1400,10 @@ function renderAdminPanel() {
     renderProducts();
     renderPaymentMethods();
     renderCurrencies();
+    renderAdminList();
     updateStats();
+    renderOrdersAdmin();
     
-    // تحميل العبارات المحفوظة
     const marqueeTexts = JSON.parse(localStorage.getItem('marqueeTexts'));
     if (marqueeTexts) {
         document.getElementById('marqueeTexts').value = marqueeTexts.join('\n');
@@ -1336,7 +1414,6 @@ function renderAdminPanel() {
 loadData();
 updateUI();
 
-// تحميل العملة المختارة
 const savedCurrency = localStorage.getItem('selectedCurrency');
 if (savedCurrency) {
     selectedCurrency = savedCurrency;
@@ -1345,7 +1422,6 @@ if (savedCurrency) {
     });
 }
 
-// تحميل العبارات المتحركة
 const marqueeTexts = JSON.parse(localStorage.getItem('marqueeTexts'));
 if (marqueeTexts && marqueeTexts.length > 0) {
     const content = document.getElementById('marqueeContent');
