@@ -30,10 +30,12 @@
             --gradient-gold: linear-gradient(135deg, #ffd700, #f5b342, #ffd700);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Tajawal', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; position: relative; }
+        body { font-family: 'Tajawal', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+        
         .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
         .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite alternate; }
         @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
+        
         .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.8s ease, transform 0.8s ease; }
         .splash-screen.hide { opacity: 0; transform: scale(1.1); pointer-events: none; }
         .splash-screen .logo { font-size: 80px; animation: pulse 1.5s ease-in-out infinite; text-shadow: 0 0 60px var(--primary-glow); }
@@ -42,23 +44,27 @@
         .splash-screen .loader { margin-top: 30px; width: 50px; height: 50px; border: 4px solid var(--bg-card); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
         .marquee-bar { background: var(--gradient-gold); background-size: 200% 200%; animation: shimmer 3s ease-in-out infinite; color: var(--text-dark); padding: 8px 0; font-weight: 700; overflow: hidden; white-space: nowrap; position: sticky; top: 0; z-index: 1001; }
         @keyframes shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .marquee-bar .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
         .marquee-bar span { margin: 0 40px; font-size: 14px; }
         .marquee-bar span i { margin: 0 5px; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        
         .top-bar { background: rgba(10,10,26,0.95); padding: 10px 20px; border-bottom: 2px solid var(--primary); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; position: sticky; top: 38px; z-index: 1000; backdrop-filter: blur(10px); }
         .top-bar .balance { color: var(--primary); font-size: 16px; font-weight: 600; }
         .top-bar .balance span { font-weight: 900; font-size: 22px; background: rgba(255,215,0,0.1); padding: 2px 12px; border-radius: 20px; }
         .top-bar .btn-add { background: var(--gradient-gold); color: var(--text-dark); border: none; border-radius: 30px; padding: 6px 18px; font-weight: 700; cursor: pointer; transition: var(--transition); font-size: 13px; }
         .top-bar .btn-add:hover { transform: scale(1.05); box-shadow: var(--shadow-gold); }
+        
         .hamburger { position: fixed; top: 45px; left: 15px; z-index: 1002; cursor: pointer; background: var(--bg-card); border: 2px solid var(--primary); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 5px; transition: var(--transition); box-shadow: var(--shadow); }
         .hamburger:hover { border-color: var(--primary-light); box-shadow: var(--shadow-gold); }
         .hamburger span { display: block; width: 28px; height: 3px; background: var(--primary); border-radius: 5px; transition: var(--transition); }
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; transform: scale(0); }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        
         .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; display: none; }
         .sidebar-overlay.active { display: block; }
         .sidebar { position: fixed; top: 0; right: -320px; width: 300px; height: 100%; background: var(--bg); border-left: 3px solid var(--primary); z-index: 1002; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 20px; overflow-y: auto; box-shadow: -10px 0 40px rgba(0,0,0,0.5); }
@@ -82,17 +88,20 @@
         .sidebar .currency-section .currency-item.active { background: var(--bg-hover); border: 1px solid var(--primary); }
         .sidebar .logout-btn { margin-top: 20px; padding: 12px; background: rgba(255,68,68,0.15); border: 1px solid var(--danger); border-radius: var(--radius); color: var(--danger); text-align: center; cursor: pointer; transition: var(--transition); font-weight: 600; }
         .sidebar .logout-btn:hover { background: var(--danger); color: #fff; }
+        
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,26,0.98); border-top: 2px solid var(--primary); display: flex; justify-content: space-around; padding: 8px 0; z-index: 999; backdrop-filter: blur(10px); }
         .bottom-nav a { color: var(--text-dim); text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 10px; cursor: pointer; padding: 4px 8px; border-radius: 12px; transition: var(--transition); background: transparent; border: none; flex: 1; }
         .bottom-nav a i { font-size: 22px; transition: var(--transition); }
         .bottom-nav a:hover, .bottom-nav a.active { color: var(--primary); }
         .bottom-nav a.active i { transform: translateY(-2px); }
+        
         .container { max-width: 900px; margin: auto; padding: 20px 15px 80px; position: relative; z-index: 1; }
         .section-title { text-align: center; font-size: 28px; color: var(--primary); margin-bottom: 25px; position: relative; }
         .section-title::after { content: ''; display: block; width: 60px; height: 3px; background: var(--gradient-gold); margin: 8px auto 0; border-radius: 10px; }
         .page { display: none; animation: fadeIn 0.5s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
         .btn { padding: 10px 24px; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
         .btn-primary { background: var(--gradient-gold); color: var(--text-dark); }
         .btn-primary:hover { transform: scale(1.05); box-shadow: var(--shadow-gold); }
@@ -103,69 +112,70 @@
         .btn-secondary { background: var(--bg-card); color: var(--text); border: 2px solid var(--border); }
         .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
         .btn-block { width: 100%; justify-content: center; }
+        .btn-back { background: var(--bg-card); color: var(--primary); border: 1px solid var(--primary); }
+        .btn-back:hover { background: var(--primary); color: var(--text-dark); }
         
-        /* ===== الأقسام الرئيسية (3 في صف) ===== */
-        .categories-grid {
+        /* ===== طرق الدفع ===== */
+        .payment-methods-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
-            margin-bottom: 20px;
         }
-        .category-card {
+        .payment-method-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 15px 10px;
+            padding: 20px;
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
-            position: relative;
         }
-        .category-card:hover {
+        .payment-method-card:hover {
             border-color: var(--primary);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
             box-shadow: var(--shadow-gold);
         }
-        .category-card .cat-icon { font-size: 30px; display: block; margin-bottom: 5px; }
-        .category-card .cat-name { font-size: 14px; font-weight: 700; color: var(--text); }
-        .category-card .cat-count { font-size: 11px; color: var(--text-dim); }
-        .category-card .sub-categories {
-            display: none;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid var(--border);
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-        .category-card .sub-categories.show { display: flex; }
-        .category-card .sub-category {
-            background: var(--bg);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--primary);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .category-card .sub-category:hover { background: var(--primary); color: var(--text-dark); }
-        .category-card .toggle-sub { font-size: 12px; color: var(--primary); cursor: pointer; margin-top: 5px; display: inline-block; }
+        .payment-method-card .pm-image { width: 100%; height: 120px; object-fit: contain; border-radius: 8px; margin-bottom: 10px; background: rgba(255,255,255,0.05); }
+        .payment-method-card .pm-image img { width: 100%; height: 100%; object-fit: contain; }
+        .payment-method-card .pm-name { font-size: 18px; font-weight: 700; color: var(--text); }
+        .payment-method-card .pm-number { font-size: 14px; color: var(--text-dim); }
         
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 10px;
-            margin-top: 10px;
+        /* ===== صفحة الدفع ===== */
+        .payment-page {
+            text-align: center;
+            max-width: 500px;
+            margin: auto;
         }
-        .product-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; text-align: center; padding: 12px; transition: var(--transition); cursor: pointer; }
-        .product-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-gold); }
-        .product-card .product-image { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; background: rgba(255,215,0,0.05); display: flex; align-items: center; justify-content: center; font-size: 30px; color: var(--primary); overflow: hidden; }
-        .product-card .product-image img { width: 100%; height: 100%; object-fit: cover; }
-        .product-card .product-info h4 { font-size: 13px; margin: 5px 0 2px; }
-        .product-card .product-info .price { color: var(--primary); font-weight: 700; font-size: 14px; }
-        .product-card .product-info .rating { color: var(--warning); font-size: 11px; }
+        .payment-page .pp-image { width: 100%; max-height: 250px; object-fit: contain; border-radius: var(--radius); background: rgba(255,255,255,0.05); padding: 20px; margin-bottom: 20px; }
+        .payment-page .pp-image img { width: 100%; height: 100%; object-fit: contain; }
+        .payment-page .pp-name { font-size: 28px; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
+        .payment-page .pp-number { font-size: 16px; color: var(--text-dim); margin-bottom: 20px; }
+        .payment-page .pp-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         
-        /* ===== النوافذ المنبثقة ===== */
+        /* ===== نافذة الفاتورة ===== */
+        .invoice-modal .modal-content { max-width: 450px; }
+        .invoice-modal .timer-circle {
+            width: 120px; height: 120px; border-radius: 50%;
+            border: 8px solid var(--border);
+            position: relative; margin: 15px auto;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .invoice-modal .timer-circle .timer-text { font-size: 28px; font-weight: 700; color: var(--primary); }
+        .invoice-modal .timer-circle .timer-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+        .invoice-modal .timer-circle .timer-svg circle { fill: none; stroke: var(--primary); stroke-width: 8; stroke-dasharray: 314; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear; }
+        
+        .invoice-modal .invoice-amount-display {
+            background: var(--bg-card); padding: 15px; border-radius: var(--radius);
+            border: 2px solid var(--primary); margin: 15px 0;
+            text-align: center;
+        }
+        .invoice-modal .invoice-amount-display .label { color: var(--text-dim); font-size: 14px; }
+        .invoice-modal .invoice-amount-display .value { font-size: 32px; color: var(--primary); font-weight: 900; }
+        
+        .admin-panel { background: var(--bg-card); border: 2px solid var(--primary); border-radius: var(--radius); padding: 25px; margin-top: 20px; }
+        .admin-panel h3 { color: var(--primary); margin-bottom: 15px; font-size: 20px; }
+        .admin-product-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-left: 3px solid var(--primary); }
+        
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
         .modal.show { display: flex; }
         .modal-content { background: #1a1a2e; padding: 25px; border-radius: var(--radius); border: 2px solid var(--primary); max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; animation: modalIn 0.3s ease; }
@@ -173,21 +183,9 @@
         .modal-content .close { position: absolute; top: 10px; left: 18px; font-size: 28px; color: #fff; cursor: pointer; transition: var(--transition); }
         .modal-content .close:hover { color: var(--primary); transform: rotate(90deg); }
         .modal-content h2 { color: var(--primary); margin-bottom: 15px; text-align: center; }
-        .modal-content input, .modal-content select, .modal-content textarea { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #333; background: #0a0a1a; color: #fff; margin-bottom: 10px; font-family: inherit; }
-        .modal-content input:focus, .modal-content select:focus, .modal-content textarea:focus { border-color: var(--primary); outline: none; }
+        .modal-content input, .modal-content select { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #333; background: #0a0a1a; color: #fff; margin-bottom: 10px; font-family: inherit; }
+        .modal-content input:focus, .modal-content select:focus { border-color: var(--primary); outline: none; }
         .modal-content .modal-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
-        .modal-content .error-msg { color: var(--danger); font-size: 14px; text-align: center; margin: 5px 0; }
-        .modal-content .success-msg { color: var(--success); font-size: 14px; text-align: center; margin: 5px 0; }
-        .modal-content .timer { font-size: 48px; color: var(--primary); text-align: center; margin: 10px 0; }
-        .modal-content .timer-text { text-align: center; color: var(--text-dim); font-size: 14px; }
-        
-        .admin-panel { background: var(--bg-card); border: 2px solid var(--primary); border-radius: var(--radius); padding: 25px; margin-top: 20px; }
-        .admin-panel h3 { color: var(--primary); margin-bottom: 15px; font-size: 20px; }
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
-        .admin-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 15px; padding: 15px; }
-        .admin-card input, .admin-card select { width: 100%; padding: 8px; margin: 5px 0; border-radius: 10px; border: 1px solid #333; background: #0a0a1a; color: #fff; }
-        .admin-product-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-left: 3px solid var(--primary); }
-        .admin-user-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; border-left: 3px solid var(--info); }
         
         .loading-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; justify-content: center; align-items: center; flex-direction: column; }
         .loading-screen.show { display: flex; }
@@ -198,23 +196,17 @@
         .firework { position: fixed; pointer-events: none; z-index: 3001; font-size: 30px; animation: fireworkUp 1.5s ease-out forwards; }
         @keyframes fireworkUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-200px) scale(0); } }
         
+        .breadcrumb { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; padding: 10px; background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border); }
+        .breadcrumb span { color: var(--text-dim); font-size: 14px; }
+        .breadcrumb .current { color: var(--primary); font-weight: 700; }
+        .breadcrumb .sep { color: var(--text-dim); }
+        
         @media (max-width: 768px) {
-            .categories-grid { grid-template-columns: repeat(2, 1fr); }
-            .products-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
-            .admin-grid { grid-template-columns: 1fr; }
             .sidebar { width: 280px; right: -290px; }
             .hamburger { top: 42px; left: 10px; padding: 8px 10px; }
             .top-bar { top: 38px; padding: 8px 12px; }
             .top-bar .balance { font-size: 13px; }
             .top-bar .balance span { font-size: 16px; }
-        }
-        @media (max-width: 480px) {
-            .categories-grid { grid-template-columns: 1fr 1fr; }
-            .products-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); }
-            .category-card .cat-icon { font-size: 24px; }
-            .category-card .cat-name { font-size: 12px; }
-            .section-title { font-size: 22px; }
-            .splash-screen h1 { font-size: 28px; }
         }
     </style>
 </head>
@@ -276,7 +268,7 @@
         <div class="profile-email" id="profileEmail">غير مسجل</div>
     </div>
     <ul class="menu-items" id="menuItems">
-        <li onclick="showPage('shop')"><i class="fas fa-store"></i> المتجر</li>
+        <li onclick="showPage('home')"><i class="fas fa-home"></i> الرئيسية</li>
         <li onclick="showPage('balance')"><i class="fas fa-wallet"></i> الرصيد</li>
         <li onclick="showPage('payment')"><i class="fas fa-credit-card"></i> الدفع</li>
         <li onclick="showPage('orders')"><i class="fas fa-list"></i> طلباتي</li>
@@ -299,7 +291,7 @@
 </div>
 
 <nav class="bottom-nav">
-    <a class="active" onclick="showPage('shop')"><i class="fas fa-store"></i> المتجر</a>
+    <a class="active" onclick="showPage('home')"><i class="fas fa-home"></i> الرئيسية</a>
     <a onclick="showPage('balance')"><i class="fas fa-wallet"></i> الرصيد</a>
     <a onclick="showPage('payment')"><i class="fas fa-credit-card"></i> الدفع</a>
     <a onclick="showPage('orders')"><i class="fas fa-list"></i> طلباتي</a>
@@ -307,31 +299,82 @@
 </nav>
 
 <div class="container">
-    <section id="page-shop" class="page active">
+    <!-- ===== الصفحة الرئيسية ===== -->
+    <section id="page-home" class="page active">
         <h2 class="section-title">🛍️ المتجر الأسطوري</h2>
-        <div id="categoriesContainer"></div>
+        <div id="homeContent">
+            <div style="text-align:center;padding:30px 0;">
+                <div style="font-size:60px;color:var(--primary);margin-bottom:15px;">👑</div>
+                <h2 style="color:var(--primary);font-size:28px;">مرحباً بك في رويال كارد</h2>
+                <p style="color:var(--text-dim);font-size:16px;margin:10px 0;">أفضل المتاجر الرقمية بجودة عالية</p>
+                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
+                    <button class="btn btn-primary" onclick="showPage('payment')">💳 طرق الدفع</button>
+                    <button class="btn btn-secondary" onclick="showPage('balance')">💰 رصيدي</button>
+                    <button class="btn btn-secondary" onclick="showPage('orders')">📋 طلباتي</button>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;margin-top:30px;">
+                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);">
+                        <div style="font-size:30px;color:var(--primary);">⭐</div>
+                        <div style="font-weight:bold;margin-top:5px;">4.9/5</div>
+                        <div style="font-size:12px;color:var(--text-dim);">تقييم العملاء</div>
+                    </div>
+                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);">
+                        <div style="font-size:30px;color:var(--primary);">✅</div>
+                        <div style="font-weight:bold;margin-top:5px;">100%</div>
+                        <div style="font-size:12px;color:var(--text-dim);">ضمان الجودة</div>
+                    </div>
+                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);">
+                        <div style="font-size:30px;color:var(--primary);">⚡</div>
+                        <div style="font-weight:bold;margin-top:5px;">فوري</div>
+                        <div style="font-size:12px;color:var(--text-dim);">توصيل الخدمة</div>
+                    </div>
+                    <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);">
+                        <div style="font-size:30px;color:var(--primary);">🛡️</div>
+                        <div style="font-weight:bold;margin-top:5px;">آمن</div>
+                        <div style="font-size:12px;color:var(--text-dim);">مدفوعات محمية</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <!-- ===== صفحة طرق الدفع ===== -->
+    <section id="page-payment" class="page">
+        <h2 class="section-title">💳 طرق الدفع</h2>
+        <div id="paymentMethodsGrid" class="payment-methods-grid"></div>
+    </section>
+
+    <!-- ===== صفحة الدفع لطريقة معينة ===== -->
+    <section id="page-payment-detail" class="page">
+        <div class="breadcrumb">
+            <button class="btn btn-back" onclick="showPage('payment')">🏠 طرق الدفع</button>
+            <span class="sep">›</span>
+            <span id="paymentDetailName" class="current"></span>
+        </div>
+        <div class="payment-page" id="paymentDetailContent"></div>
+    </section>
+
+    <!-- ===== صفحة الرصيد ===== -->
     <section id="page-balance" class="page">
         <h2 class="section-title">💰 الرصيد</h2>
         <div style="text-align:center;background:var(--bg-card);border:2px solid var(--primary);border-radius:var(--radius);padding:30px;max-width:400px;margin:auto;">
             <i class="fas fa-wallet" style="font-size:60px;color:var(--primary);"></i>
             <div style="font-size:36px;color:var(--primary);font-weight:bold;margin:15px 0;" id="balancePageAmount">0</div>
             <div style="color:var(--text-dim);">رصيدك الحالي</div>
-            <button class="btn btn-primary mt-20" onclick="showAddBalanceModal()">💰 إضافة رصيد</button>
+            <button class="btn btn-primary mt-20" onclick="showPage('payment')">💰 إضافة رصيد</button>
         </div>
     </section>
-    <section id="page-payment" class="page">
-        <h2 class="section-title">💳 طرق الدفع</h2>
-        <div id="paymentMethodsGrid"></div>
-    </section>
+
+    <!-- ===== صفحة طلباتي ===== -->
     <section id="page-orders" class="page">
         <h2 class="section-title">📋 طلباتي</h2>
         <div id="ordersList"></div>
     </section>
+
+    <!-- ===== صفحة الإدارة ===== -->
     <section id="page-admin" class="page">
         <h2 class="section-title">🔧 لوحة التحكم</h2>
         
-        <!-- إحصائيات -->
         <div class="admin-panel">
             <h3>📊 الإحصائيات</h3>
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;">
@@ -342,10 +385,6 @@
                 <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
                     <div style="font-size:28px;color:var(--primary);" id="statOrders">0</div>
                     <div style="color:var(--text-dim);font-size:13px;">📦 الطلبات</div>
-                </div>
-                <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
-                    <div style="font-size:28px;color:var(--primary);" id="statRevenue">0</div>
-                    <div style="color:var(--text-dim);font-size:13px;">💰 الأرباح</div>
                 </div>
                 <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
                     <div style="font-size:28px;color:var(--primary);" id="statInvoices">0</div>
@@ -360,123 +399,11 @@
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
                 <div style="flex:1;">
                     <label>نسبة العمولة (%)</label>
-                    <input type="number" id="commissionRate" value="1" min="0" max="100" step="0.1">
+                    <input type="number" id="commissionRate" value="1" min="0" max="100" step="0.1" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
                 <button class="btn btn-primary" onclick="updateCommission()">تحديث</button>
             </div>
             <div id="commissionMsg" style="margin-top:10px;"></div>
-        </div>
-
-        <!-- إدارة الألوان -->
-        <div class="admin-panel">
-            <h3>🎨 تخصيص الألوان</h3>
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
-                <div><label style="font-size:12px;">اللون الأساسي</label><input type="color" id="colorPrimary" value="#ffd700" oninput="updateColors()"></div>
-                <div><label style="font-size:12px;">الخلفية</label><input type="color" id="colorBg" value="#0a0a1a" oninput="updateColors()"></div>
-                <div><label style="font-size:12px;">لون البطاقات</label><input type="color" id="colorCard" value="#1a1f2f" oninput="updateColors()"></div>
-                <div><label style="font-size:12px;">لون النصوص</label><input type="color" id="colorText" value="#ffffff" oninput="updateColors()"></div>
-            </div>
-        </div>
-
-        <!-- إدارة اللاعبين -->
-        <div class="admin-panel">
-            <h3>🎮 إدارة اللاعبين</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;">
-                    <label>معرف اللاعب (ID)</label>
-                    <input type="text" id="newPlayerId" placeholder="معرف اللاعب">
-                </div>
-                <div style="flex:1;">
-                    <label>اسم اللاعب</label>
-                    <input type="text" id="newPlayerName" placeholder="اسم اللاعب">
-                </div>
-                <button class="btn btn-primary" onclick="addPlayer()">➕ إضافة</button>
-            </div>
-            <div id="playersList" style="margin-top:15px;"></div>
-        </div>
-
-        <!-- إدارة الأقسام الرئيسية -->
-        <div class="admin-panel">
-            <h3>📂 إدارة الأقسام</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;">
-                    <label>اسم القسم</label>
-                    <input type="text" id="newCategoryName" placeholder="اسم القسم">
-                </div>
-                <div style="flex:1;">
-                    <label>الأيقونة</label>
-                    <input type="text" id="newCategoryIcon" placeholder="🎮">
-                </div>
-                <button class="btn btn-primary" onclick="addCategory()">➕ إضافة</button>
-            </div>
-            <div id="categoryList" style="margin-top:15px;"></div>
-        </div>
-
-        <!-- إدارة الأقسام الفرعية -->
-        <div class="admin-panel">
-            <h3>📂 إدارة الأقسام الفرعية</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;">
-                    <label>القسم الرئيسي</label>
-                    <select id="subCategoryParentSelect"></select>
-                </div>
-                <div style="flex:1;">
-                    <label>اسم القسم الفرعي</label>
-                    <input type="text" id="newSubCategoryName" placeholder="اسم القسم الفرعي">
-                </div>
-                <button class="btn btn-primary" onclick="addSubCategory()">➕ إضافة</button>
-            </div>
-            <div id="subCategoryList" style="margin-top:15px;"></div>
-        </div>
-
-        <!-- إدارة المنتجات -->
-        <div class="admin-panel">
-            <h3>📦 إدارة المنتجات</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;min-width:100px;">
-                    <label>القسم الفرعي</label>
-                    <select id="productSubCategorySelect"></select>
-                </div>
-                <div style="flex:1;min-width:100px;">
-                    <label>اسم المنتج</label>
-                    <input type="text" id="newProductName" placeholder="اسم المنتج">
-                </div>
-                <div style="flex:1;min-width:80px;">
-                    <label>السعر ($)</label>
-                    <input type="number" id="newProductPrice" placeholder="السعر">
-                </div>
-                <div style="flex:1;min-width:100px;">
-                    <label>صورة المنتج</label>
-                    <input type="file" id="newProductImage" accept="image/*">
-                </div>
-                <div style="flex:1;min-width:150px;">
-                    <label>📝 معلومات مطلوبة</label>
-                    <input type="text" id="newProductRequirements" placeholder="مثل: أدخل معرف اللاعب">
-                </div>
-                <button class="btn btn-primary" onclick="addProduct()">➕ إضافة</button>
-            </div>
-            <div id="productList" style="margin-top:15px;"></div>
-        </div>
-
-        <!-- إدارة العملات -->
-        <div class="admin-panel">
-            <h3>💱 إدارة العملات</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;">
-                    <label>اسم العملة</label>
-                    <input type="text" id="newCurrencyName" placeholder="مثل: ليرة سورية">
-                </div>
-                <div style="flex:1;">
-                    <label>الرمز</label>
-                    <input type="text" id="newCurrencySymbol" placeholder="🇸🇾">
-                </div>
-                <div style="flex:1;">
-                    <label>سعر الصرف (1 دولار = )</label>
-                    <input type="number" id="newCurrencyRate" placeholder="130">
-                </div>
-                <button class="btn btn-primary" onclick="addCurrency()">➕ إضافة</button>
-            </div>
-            <div id="currencyListAdmin" style="margin-top:15px;"></div>
         </div>
 
         <!-- إدارة طرق الدفع -->
@@ -485,15 +412,15 @@
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
                 <div style="flex:1;">
                     <label>اسم الطريقة</label>
-                    <input type="text" id="newPayName" placeholder="شنكاشي">
+                    <input type="text" id="newPayName" placeholder="شنكاشي" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
                 <div style="flex:1;">
                     <label>الرقم/الحساب</label>
-                    <input type="text" id="newPayNumber" placeholder="رقم الحساب">
+                    <input type="text" id="newPayNumber" placeholder="رقم الحساب" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
                 <div style="flex:1;">
                     <label>صورة</label>
-                    <input type="file" id="newPayImage" accept="image/*">
+                    <input type="file" id="newPayImage" accept="image/*" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
                 <button class="btn btn-primary" onclick="addPaymentMethod()">➕ إضافة</button>
             </div>
@@ -524,15 +451,15 @@
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
                 <div style="flex:1;">
                     <label>الإيميل</label>
-                    <input type="email" id="newAdminEmail" placeholder="admin@example.com">
+                    <input type="email" id="newAdminEmail" placeholder="admin@example.com" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
                 <div style="flex:1;">
                     <label>كلمة المرور</label>
-                    <input type="password" id="newAdminPass" placeholder="كلمة المرور">
+                    <input type="password" id="newAdminPass" placeholder="كلمة المرور" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
                 <div style="flex:1;">
                     <label>الاسم</label>
-                    <input type="text" id="newAdminName" placeholder="اسم المدير">
+                    <input type="text" id="newAdminName" placeholder="اسم المدير" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
                 <button class="btn btn-primary" onclick="addAdmin()">➕ إضافة</button>
             </div>
@@ -545,7 +472,7 @@
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
                 <div style="flex:1;">
                     <label>كلمة المرور الجديدة</label>
-                    <input type="password" id="newAdminPassword" placeholder="كلمة المرور الجديدة">
+                    <input type="password" id="newAdminPassword" placeholder="كلمة المرور الجديدة" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
                 </div>
                 <button class="btn btn-primary" onclick="changeAdminPassword()">تغيير</button>
             </div>
@@ -591,28 +518,60 @@
     </div>
 </div>
 
-<!-- ===== نافذة إضافة رصيد (فاتورة) ===== -->
-<div class="modal" id="balanceModal">
+<!-- ===== نافذة الفاتورة ===== -->
+<div class="modal invoice-modal" id="invoiceModal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal('balanceModal')">✕</span>
-        <h2>💰 إنشاء فاتورة</h2>
-        <div id="invoiceError" class="error-msg"></div>
-        <div id="invoiceSuccess" class="success-msg"></div>
-        <input type="number" id="invoiceAmount" placeholder="المبلغ بالدولار" min="1">
-        <select id="invoiceCurrency">
-            <option value="usd">🇺🇸 دولار أمريكي</option>
-            <option value="syp">🇸🇾 ليرة سورية</option>
-        </select>
-        <div id="commissionDisplay" style="text-align:center;color:var(--text-dim);font-size:14px;margin:5px 0;"></div>
-        <div class="timer" id="invoiceTimer">⏳</div>
-        <div class="timer-text" id="timerText">الوقت المتبقي: 30:00</div>
-        <input type="text" id="invoiceTransferCode" placeholder="رقم عملية التحويل">
-        <div class="modal-buttons">
-            <button class="btn btn-primary" onclick="createInvoice()">إنشاء فاتورة</button>
-            <button class="btn btn-success" onclick="confirmInvoice()" id="confirmInvoiceBtn" style="display:none;">تأكيد الدفع</button>
-            <button class="btn btn-danger" onclick="closeModal('balanceModal')">إلغاء</button>
+        <span class="close" onclick="closeModal('invoiceModal')">✕</span>
+        <h2>📄 إنشاء فاتورة</h2>
+        <div id="invoiceError" class="error-msg" style="color:var(--danger);font-size:14px;text-align:center;margin:5px 0;"></div>
+        <div id="invoiceSuccess" class="success-msg" style="color:var(--success);font-size:14px;text-align:center;margin:5px 0;"></div>
+        
+        <div id="invoiceStep1">
+            <label style="color:var(--text-dim);font-size:14px;display:block;margin-bottom:5px;">💰 المبلغ بالدولار</label>
+            <input type="number" id="invoiceAmount" placeholder="المبلغ" min="1" step="0.01">
+            
+            <div class="invoice-amount-display">
+                <div class="label">💰 المبلغ الذي سيتم استلامه</div>
+                <div class="value" id="invoiceFinalAmount">0.00 دولار</div>
+                <div style="font-size:13px;color:var(--text-dim);" id="invoiceCommissionDisplay">(بعد خصم 1% عمولة)</div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="createInvoice()">إنشاء فاتورة</button>
+                <button class="btn btn-danger" onclick="closeModal('invoiceModal')">إلغاء</button>
+            </div>
         </div>
-        <div id="invoiceStatus" style="text-align:center;margin-top:10px;"></div>
+        
+        <div id="invoiceStep2" style="display:none;">
+            <div style="text-align:center;margin:10px 0;">
+                <div style="font-size:14px;color:var(--text-dim);">⏳ الوقت المتبقي</div>
+                <div class="timer-circle">
+                    <svg class="timer-svg" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" stroke-dasharray="282.7" stroke-dashoffset="0" id="timerCircle"/>
+                    </svg>
+                    <div class="timer-text" id="timerText">30:00</div>
+                </div>
+            </div>
+            
+            <div class="invoice-amount-display">
+                <div class="label">💰 المبلغ المراد تحويله</div>
+                <div class="value" id="invoiceAmountDisplay">0.00 دولار</div>
+            </div>
+            
+            <div class="invoice-amount-display" style="border-color:var(--success);">
+                <div class="label">💰 سيتم إضافة</div>
+                <div class="value" id="invoiceFinalAmountDisplay" style="color:var(--success);">0.00 دولار</div>
+            </div>
+            
+            <label style="color:var(--text-dim);font-size:14px;display:block;margin-bottom:5px;">🔢 رقم عملية التحويل</label>
+            <input type="text" id="invoiceTransferCode" placeholder="أدخل رقم عملية التحويل">
+            
+            <div class="modal-buttons">
+                <button class="btn btn-success" onclick="confirmInvoice()" id="confirmInvoiceBtn">✅ تأكيد الدفع</button>
+                <button class="btn btn-danger" onclick="cancelInvoice()">❌ إلغاء</button>
+            </div>
+            <div id="invoiceStatus" style="text-align:center;margin-top:10px;font-size:14px;"></div>
+        </div>
     </div>
 </div>
 
@@ -629,15 +588,11 @@
 // ===== البيانات =====
 let currentUser = null;
 let balance = 0;
-let categories = [];
-let subCategories = [];
-let products = [];
-let orders = [];
-let invoices = [];
 let paymentMethods = [];
+let invoices = [];
+let orders = [];
 let users = [];
 let admins = [];
-let players = [];
 let currencies = [];
 let selectedCurrency = 'usd';
 let exchangeRates = { usd: 1, syp: 130 };
@@ -645,28 +600,19 @@ let adminPassword = 'Admin@2024';
 let commissionRate = 1;
 let currentInvoice = null;
 let timerInterval = null;
+let invoiceTimeout = null;
 
+// ===== تحميل البيانات =====
 function loadData() {
     try {
         balance = parseFloat(localStorage.getItem('balance')) || 0;
-        categories = JSON.parse(localStorage.getItem('categories')) || [
-            { id: 1, name: '🎮 ألعاب', icon: '🎮' },
-            { id: 2, name: '📱 تطبيقات', icon: '📱' },
-            { id: 3, name: '🎬 اشتراكات', icon: '🎬' }
-        ];
-        subCategories = JSON.parse(localStorage.getItem('subCategories')) || [];
-        products = JSON.parse(localStorage.getItem('products')) || [];
-        orders = JSON.parse(localStorage.getItem('orders')) || [];
-        invoices = JSON.parse(localStorage.getItem('invoices')) || [];
         paymentMethods = JSON.parse(localStorage.getItem('paymentMethods')) || [
             { id: 1, name: 'شنكاشي', number: '0991234567', image: '' }
         ];
+        invoices = JSON.parse(localStorage.getItem('invoices')) || [];
+        orders = JSON.parse(localStorage.getItem('orders')) || [];
         users = JSON.parse(localStorage.getItem('users')) || [];
         admins = JSON.parse(localStorage.getItem('admins')) || [];
-        players = JSON.parse(localStorage.getItem('players')) || [
-            { id: 'player1', name: 'أسطورة اللعبة' },
-            { id: 'player2', name: 'المحارب الأسطوري' }
-        ];
         currencies = JSON.parse(localStorage.getItem('currencies')) || [
             { id: 1, name: 'دولار أمريكي', symbol: '🇺🇸', rate: 1, code: 'usd' },
             { id: 2, name: 'ليرة سورية', symbol: '🇸🇾', rate: 130, code: 'syp' }
@@ -697,15 +643,11 @@ function loadData() {
 
 function saveData() {
     localStorage.setItem('balance', balance);
-    localStorage.setItem('categories', JSON.stringify(categories));
-    localStorage.setItem('subCategories', JSON.stringify(subCategories));
-    localStorage.setItem('products', JSON.stringify(products));
-    localStorage.setItem('orders', JSON.stringify(orders));
-    localStorage.setItem('invoices', JSON.stringify(invoices));
     localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
+    localStorage.setItem('invoices', JSON.stringify(invoices));
+    localStorage.setItem('orders', JSON.stringify(orders));
     localStorage.setItem('users', JSON.stringify(users));
     localStorage.setItem('admins', JSON.stringify(admins));
-    localStorage.setItem('players', JSON.stringify(players));
     localStorage.setItem('currencies', JSON.stringify(currencies));
     localStorage.setItem('exchangeRates', JSON.stringify(exchangeRates));
     localStorage.setItem('adminPassword', adminPassword);
@@ -752,12 +694,11 @@ function showPage(page) {
         if (a.onclick && a.onclick.toString().includes(page)) a.classList.add('active');
     });
     if (page === 'admin') {
-        if (!isAdmin()) { alert('⚠️ هذه الصفحة مخصصة للمدراء فقط!'); showPage('shop'); return; }
+        if (!isAdmin()) { alert('⚠️ هذه الصفحة مخصصة للمدراء فقط!'); showPage('home'); return; }
         renderAdminPanel();
     }
-    if (page === 'shop') renderCategories();
-    if (page === 'orders') renderOrders();
     if (page === 'payment') renderPaymentMethods();
+    if (page === 'orders') renderOrders();
     if (page === 'balance') updateBalance();
     toggleSidebar();
 }
@@ -783,43 +724,13 @@ function convertCurrency(amount, from, to) {
     return (amount / rateFrom) * rateTo;
 }
 
-function renderCurrencies() {
-    const container = document.getElementById('currencyList');
-    if (container) container.innerHTML = currencies.map(c => 
-        `<div class="currency-item ${selectedCurrency === c.code ? 'active' : ''}" data-currency="${c.code}" onclick="changeCurrency('${c.code}')">
-            <span>${c.symbol} ${c.name}</span>
-            <span class="rate">1 دولار = ${c.rate}</span>
-        </div>`
-    ).join('');
-    const adminContainer = document.getElementById('currencyListAdmin');
-    if (adminContainer) adminContainer.innerHTML = currencies.map(c => 
-        `<div class="admin-product-item"><span>${c.symbol} ${c.name} (1 دولار = ${c.rate})</span>
-        <button class="btn btn-danger" onclick="deleteCurrency(${c.id})">🗑️ حذف</button></div>`
-    ).join('');
-}
-
-function addCurrency() {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    const name = document.getElementById('newCurrencyName').value.trim();
-    const symbol = document.getElementById('newCurrencySymbol').value.trim();
-    const rate = parseFloat(document.getElementById('newCurrencyRate').value);
-    if (!name || !symbol || !rate) return alert('❌ أدخل جميع البيانات');
-    const id = Date.now();
-    const code = name.substring(0,3).toLowerCase();
-    currencies.push({ id, name, symbol, rate, code });
-    exchangeRates[code] = rate;
-    saveData(); renderCurrencies();
-    document.getElementById('newCurrencyName').value = '';
-    document.getElementById('newCurrencySymbol').value = '';
-    document.getElementById('newCurrencyRate').value = '';
-    alert('✅ تم إضافة العملة');
-}
-
-function deleteCurrency(id) {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    if (!confirm('هل أنت متأكد؟')) return;
-    currencies = currencies.filter(c => c.id !== id);
-    saveData(); renderCurrencies();
+// ===== تحديث الرصيد =====
+function updateBalance() {
+    const displayBalance = convertCurrency(balance, 'usd', selectedCurrency);
+    document.getElementById('headerBalance').textContent = displayBalance.toFixed(2);
+    document.getElementById('balancePageAmount').textContent = displayBalance.toFixed(2);
+    const currency = currencies.find(c => c.code === selectedCurrency);
+    document.getElementById('currencySymbol').textContent = currency ? currency.symbol : 'دولار';
 }
 
 // ===== إدارة العمولة =====
@@ -833,380 +744,161 @@ function updateCommission() {
     alert('✅ تم تحديث العمولة');
 }
 
-// ===== إدارة الألوان =====
-function updateColors() {
-    const primary = document.getElementById('colorPrimary').value;
-    const bg = document.getElementById('colorBg').value;
-    const card = document.getElementById('colorCard').value;
-    const text = document.getElementById('colorText').value;
-    document.documentElement.style.setProperty('--primary', primary);
-    document.documentElement.style.setProperty('--bg', bg);
-    document.documentElement.style.setProperty('--bg-card', card);
-    document.documentElement.style.setProperty('--text', text);
-    localStorage.setItem('colors', JSON.stringify({ primary, bg, card, text }));
-}
-
-function loadColors() {
-    try {
-        const colors = JSON.parse(localStorage.getItem('colors'));
-        if (colors) {
-            document.getElementById('colorPrimary').value = colors.primary;
-            document.getElementById('colorBg').value = colors.bg;
-            document.getElementById('colorCard').value = colors.card;
-            document.getElementById('colorText').value = colors.text;
-            updateColors();
-        }
-    } catch(e) {}
-}
-
-// ===== إدارة اللاعبين =====
-function renderPlayers() {
-    const container = document.getElementById('playersList');
+// ===== إدارة طرق الدفع =====
+function renderPaymentMethods() {
+    const container = document.getElementById('paymentMethodsGrid');
     if (!container) return;
-    container.innerHTML = players.map(p => 
-        `<div class="admin-product-item">
-            <span>🎮 ${p.id} → ${p.name}</span>
-            <button class="btn btn-danger" onclick="deletePlayer('${p.id}')">🗑️ حذف</button>
-        </div>`
-    ).join('') || '<p style="color:var(--text-dim);">لا يوجد لاعبين</p>';
-}
-
-function addPlayer() {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    const id = document.getElementById('newPlayerId').value.trim();
-    const name = document.getElementById('newPlayerName').value.trim();
-    if (!id || !name) return alert('❌ أدخل المعرف والاسم');
-    if (players.some(p => p.id === id)) return alert('❌ هذا المعرف موجود مسبقاً');
-    players.push({ id, name });
-    saveData(); renderPlayers();
-    document.getElementById('newPlayerId').value = '';
-    document.getElementById('newPlayerName').value = '';
-    alert('✅ تم إضافة اللاعب');
-}
-
-function deletePlayer(id) {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    if (!confirm('هل أنت متأكد؟')) return;
-    players = players.filter(p => p.id !== id);
-    saveData(); renderPlayers();
-}
-
-// ===== التحقق من اللاعب =====
-function verifyPlayer() {
-    const id = document.getElementById('verifyPlayerId').value.trim();
-    if (!id) return alert('❌ أدخل معرف اللاعب');
-    const player = players.find(p => p.id === id);
-    if (player) {
-        document.getElementById('verifyResult').innerHTML = `<span style="color:var(--success);">✅ تم التحقق! الاسم: ${player.name}</span>`;
-    } else {
-        document.getElementById('verifyResult').innerHTML = `<span style="color:var(--danger);">❌ لم يتم العثور على لاعب بهذا المعرف</span>`;
+    container.innerHTML = paymentMethods.map(m => `
+        <div class="payment-method-card" onclick="showPaymentDetail(${m.id})">
+            ${m.image ? `<div class="pm-image"><img src="${m.image}" alt="${m.name}"></div>` : `<div class="pm-image" style="font-size:60px;color:var(--primary);display:flex;align-items:center;justify-content:center;">💳</div>`}
+            <div class="pm-name">${m.name}</div>
+            <div class="pm-number">${m.number}</div>
+        </div>
+    `).join('') || '<p style="color:var(--text-dim);text-align:center;">لا توجد طرق دفع</p>';
+    
+    const adminContainer = document.getElementById('paymentMethodsListAdmin');
+    if (adminContainer) {
+        adminContainer.innerHTML = paymentMethods.map(m => `
+            <div class="admin-product-item">
+                <span>${m.image ? '🖼️' : '💳'} ${m.name} - ${m.number}</span>
+                <button class="btn btn-danger" onclick="deletePaymentMethod(${m.id})">🗑️ حذف</button>
+            </div>
+        `).join('');
     }
 }
 
-// ===== إدارة الأقسام =====
-function renderCategories() {
-    const container = document.getElementById('categoriesContainer');
-    if (!container) return;
-    container.innerHTML = '';
-    categories.forEach(cat => {
-        const subs = subCategories.filter(s => s.parentId === cat.id);
-        const div = document.createElement('div');
-        div.className = 'category-card';
-        div.innerHTML = `
-            <span class="cat-icon">${cat.icon}</span>
-            <span class="cat-name">${cat.name}</span>
-            <span class="cat-count">${subs.length} أقسام</span>
-            <span class="toggle-sub" onclick="toggleSubCategories(${cat.id})">▼ عرض الأقسام الفرعية</span>
-            <div class="sub-categories" id="subs-${cat.id}">
-                ${subs.map(s => `<span class="sub-category" onclick="showSubCategoryProducts(${s.id})">${s.name}</span>`).join('')}
-            </div>
-        `;
-        container.appendChild(div);
-    });
+function showPaymentDetail(id) {
+    if (!currentUser) { showLoginModal(); return; }
+    const method = paymentMethods.find(m => m.id === id);
+    if (!method) return;
     
-    const categoryList = document.getElementById('categoryList');
-    if (categoryList) categoryList.innerHTML = categories.map(cat => 
-        `<div class="admin-product-item"><span>${cat.icon} ${cat.name}</span>
-        <button class="btn btn-danger" onclick="deleteCategory(${cat.id})">🗑️ حذف</button></div>`
-    ).join('');
-    updateSelects();
+    document.getElementById('paymentDetailName').textContent = method.name;
+    document.getElementById('paymentDetailContent').innerHTML = `
+        <div class="pp-image">${method.image ? `<img src="${method.image}" alt="${method.name}">` : '<div style="font-size:80px;color:var(--primary);padding:40px;">💳</div>'}</div>
+        <div class="pp-name">${method.name}</div>
+        <div class="pp-number">📞 ${method.number}</div>
+        <div class="pp-buttons">
+            <button class="btn btn-primary" onclick="openInvoiceModal()">📄 إنشاء فاتورة</button>
+            <button class="btn btn-danger" onclick="showPage('payment')">🔙 رجوع</button>
+        </div>
+    `;
+    showPage('payment-detail');
 }
 
-function toggleSubCategories(catId) {
-    const el = document.getElementById('subs-' + catId);
-    if (el) el.classList.toggle('show');
-}
-
-function addCategory() {
+function addPaymentMethod() {
     if (!isAdmin()) return alert('🔒 فقط المدراء');
-    const name = document.getElementById('newCategoryName').value.trim();
-    const icon = document.getElementById('newCategoryIcon').value.trim() || '📁';
-    if (!name) return alert('❌ أدخل اسم القسم');
-    const id = Date.now();
-    categories.push({ id, name, icon });
-    saveData(); renderCategories();
-    document.getElementById('newCategoryName').value = '';
-    document.getElementById('newCategoryIcon').value = '';
-    alert('✅ تم إضافة القسم');
-}
-
-function deleteCategory(id) {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    if (!confirm('هل أنت متأكد؟')) return;
-    categories = categories.filter(c => c.id !== id);
-    subCategories = subCategories.filter(s => s.parentId !== id);
-    products = products.filter(p => p.subCategoryId !== undefined);
-    saveData(); renderCategories();
-}
-
-// ===== إدارة الأقسام الفرعية =====
-function renderSubCategories() {
-    const container = document.getElementById('subCategoryList');
-    if (!container) return;
-    container.innerHTML = subCategories.map(s => {
-        const parent = categories.find(c => c.id === s.parentId);
-        return `<div class="admin-product-item"><span>📂 ${s.name} (في ${parent ? parent.name : 'غير معروف'})</span>
-        <button class="btn btn-danger" onclick="deleteSubCategory(${s.id})">🗑️ حذف</button></div>`;
-    }).join('') || '<p style="color:var(--text-dim);">لا توجد أقسام فرعية</p>';
-}
-
-function addSubCategory() {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    const parentId = parseInt(document.getElementById('subCategoryParentSelect').value);
-    const name = document.getElementById('newSubCategoryName').value.trim();
-    if (!name) return alert('❌ أدخل اسم القسم الفرعي');
-    const id = Date.now();
-    subCategories.push({ id, parentId, name });
-    saveData(); renderCategories(); renderSubCategories();
-    document.getElementById('newSubCategoryName').value = '';
-    alert('✅ تم إضافة القسم الفرعي');
-}
-
-function deleteSubCategory(id) {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    if (!confirm('هل أنت متأكد؟')) return;
-    subCategories = subCategories.filter(s => s.id !== id);
-    products = products.filter(p => p.subCategoryId !== id);
-    saveData(); renderCategories(); renderSubCategories();
-}
-
-// ===== إدارة المنتجات =====
-function renderProducts() {
-    const container = document.getElementById('productList');
-    if (!container) return;
-    container.innerHTML = products.map(p => {
-        const sub = subCategories.find(s => s.id === p.subCategoryId);
-        return `<div class="admin-product-item">
-            <span>${p.image ? '🖼️' : '📦'} ${p.name} - ${p.price} $ ${sub ? '(في ' + sub.name + ')' : ''} ${p.requirements ? '📝' : ''}</span>
-            <button class="btn btn-danger" onclick="deleteProduct(${p.id})">🗑️ حذف</button>
-        </div>`;
-    }).join('') || '<p style="color:var(--text-dim);">لا توجد منتجات</p>';
-}
-
-function addProduct() {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    const subCategoryId = parseInt(document.getElementById('productSubCategorySelect').value);
-    const name = document.getElementById('newProductName').value.trim();
-    const price = parseFloat(document.getElementById('newProductPrice').value);
-    const requirements = document.getElementById('newProductRequirements').value.trim();
-    if (!name || !price) return alert('❌ أدخل اسم المنتج والسعر');
-    const fileInput = document.getElementById('newProductImage');
+    const name = document.getElementById('newPayName').value.trim();
+    const number = document.getElementById('newPayNumber').value.trim();
+    if (!name || !number) return alert('❌ أدخل جميع البيانات');
+    const fileInput = document.getElementById('newPayImage');
     let imageData = '';
     if (fileInput.files && fileInput.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
             imageData = e.target.result;
-            saveProduct(subCategoryId, name, price, imageData, requirements);
+            savePaymentMethod(name, number, imageData);
         };
         reader.readAsDataURL(fileInput.files[0]);
     } else {
-        saveProduct(subCategoryId, name, price, '', requirements);
+        savePaymentMethod(name, number, '');
     }
 }
 
-function saveProduct(subCategoryId, name, price, image, requirements) {
+function savePaymentMethod(name, number, image) {
     const id = Date.now();
-    products.push({ id, subCategoryId, name, price, image, requirements });
-    saveData(); renderCategories(); renderProducts();
-    document.getElementById('newProductName').value = '';
-    document.getElementById('newProductPrice').value = '';
-    document.getElementById('newProductImage').value = '';
-    document.getElementById('newProductRequirements').value = '';
-    alert('✅ تم إضافة المنتج');
+    paymentMethods.push({ id, name, number, image });
+    saveData();
+    renderPaymentMethods();
+    document.getElementById('newPayName').value = '';
+    document.getElementById('newPayNumber').value = '';
+    document.getElementById('newPayImage').value = '';
+    alert('✅ تم إضافة طريقة الدفع');
 }
 
-function deleteProduct(id) {
+function deletePaymentMethod(id) {
     if (!isAdmin()) return alert('🔒 فقط المدراء');
     if (!confirm('هل أنت متأكد؟')) return;
-    products = products.filter(p => p.id !== id);
-    saveData(); renderProducts();
-}
-
-function updateSelects() {
-    const parentSelect = document.getElementById('subCategoryParentSelect');
-    if (parentSelect) parentSelect.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-    const subSelect = document.getElementById('productSubCategorySelect');
-    if (subSelect) subSelect.innerHTML = subCategories.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-}
-
-// ===== عرض المنتج للزبون =====
-function showProductDetails(id) {
-    if (!currentUser) { showLoginModal(); return; }
-    const product = products.find(p => p.id === id);
-    if (!product) return;
-    
-    const displayPrice = convertCurrency(product.price, 'usd', selectedCurrency);
-    const currency = currencies.find(c => c.code === selectedCurrency);
-    const symbol = currency ? currency.symbol : '$';
-    
-    const modal = document.getElementById('productModal');
-    document.getElementById('productModalTitle').textContent = product.name;
-    document.getElementById('productModalBody').innerHTML = `
-        <div style="text-align:center;font-size:60px;margin:10px 0;">
-            ${product.image ? `<img src="${product.image}" style="max-width:100%;max-height:150px;border-radius:10px;">` : '📦'}
-        </div>
-        <div style="text-align:center;font-size:24px;color:var(--primary);font-weight:bold;">${displayPrice.toFixed(2)} ${symbol}</div>
-        ${product.requirements ? `
-            <div style="background:var(--bg-card);padding:10px;border-radius:10px;margin:10px 0;border:1px solid var(--primary);">
-                <div style="font-size:13px;color:var(--text-dim);">📝 معلومات مطلوبة:</div>
-                <div style="font-size:14px;color:var(--primary);">${product.requirements}</div>
-            </div>
-            <div style="margin:10px 0;">
-                <label style="color:var(--text-dim);font-size:13px;">✏️ أدخل المعلومات المطلوبة:</label>
-                <input type="text" id="productUserInfo" placeholder="${product.requirements}" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-            </div>
-        ` : ''}
-        <div class="modal-buttons">
-            <button class="btn btn-success" onclick="buyProduct(${product.id})">🛒 شراء</button>
-            <button class="btn btn-danger" onclick="closeModal('productModal')">إلغاء</button>
-        </div>
-    `;
-    modal.classList.add('show');
-}
-
-function buyProduct(id) {
-    if (!currentUser) { showLoginModal(); return; }
-    const product = products.find(p => p.id === id);
-    if (!product) return;
-    
-    const userInfo = document.getElementById('productUserInfo')?.value.trim();
-    if (product.requirements && !userInfo) {
-        alert('❌ يرجى إدخال المعلومات المطلوبة قبل الشراء');
-        return;
-    }
-    if (balance < product.price) {
-        alert('❌ رصيدك غير كافٍ! رصيدك: ' + balance + ' دولار');
-        return;
-    }
-    
-    closeModal('productModal');
-    const loading = document.getElementById('loadingScreen');
-    loading.classList.add('show');
-    
-    setTimeout(() => {
-        balance -= product.price;
-        orders.push({
-            id: Date.now(),
-            productId: product.id,
-            productName: product.name,
-            price: product.price,
-            date: new Date().toLocaleDateString('ar'),
-            status: 'قيد التنفيذ',
-            userInfo: userInfo || 'لا يوجد',
-            userName: currentUser.name || 'مستخدم'
-        });
-        saveData();
-        updateBalance();
-        renderOrders();
-        loading.classList.remove('show');
-        createFireworks();
-        alert('✅ تم شراء ' + product.name + ' بنجاح!');
-        showPage('orders');
-    }, 2000);
-}
-
-function createFireworks() {
-    const emojis = ['🎉', '🎊', '✨', '🌟', '💫', '⭐', '🎆', '🎇'];
-    for (let i = 0; i < 20; i++) {
-        setTimeout(() => {
-            const el = document.createElement('div');
-            el.className = 'firework';
-            el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-            el.style.left = (Math.random() * 90 + 5) + '%';
-            el.style.top = (Math.random() * 60 + 10) + '%';
-            el.style.fontSize = (Math.random() * 30 + 20) + 'px';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 1500);
-        }, i * 100);
-    }
+    paymentMethods = paymentMethods.filter(m => m.id !== id);
+    saveData();
+    renderPaymentMethods();
 }
 
 // ===== الفواتير =====
-function showAddBalanceModal() {
+function openInvoiceModal() {
     if (!currentUser) { showLoginModal(); return; }
-    document.getElementById('balanceModal').classList.add('show');
+    document.getElementById('invoiceModal').classList.add('show');
+    document.getElementById('invoiceStep1').style.display = 'block';
+    document.getElementById('invoiceStep2').style.display = 'none';
     document.getElementById('invoiceAmount').value = '';
     document.getElementById('invoiceTransferCode').value = '';
-    document.getElementById('invoiceStatus').innerHTML = '';
+    document.getElementById('invoiceStatus').textContent = '';
     document.getElementById('invoiceError').textContent = '';
     document.getElementById('invoiceSuccess').textContent = '';
-    document.getElementById('confirmInvoiceBtn').style.display = 'none';
-    document.getElementById('invoiceTimer').textContent = '⏳';
-    document.getElementById('timerText').textContent = 'الوقت المتبقي: 30:00';
     currentInvoice = null;
     if (timerInterval) clearInterval(timerInterval);
+    if (invoiceTimeout) clearTimeout(invoiceTimeout);
 }
 
 function createInvoice() {
     const amount = parseFloat(document.getElementById('invoiceAmount').value);
-    const currency = document.getElementById('invoiceCurrency').value;
     if (!amount || amount < 1) return alert('❌ أدخل مبلغاً صحيحاً');
     
     const commissionAmount = amount * (commissionRate / 100);
     const finalAmount = amount - commissionAmount;
     
-    document.getElementById('commissionDisplay').innerHTML = `💰 سيتم إضافة ${finalAmount.toFixed(2)} دولار إلى رصيدك (بعد خصم ${commissionRate}% عمولة)`;
-    
-    const expiry = Date.now() + 30 * 60 * 1000; // 30 دقيقة
+    const expiry = Date.now() + 30 * 60 * 1000;
     currentInvoice = {
         id: Date.now(),
         amount: amount,
         finalAmount: finalAmount,
-        currency: currency,
         expiry: expiry,
         userId: currentUser.email,
         userName: currentUser.name,
         confirmed: false,
-        transferCode: null
+        transferCode: null,
+        paymentMethod: document.getElementById('paymentDetailName').textContent || 'غير محدد'
     };
     
-    document.getElementById('invoiceStatus').innerHTML = `
-        <div style="color:var(--primary);font-weight:bold;">📄 تم إنشاء الفاتورة</div>
-        <div style="color:var(--text-dim);font-size:13px;">المبلغ: ${amount} ${currency}</div>
-        <div style="color:var(--text-dim);font-size:13px;">سيتم إضافة: ${finalAmount.toFixed(2)} دولار</div>
-        <div style="color:var(--warning);font-size:13px;">⏳ يجب تأكيد الدفع خلال 30 دقيقة</div>
-    `;
-    document.getElementById('confirmInvoiceBtn').style.display = 'inline-block';
+    document.getElementById('invoiceAmountDisplay').textContent = amount.toFixed(2) + ' دولار';
+    document.getElementById('invoiceFinalAmountDisplay').textContent = finalAmount.toFixed(2) + ' دولار';
     
-    // بدء العداد
-    if (timerInterval) clearInterval(timerInterval);
+    document.getElementById('invoiceStep1').style.display = 'none';
+    document.getElementById('invoiceStep2').style.display = 'block';
+    document.getElementById('invoiceStatus').textContent = '⏳ يرجى إدخال رقم عملية التحويل';
+    document.getElementById('invoiceStatus').style.color = 'var(--warning)';
+    
+    // بدء العداد الدائري
     let timeLeft = 30 * 60;
+    const totalTime = 30 * 60;
+    if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         timeLeft--;
         const mins = Math.floor(timeLeft / 60);
         const secs = timeLeft % 60;
-        document.getElementById('timerText').textContent = `الوقت المتبقي: ${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+        document.getElementById('timerText').textContent = String(mins).padStart(2,'0') + ':' + String(secs).padStart(2,'0');
+        
+        // تحديث الدائرة
+        const progress = 1 - (timeLeft / totalTime);
+        const circumference = 282.7;
+        const offset = circumference * progress;
+        document.getElementById('timerCircle').style.strokeDashoffset = offset;
+        
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            document.getElementById('timerText').textContent = '⏰ انتهى الوقت!';
-            document.getElementById('invoiceStatus').innerHTML = '<span style="color:var(--danger);">❌ انتهت صلاحية الفاتورة</span>';
-            document.getElementById('confirmInvoiceBtn').style.display = 'none';
+            document.getElementById('timerText').textContent = '00:00';
+            document.getElementById('invoiceStatus').textContent = '❌ انتهى الوقت!';
+            document.getElementById('invoiceStatus').style.color = 'var(--danger)';
+            document.getElementById('confirmInvoiceBtn').disabled = true;
             currentInvoice = null;
+            // حذف الفاتورة من النظام
+            invoices = invoices.filter(inv => inv.id !== currentInvoice?.id);
+            saveData();
         }
     }, 1000);
     
     invoices.push(currentInvoice);
     saveData();
+    document.getElementById('confirmInvoiceBtn').disabled = false;
 }
 
 function confirmInvoice() {
@@ -1218,18 +910,28 @@ function confirmInvoice() {
         return;
     }
     
-    // حفظ رقم التحويل للتحقق اليدوي
     currentInvoice.transferCode = code;
     currentInvoice.confirmed = 'pending';
     saveData();
     
-    document.getElementById('invoiceStatus').innerHTML = `
-        <div style="color:var(--warning);">⏳ جاري التحقق من عملية التحويل...</div>
-        <div style="color:var(--text-dim);font-size:13px;">رقم التحويل: ${code}</div>
-        <div style="color:var(--text-dim);font-size:13px;">سيتم إضافة الرصيد بعد التأكيد اليدوي من قبل الإدارة</div>
-    `;
-    alert('✅ تم استلام رقم التحويل. سيتم إضافة الرصيد بعد التأكيد اليدوي.');
-    closeModal('balanceModal');
+    document.getElementById('invoiceStatus').textContent = '⏳ جاري التحقق من عملية التحويل...';
+    document.getElementById('invoiceStatus').style.color = 'var(--warning)';
+    document.getElementById('confirmInvoiceBtn').disabled = true;
+    
+    setTimeout(() => {
+        alert('✅ تم استلام رقم التحويل. سيتم إضافة الرصيد بعد التأكيد اليدوي من قبل الإدارة.');
+        closeModal('invoiceModal');
+    }, 1500);
+}
+
+function cancelInvoice() {
+    if (!confirm('هل أنت متأكد من إلغاء الفاتورة؟')) return;
+    if (currentInvoice) {
+        invoices = invoices.filter(inv => inv.id !== currentInvoice.id);
+        saveData();
+    }
+    if (timerInterval) clearInterval(timerInterval);
+    closeModal('invoiceModal');
 }
 
 // ===== إدارة الفواتير في لوحة التحكم =====
@@ -1263,7 +965,6 @@ function approveInvoice(id) {
     if (!inv) return;
     if (!confirm('تأكيد إضافة ' + inv.finalAmount.toFixed(2) + ' دولار إلى حساب ' + inv.userName + '؟')) return;
     inv.confirmed = true;
-    // إضافة الرصيد للمستخدم
     const user = users.find(u => u.email === inv.userId);
     if (user) {
         user.balance = (user.balance || 0) + inv.finalAmount;
@@ -1286,73 +987,15 @@ function rejectInvoice(id) {
     alert('✅ تم رفض الفاتورة');
 }
 
-// ===== إدارة طرق الدفع =====
-function renderPaymentMethods() {
-    const container = document.getElementById('paymentMethodsGrid');
-    if (!container) return;
-    container.innerHTML = paymentMethods.map(m => `
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:15px;text-align:center;">
-            ${m.image ? `<img src="${m.image}" style="max-width:100px;max-height:80px;object-fit:contain;border-radius:8px;">` : '<div style="font-size:40px;color:var(--primary);">💳</div>'}
-            <h4 style="color:var(--text);margin:8px 0;">${m.name}</h4>
-            <div style="color:var(--text-dim);font-size:13px;">الرقم: ${m.number}</div>
-        </div>
-    `).join('');
-    
-    const adminContainer = document.getElementById('paymentMethodsListAdmin');
-    if (adminContainer) adminContainer.innerHTML = paymentMethods.map(m => `
-        <div class="admin-product-item">
-            <span>${m.image ? '🖼️' : '💳'} ${m.name} - ${m.number}</span>
-            <button class="btn btn-danger" onclick="deletePaymentMethod(${m.id})">🗑️ حذف</button>
-        </div>
-    `).join('');
-}
-
-function addPaymentMethod() {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    const name = document.getElementById('newPayName').value.trim();
-    const number = document.getElementById('newPayNumber').value.trim();
-    if (!name || !number) return alert('❌ أدخل جميع البيانات');
-    const fileInput = document.getElementById('newPayImage');
-    let imageData = '';
-    if (fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            imageData = e.target.result;
-            savePaymentMethod(name, number, imageData);
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-    } else {
-        savePaymentMethod(name, number, '');
-    }
-}
-
-function savePaymentMethod(name, number, image) {
-    const id = Date.now();
-    paymentMethods.push({ id, name, number, image });
-    saveData(); renderPaymentMethods();
-    document.getElementById('newPayName').value = '';
-    document.getElementById('newPayNumber').value = '';
-    document.getElementById('newPayImage').value = '';
-    alert('✅ تم إضافة طريقة الدفع');
-}
-
-function deletePaymentMethod(id) {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    if (!confirm('هل أنت متأكد؟')) return;
-    paymentMethods = paymentMethods.filter(m => m.id !== id);
-    saveData(); renderPaymentMethods();
-}
-
 // ===== إدارة الطلبات =====
 function renderOrders() {
     const container = document.getElementById('ordersList');
     if (!container) return;
     container.innerHTML = orders.map(o => `
-        <div class="admin-order-item" style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--primary);">
-            <div>🛍️ ${o.productName}</div>
-            <div>💰 ${o.price} $</div>
-            <div>📅 ${o.date}</div>
-            ${o.userInfo ? `<div style="background:var(--bg-card);padding:5px 10px;border-radius:8px;margin-top:5px;font-size:13px;border:1px solid var(--primary);">📝 ${o.userInfo}</div>` : ''}
+        <div style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--primary);">
+            <div>🛍️ ${o.productName || 'طلب'}</div>
+            <div>💰 ${o.amount || o.price || 0} دولار</div>
+            <div>📅 ${o.date || new Date().toLocaleDateString('ar')}</div>
             <div>الحالة: <span style="color:${o.status === 'مكتمل' ? 'var(--success)' : o.status === 'مرفوض' ? 'var(--danger)' : 'var(--warning)'};">${o.status || 'قيد التنفيذ'}</span></div>
         </div>
     `).join('') || '<p style="text-align:center;color:var(--text-dim);">لا توجد طلبات</p>';
@@ -1362,12 +1005,11 @@ function renderOrdersAdmin() {
     const container = document.getElementById('ordersListAdmin');
     if (!container) return;
     container.innerHTML = orders.map(o => `
-        <div class="admin-order-item" style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--primary);">
-            <div>🛍️ ${o.productName}</div>
-            <div>💰 ${o.price} $</div>
-            <div>📅 ${o.date}</div>
+        <div style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--primary);">
+            <div>🛍️ ${o.productName || 'طلب'}</div>
+            <div>💰 ${o.amount || o.price || 0} دولار</div>
+            <div>📅 ${o.date || new Date().toLocaleDateString('ar')}</div>
             <div>👤 ${o.userName || 'غير معروف'}</div>
-            ${o.userInfo ? `<div style="background:var(--bg-card);padding:5px 10px;border-radius:8px;margin-top:5px;font-size:13px;border:1px solid var(--primary);">📝 ${o.userInfo}</div>` : ''}
             <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;">
                 <span style="color:${o.status === 'مكتمل' ? 'var(--success)' : o.status === 'مرفوض' ? 'var(--danger)' : 'var(--warning)'};">${o.status || 'قيد التنفيذ'}</span>
                 <button class="btn btn-success" onclick="updateOrderStatus(${o.id}, 'مكتمل')" style="font-size:11px;padding:4px 12px;">✅ مكتمل</button>
@@ -1382,7 +1024,9 @@ function updateOrderStatus(orderId, status) {
     const order = orders.find(o => o.id === orderId);
     if (!order) return;
     order.status = status;
-    saveData(); renderOrders(); renderOrdersAdmin();
+    saveData();
+    renderOrders();
+    renderOrdersAdmin();
     alert('✅ تم تغيير حالة الطلب إلى: ' + status);
 }
 
@@ -1391,7 +1035,7 @@ function renderUsers() {
     const container = document.getElementById('usersList');
     if (!container) return;
     container.innerHTML = users.map(u => `
-        <div class="admin-user-item" style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--info);">
+        <div style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--info);">
             <div><strong>${u.name || 'بدون اسم'}</strong> - ${u.email}</div>
             <div style="font-size:12px;color:var(--text-dim);">📱 ${u.phone || 'لا يوجد'} | 📅 ${u.date || 'غير معروف'}</div>
             <div style="font-size:12px;color:var(--text-dim);">💰 الرصيد: ${u.balance || 0} دولار</div>
@@ -1404,23 +1048,15 @@ function deleteUser(email) {
     if (!isAdmin()) return alert('🔒 فقط المدراء');
     if (!confirm('هل أنت متأكد من حذف هذا المستخدم؟')) return;
     users = users.filter(u => u.email !== email);
-    saveData(); renderUsers(); updateStats();
+    saveData();
+    renderUsers();
+    updateStats();
 }
 
 function updateStats() {
     document.getElementById('statUsers').textContent = users.length;
     document.getElementById('statOrders').textContent = orders.length;
-    document.getElementById('statRevenue').textContent = orders.reduce((sum, o) => sum + (o.price || 0), 0).toFixed(2);
     document.getElementById('statInvoices').textContent = invoices.length;
-}
-
-// ===== تحديث الرصيد =====
-function updateBalance() {
-    const displayBalance = convertCurrency(balance, 'usd', selectedCurrency);
-    document.getElementById('headerBalance').textContent = displayBalance.toFixed(2);
-    document.getElementById('balancePageAmount').textContent = displayBalance.toFixed(2);
-    const currency = currencies.find(c => c.code === selectedCurrency);
-    document.getElementById('currencySymbol').textContent = currency ? currency.symbol : 'دولار';
 }
 
 // ===== تحديث الواجهة =====
@@ -1457,15 +1093,10 @@ function updateUI() {
         adminNavLink.style.display = 'none';
     }
     updateBalance();
-    renderCategories();
-    renderProducts();
-    renderOrders();
     renderPaymentMethods();
-    renderCurrencies();
+    renderOrders();
     renderUsers();
     renderAdminList();
-    renderPlayers();
-    renderSubCategories();
     renderInvoicesAdmin();
     renderOrdersAdmin();
     updateStats();
@@ -1496,7 +1127,7 @@ function register() {
     updateUI();
     closeModal('loginModal');
     alert('✅ تم إنشاء الحساب بنجاح!');
-    showPage('shop');
+    showPage('home');
 }
 
 function login() {
@@ -1520,7 +1151,7 @@ function login() {
         updateUI();
         closeModal('loginModal');
         alert('👋 مرحباً ' + user.name);
-        showPage('shop');
+        showPage('home');
         return;
     }
     alert('❌ الإيميل أو كلمة المرور غير صحيحة، أو الحساب غير موجود');
@@ -1531,7 +1162,7 @@ function logout() {
     localStorage.removeItem('currentUser');
     updateUI();
     alert('👋 تم تسجيل الخروج');
-    showPage('shop');
+    showPage('home');
     toggleSidebar();
 }
 
@@ -1544,7 +1175,7 @@ function showLoginModal() {
 
 function closeModal(id) {
     document.getElementById(id).classList.remove('show');
-    if (id === 'balanceModal' && timerInterval) {
+    if (id === 'invoiceModal' && timerInterval) {
         clearInterval(timerInterval);
     }
 }
@@ -1583,7 +1214,8 @@ function addAdmin() {
     if (!email || !password) return alert('❌ أدخل الإيميل وكلمة المرور');
     if (admins.some(a => a.email === email)) return alert('❌ هذا الإيميل مدير بالفعل');
     admins.push({ email, password, name });
-    saveData(); renderAdminList();
+    saveData();
+    renderAdminList();
     document.getElementById('newAdminEmail').value = '';
     document.getElementById('newAdminPass').value = '';
     document.getElementById('newAdminName').value = '';
@@ -1595,7 +1227,8 @@ function removeAdmin(email) {
     if (email === 'admin@royal.com') return alert('❌ لا يمكن حذف المدير الرئيسي');
     if (!confirm('هل أنت متأكد من حذف هذا المدير؟')) return;
     admins = admins.filter(a => a.email !== email);
-    saveData(); renderAdminList();
+    saveData();
+    renderAdminList();
     alert('✅ تم حذف المدير');
 }
 
@@ -1625,17 +1258,11 @@ function updateMarquee() {
 // ===== لوحة التحكم =====
 function renderAdminPanel() {
     renderUsers();
-    renderCategories();
-    renderProducts();
     renderPaymentMethods();
-    renderCurrencies();
     renderAdminList();
-    renderPlayers();
-    renderSubCategories();
     renderInvoicesAdmin();
     renderOrdersAdmin();
     updateStats();
-    loadColors();
     document.getElementById('commissionRate').value = commissionRate;
     const marqueeTexts = JSON.parse(localStorage.getItem('marqueeTexts'));
     if (marqueeTexts) document.getElementById('marqueeTexts').value = marqueeTexts.join('\n');
@@ -1644,7 +1271,6 @@ function renderAdminPanel() {
 // ===== تهيئة التطبيق =====
 loadData();
 updateUI();
-loadColors();
 const savedCurrency = localStorage.getItem('selectedCurrency');
 if (savedCurrency) {
     selectedCurrency = savedCurrency;
@@ -1656,7 +1282,7 @@ const marqueeTexts = JSON.parse(localStorage.getItem('marqueeTexts'));
 if (marqueeTexts && marqueeTexts.length > 0) {
     document.getElementById('marqueeContent').innerHTML = marqueeTexts.map(t => `<span><i class="fas fa-star"></i> ${t}</span>`).join('');
 }
-console.log('👑 رويال كارد - المتجر الأسطوري جاهز!');
+console.log('👑 رويال كارد جاهز!');
 </script>
 </body>
 </html>
