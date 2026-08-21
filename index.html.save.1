@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رويال كارد - متجر رقمي أسطوري</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ===== الألوان الأساسية (قابلة للتغيير) ===== */
+        :root {
+            --primary: #ffd700;
+            --primary-dark: #c9a800;
+            --bg: #0a0a1a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --text: #ffffff;
+            --text-dim: #aaaaaa;
+            --border: rgba(255, 215, 0, 0.2);
+            --radius: 20px;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            --success: #4caf50;
+            --danger: #ff4444;
+            --danger-bg: rgba(255, 68, 68, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+
+        /* ===== شريط الرصيد العلوي ===== */
+        .top-bar {
+            background: rgba(10, 10, 26, 0.95);
+            padding: 12px 0;
+            border-bottom: 2px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .top-bar .balance {
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .top-bar .balance span {
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+        .top-bar .balance .btn-add {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: 0.3s;
+        }
+
+        .top-bar .balance .btn-add:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        /* ===== التنقل السفلي ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 26, 0.98);
+            border-top: 2px solid var(--primary);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 0;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+        }
+
+        .bottom-nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            flex: 1;
+        }
+
+        .bottom-nav a i {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+
+        .bottom-nav a:hover,
+        .bottom-nav a.active {
+            color: var(--primary);
+        }
+
+        .bottom-nav a.active {
+            color: var(--primary);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* ===== الأزرار ===== */
+        .btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #cc0000;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background: #388e3c;
+        }
+
+        /* ===== الصفحات ===== */
+        .page {
+            display: none;
+            padding: 20px 0 30px;
+            animation: fadeIn 0.4s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        /* ===== الرسالة الخطأ الكبيرة ===== */
+        .error-message {
+            background: var(--danger-bg);
+            border: 3px solid var(--danger);
+            border-radius: var(--radius);
+            padding: 20px 25px;
+            margin: 15px 0;
+            text-align: center;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .error-message i {
+            font-size: 48px;
+            color: var(--danger);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .error-message h3 {
+            color: var(--danger);
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .error-message p {
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-15px);
+            }
+            40% {
+                transform: translateX(15px);
+            }
+            60% {
+                transform: translateX(-10px);
+            }
+            80% {
+                transform: translateX(10px);
+            }
+        }
+
+        /* ===== بطاقات الأقسام ===== */
+        .category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 25px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+        }
+
+        .category-card .category-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: var(--primary);
+            overflow: hidden;
+        }
+
+        .category-card .category-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-card .category-info {
+            padding: 15px 20px;
+        }
+
+        .category-card .category-info h3 {
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .category-card .category-info p {
+            color: var(--text-dim);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* ===== الأقسام الفرعية ===== */
+        .sub-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .sub-category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .sub-category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .sub-category-card .sub-image {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: var(--primary);
+            overflow: hidden;
+        }
+
+        .sub-category-card .sub-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sub-category-card h4 {
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        /* ===== المنتجات ===== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+        }
+
+        .product-card .product-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--primary);
+            overflow: hidden;
+        }
+
+        .product-card .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-card .product-info {
+            padding: 10px;
+        }
+
+        .product-card .product-info h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .product-card .product-info .price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .product-card .product-info .max-qty {
+            color: var(--text-dim);
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        /* ===== طرق الدفع ===== */
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .payment-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .payment-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .payment-card .payment-image {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            background: #0a0a1a;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .payment-card .payment-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .payment-card .payment-image i {
+            font-size: 40px;
+            color: var(--primary);
+        }
+
+        .payment-card h4 {
+            color: var(--text);
+            margin: 8px 0;
+        }
+
+        .payment-card .payment-info {
+            color: var(--text-dim);
+            font-size: 12px;
+            white-space: pre-line;
+        }
+
+        .payment-card .payment-code {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 5px 15px;
+            border-radius: 10px;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 5px 0;
+            font-size: 14px;
+            direction: ltr;
+        }
+
+        /* ===== حاسبة التحويل ===== */
+        .converter-box {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .converter-box .form-group {
+            margin: 15px 0;
+        }
+
+        .converter-box label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-dim);
+        }
+
+        .converter-box input,
+        .converter-box select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #0a0a1a;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .converter-box .result {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid var(--primary);
+            margin-top: 15px;
+        }
+
+        .converter-box .result .amount {
+            font-size: 28px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* ===== النوافذ المنبثقة ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            padding: 25px;
+            border-radius: var(--radius);
+            border: 2px solid var(--primary);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-content .close {
+            position: absolute;
+            top: 10px;
+            left: 18px;
+            font-size: 28px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .modal-content .close:hover {
+            color: var(--primary);
+        }
+
+        .modal-content h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .modal-content input,
+        .modal-content textarea,
+        .modal-content select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #0a0a1a;
+            color: #fff;
+        }
+
+        .modal-content input[type="file"] {
+            padding: 8px;
+            background: transparent;
+        }
+
+        .modal-content .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .modal-content .error-message {
+            margin: 10px 0;
+        }
+
+        /* ===== لوحة التحكم ===== */
+        .admin-panel {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .admin-panel h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .admin-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .admin-card input,
+        .admin-card select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #0a0a1a;
+            color: #fff;
+        }
+
+        .admin-card input[type="file"] {
+            padding: 5px;
+            background: transparent;
+        }
+
+        .admin-product-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-left: 3px solid var(--primary);
+        }
+
+        .admin-order-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+            border-left: 3px solid var(--primary);
+        }
+
+        /* ===== الحالة ===== */
+        .status-pending {
+            color: #ff9800;
+        }
+        .status-completed {
+            color: var(--success);
+        }
+        .status-rejected {
+            color: var(--danger);
+        }
+
+        /* ===== أدوات مساعدة ===== */
+        .text-gold {
+            color: var(--primary);
+        }
+        .mt-20 {
+            margin-top: 20px;
+        }
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .hidden {
+            display: none;
+        }
+
+        /* ===== استجابة للجوال ===== */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            .sub-category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            .payment-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+            .bottom-nav a {
+                font-size: 10px;
+                padding: 4px 6px;
+            }
+            .bottom-nav a i {
+                font-size: 18px;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== شريط الرصيد العلوي ===== -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="balance">
+                <i class="fas fa-wallet"></i>
+                رصيدي: <span id="headerBalance">150</span> <span id="currencySymbol">ريال</span>
+                <button class="btn-add" onclick="showPage('payment')">
+                    <i class="fas fa-plus"></i> إضافة رصيد
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== التنقل السفلي ===== -->
+    <nav class="bottom-nav">
+        <a class="active" onclick="showPage('home')">
+            <i class="fas fa-home"></i> الرئيسية
+        </a>
+        <a onclick="showPage('shop')">
+            <i class="fas fa-store"></i> المتجر
+        </a>
+        <a onclick="showPage('balance')">
+            <i class="fas fa-wallet"></i> الرصيد
+        </a>
+        <a onclick="showPage('payment')">
+            <i class="fas fa-credit-card"></i> الدفع
+        </a>
+        <a onclick="showPage('converter')">
+            <i class="fas fa-exchange-alt"></i> تحويل
+        </a>
+        <a onclick="showPage('orders')">
+            <i class="fas fa-list"></i> طلباتي
+        </a>
+        <a onclick="showPage('admin')" style="color:var(--primary);">
+            <i class="fas fa-cog"></i> إدارة
+        </a>
+    </nav>
+
+    <div class="container">
+
+        <!-- ===== الصفحة الرئيسية ===== -->
+        <section id="page-home" class="page active">
+            <div style="text-align:center;padding:30px 0;">
+                <h1 style="font-size:36px;color:var(--primary);">🛍️ رويال كارد</h1>
+                <p style="font-size:18px;color:var(--text-dim);margin:15px 0;" id="homeDescription">أفضل الخدمات الرقمية بجودة عالية</p>
+                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                    <button class="btn btn-primary" onclick="showPage('shop')">🛍️ تسوق الآن</button>
+                    <button class="btn btn-secondary" onclick="showPage('payment')">💰 إضافة رصيد</button>
+                    <button class="btn btn-secondary" onclick="showPage('converter')">💱 تحويل العملات</button>
+                    <button class="btn btn-secondary" onclick="showPage('admin')">🔧 إدارة</button>
+                </div>
+                <div style="margin-top:30px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+                    <div style="background:var(--bg-card);padding:15px 25px;border-radius:15px;border:1px solid var(--border);">
+                        <div style="font-size:24px;color:var(--primary);">⭐</div>
+                        <div style="font-weight:bold;">4.9/5</div>
+                        <div style="font-size:12px;color:var(--text-dim);">تقييم العملاء</div>
+                    </div>
+                    <div style="background:var(--bg-card);padding:15px 25px;border-radius:15px;border:1px solid var(--border);">
+                        <div style="font-size:24px;color:var(--primary);">✅</div>
+                        <div style="font-weight:bold;">100%</div>
+                        <div style="font-size:12px;color:var(--text-dim);">ضمان الجودة</div>
+                    </div>
+                    <div style="background:var(--bg-card);padding:15px 25px;border-radius:15px;border:1px solid var(--border);">
+                        <div style="font-size:24px;color:var(--primary);">⚡</div>
+                        <div style="font-weight:bold;">فوري</div>
+                        <div style="font-size:12px;color:var(--text-dim);">توصيل الخدمة</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== صفحة المتجر ===== -->
+        <section id="page-shop" class="page">
+            <h2 class="section-title">🛍️ المتجر</h2>
+            <div id="categoriesContainer"></div>
+        </section>
+
+        <!-- ===== صفحة الرصيد ===== -->
+        <section id="page-balance" class="page">
+            <h2 class="section-title">💰 الرصيد</h2>
+            <div style="text-align:center;background:var(--bg-card);border:2px solid var(--primary);border-radius:var(--radius);padding:30px;max-width:400px;margin:auto;">
+                <i class="fas fa-wallet" style="font-size:60px;color:var(--primary);"></i>
+                <div style="font-size:36px;color:var(--primary);font-weight:bold;margin:15px 0;" id="balancePageAmount">150</div>
+                <div style="color:var(--text-dim);">رصيدك الحالي</div>
+                <button class="btn btn-primary mt-20" onclick="showPage('payment')">💰 إضافة رصيد</button>
+            </div>
+            <div style="margin-top:30px;">
+                <h3 style="color:var(--primary);text-align:center;">طرق الدفع المتاحة</h3>
+                <div class="payment-grid" id="paymentMethodsGrid"></div>
+            </div>
+        </section>
+
+        <!-- ===== صفحة الدفع ===== -->
+        <section id="page-payment" class="page">
+            <h2 class="section-title">💳 طرق الدفع</h2>
+            <div class="payment-grid" id="paymentMethodsGrid2"></div>
+            <div style="text-align:center;margin-top:20px;">
+                <button class="btn btn-primary" onclick="showAddBalanceModal()">💰 إضافة رصيد</button>
+            </div>
+        </section>
+
+        <!-- ===== صفحة تحويل العملات ===== -->
+        <section id="page-converter" class="page">
+            <h2 class="section-title">💱 تحويل العملات</h2>
+            <div class="converter-box">
+                <h3 style="color:var(--primary);text-align:center;margin-bottom:15px;">حاسبة الصرف</h3>
+                <div class="form-group">
+                    <label>💵 المبلغ بالعملة الأجنبية</label>
+                    <input type="number" id="convertAmount" placeholder="أدخل المبلغ" min="0.5" step="0.01" oninput="calculateConversion()">
+                    <div style="font-size:12px;color:var(--text-dim);margin-top:5px;">⚠️ أقل قيمة مسموحة: 0.50 دولار (نصف دولار)</div>
+                </div>
+                <div class="form-group">
+                    <label>🌍 اختر العملة</label>
+                    <select id="convertCurrency" onchange="calculateConversion()">
+                        <option value="usd">🇺🇸 دولار أمريكي (USD)</option>
+                        <option value="eur">🇪🇺 يورو (EUR)</option>
+                        <option value="gbp">🇬🇧 جنيه إسترليني (GBP)</option>
+                        <option value="try">🇹🇷 ليرة تركية (TRY)</option>
+                        <option value="jod">🇯🇴 دينار أردني (JOD)</option>
+                        <option value="aed">🇦🇪 درهم إماراتي (AED)</option>
+                        <option value="egp">🇪🇬 جنيه مصري (EGP)</option>
+                        <option value="sar">🇸🇦 ريال سعودي (SAR)</option>
+                    </select>
+                </div>
+                <div class="result">
+                    <div style="color:var(--text-dim);">🇸🇾 يساوي بالليرة السورية</div>
+                    <div class="amount" id="convertResult">0.00</div>
+                    <div style="font-size:12px;color:var(--text-dim);margin-top:5px;">سعر الصرف: <span id="exchangeRateDisplay">1 دولار = 15000 ليرة</span></div>
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:20px;">
+                <p style="color:var(--text-dim);font-size:14px;">⚠️ هذه الأسعار تقريبية ويتم تحديثها من قبل المشرف</p>
+            </div>
+        </section>
+
+        <!-- ===== صفحة طلباتي ===== -->
+        <section id="page-orders" class="page">
+            <h2 class="section-title">📋 طلباتي</h2>
+            <div id="ordersList"></div>
+        </section>
+
+        <!-- ===== صفحة الإدارة ===== -->
+        <section id="page-admin" class="page">
+            <h2 class="section-title">🔧 لوحة التحكم</h2>
+
+            <!-- إدارة العملة وسعر الصرف -->
+            <div class="admin-panel">
+                <h3>💱 إدارة العملة وسعر الصرف</h3>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                    <input type="text" id="currencyInput" value="ريال" style="padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;flex:1;" placeholder="اسم العملة المحلية">
+                    <button class="btn btn-primary" onclick="updateCurrency()">تحديث العملة</button>
+                </div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px;">
+                    <select id="exchangeCurrencySelect" style="padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;flex:1;">
+                        <option value="usd">🇺🇸 دولار أمريكي (USD)</option>
+                        <option value="eur">🇪🇺 يورو (EUR)</option>
+                        <option value="gbp">🇬🇧 جنيه إسترليني (GBP)</option>
+                        <option value="try">🇹🇷 ليرة تركية (TRY)</option>
+                        <option value="jod">🇯🇴 دينار أردني (JOD)</option>
+                        <option value="aed">🇦🇪 درهم إماراتي (AED)</option>
+                        <option value="egp">🇪🇬 جنيه مصري (EGP)</option>
+                        <option value="sar">🇸🇦 ريال سعودي (SAR)</option>
+                    </select>
+                    <input type="number" id="exchangeRateInput" placeholder="سعر الصرف" style="padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;flex:1;">
+                    <button class="btn btn-primary" onclick="updateExchangeRate()">تحديث السعر</button>
+                </div>
+            </div>
+
+            <!-- إدارة الأقسام الرئيسية -->
+            <div class="admin-panel">
+                <h3>📂 إدارة الأقسام الرئيسية</h3>
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h4>➕ إضافة قسم رئيسي</h4>
+                        <input type="text" id="newCategoryName" placeholder="اسم القسم">
+                        <input type="file" id="newCategoryImage" accept="image/*">
+                        <button class="btn btn-primary" onclick="addCategory()">إضافة</button>
+                    </div>
+                    <div class="admin-card">
+                        <h4>🗑️ حذف قسم رئيسي</h4>
+                        <select id="deleteCategorySelect"></select>
+                        <button class="btn btn-danger" onclick="deleteCategory()">حذف</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة الأقسام الفرعية -->
+            <div class="admin-panel">
+                <h3>📂 إدارة الأقسام الفرعية</h3>
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h4>➕ إضافة قسم فرعي</h4>
+                        <select id="subCategoryParentSelect"></select>
+                        <input type="text" id="newSubCategoryName" placeholder="اسم القسم الفرعي">
+                        <input type="file" id="newSubCategoryImage" accept="image/*">
+                        <button class="btn btn-primary" onclick="addSubCategory()">إضافة</button>
+                    </div>
+                    <div class="admin-card">
+                        <h4>🗑️ حذف قسم فرعي</h4>
+                        <select id="deleteSubCategorySelect"></select>
+                        <button class="btn btn-danger" onclick="deleteSubCategory()">حذف</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة المنتجات -->
+            <div class="admin-panel">
+                <h3>📦 إدارة المنتجات</h3>
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h4>➕ إضافة منتج</h4>
+                        <select id="productCategorySelect"></select>
+                        <input type="text" id="newProductName" placeholder="اسم المنتج">
+                        <input type="number" id="newProductPrice" placeholder="السعر">
+                        <input type="number" id="newProductMaxQty" placeholder="الحد الأقصى للشراء" value="5">
+                        <input type="text" id="newProductDesc" placeholder="الوصف">
+                        <input type="file" id="newProductImage" accept="image/*">
+                        <button class="btn btn-primary" onclick="addProduct()">إضافة</button>
+                    </div>
+                    <div class="admin-card">
+                        <h4>🗑️ حذف منتج</h4>
+                        <select id="deleteProductCategorySelect"></select>
+                        <select id="deleteProductSelect"></select>
+                        <button class="btn btn-danger" onclick="deleteProduct()">حذف</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة طرق الدفع -->
+            <div class="admin-panel">
+                <h3>💳 إدارة طرق الدفع</h3>
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h4>➕ إضافة طريقة دفع</h4>
+                        <input type="text" id="newPayName" placeholder="الاسم">
+                        <input type="text" id="newPayNumber" placeholder="الرقم">
+                        <input type="text" id="newPayCode" placeholder="رمز الكود">
+                        <input type="file" id="newPayImage" accept="image/*">
+                        <button class="btn btn-primary" onclick="addPaymentMethod()">إضافة</button>
+                    </div>
+                    <div class="admin-card">
+                        <h4>🗑️ حذف طريقة دفع</h4>
+                        <select id="deletePaymentSelect"></select>
+                        <button class="btn btn-danger" onclick="deletePaymentMethod()">حذف</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة الطلبات -->
+            <div class="admin-panel">
+                <h3>📋
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رويال كارد - متجر رقمي أسطوري</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ===== الألوان الأساسية (قابلة للتغيير) ===== */
+        :root {
+            --primary: #ffd700;
+            --primary-dark: #c9a800;
+            --bg: #0a0a1a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --text: #ffffff;
+            --text-dim: #aaaaaa;
+            --border: rgba(255, 215, 0, 0.2);
+            --radius: 20px;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            --success: #4caf50;
+            --danger: #ff4444;
+            --danger-bg: rgba(255, 68, 68, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+
+        /* ===== شريط الرصيد العلوي ===== */
+        .top-bar {
+            background: rgba(10, 10, 26, 0.95);
+            padding: 12px 0;
+            border-bottom: 2px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .top-bar .balance {
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .top-bar .balance span {
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+        .top-bar .balance .btn-add {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: 0.3s;
+        }
+
+        .top-bar .balance .btn-add:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        /* ===== التنقل السفلي ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 26, 0.98);
+            border-top: 2px solid var(--primary);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 0;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+        }
+
+        .bottom-nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            flex: 1;
+        }
+
+        .bottom-nav a i {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+
+        .bottom-nav a:hover,
+        .bottom-nav a.active {
+            color: var(--primary);
+        }
+
+        .bottom-nav a.active {
+            color: var(--primary);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* ===== الأزرار ===== */
+        .btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #cc0000;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background: #388e3c;
+        }
+
+        /* ===== الصفحات ===== */
+        .page {
+            display: none;
+            padding: 20px 0 30px;
+            animation: fadeIn 0.4s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        /* ===== الرسالة الخطأ الكبيرة ===== */
+        .error-message {
+            background: var(--danger-bg);
+            border: 3px solid var(--danger);
+            border-radius: var(--radius);
+            padding: 20px 25px;
+            margin: 15px 0;
+            text-align: center;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .error-message i {
+            font-size: 48px;
+            color: var(--danger);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .error-message h3 {
+            color: var(--danger);
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .error-message p {
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-15px);
+            }
+            40% {
+                transform: translateX(15px);
+            }
+            60% {
+                transform: translateX(-10px);
+            }
+            80% {
+                transform: translateX(10px);
+            }
+        }
+
+        /* ===== بطاقات الأقسام ===== */
+        .category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 25px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+        }
+
+        .category-card .category-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: var(--primary);
+            overflow: hidden;
+        }
+
+        .category-card .category-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-card .category-info {
+            padding: 15px 20px;
+        }
+
+        .category-card .category-info h3 {
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .category-card .category-info p {
+            color: var(--text-dim);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* ===== الأقسام الفرعية ===== */
+        .sub-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .sub-category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .sub-category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .sub-category-card .sub-image {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: var(--primary);
+            overflow: hidden;
+        }
+
+        .sub-category-card .sub-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sub-category-card h4 {
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        /* ===== المنتجات ===== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+        }
+
+        .product-card .product-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--primary);
+            overflow: hidden;
+        }
+
+        .product-card .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-card .product-info {
+            padding: 10px;
+        }
+
+        .product-card .product-info h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .product-card .product-info .price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .product-card .product-info .max-qty {
+            color: var(--text-dim);
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        /* ===== طرق الدفع ===== */
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .payment-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .payment-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .payment-card .payment-image {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            background: #0a0a1a;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .payment-card .payment-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .payment-card .payment-image i {
+            font-size: 40px;
+            color: var(--primary);
+        }
+
+        .payment-card h4 {
+            color: var(--text);
+            margin: 8px 0;
+        }
+
+        .payment-card .payment-info {
+            color: var(--text-dim);
+            font-size: 12px;
+            white-space: pre-line;
+        }
+
+        .payment-card .payment-code {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 5px 15px;
+            border-radius: 10px;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 5px 0;
+            font-size: 14px;
+            direction: ltr;
+        }
+
+        /* ===== حاسبة التحويل ===== */
+        .converter-box {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .converter-box .form-group {
+            margin: 15px 0;
+        }
+
+        .converter-box label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-dim);
+        }
+
+        .converter-box input,
+        .converter-box select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #0a0a1a;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .converter-box .result {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid var(--primary);
+            margin-top: 15px;
+        }
+
+        .converter-box .result .amount {
+            font-size: 28px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* ===== النوافذ المنبثقة ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            padding: 25px;
+            border-radius: var(--radius);
+            border: 2px solid var(--primary);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-content .close {
+            position: absolute;
+            top: 10px;
+            left: 18px;
+            font-size: 28px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .modal-content .close:hover {
+            color: var(--primary);
+        }
+
+        .modal-content h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .modal-content input,
+        .modal-content textarea,
+        .modal-content select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #0a0a1a;
+            color: #fff;
+        }
+
+        .modal-content input[type="file"] {
+            padding: 8px;
+            background: transparent;
+        }
+
+        .modal-content .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .modal-content .error-message {
+            margin: 10px 0;
+        }
+
+        /* ===== لوحة التحكم ===== */
+        .admin-panel {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .admin-panel h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .admin-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .admin-card input,
+        .admin-card select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #0a0a1a;
+            color: #fff;
+        }
+
+        .admin-card input[type="file"] {
+            padding: 5px;
+            background: transparent;
+        }
+
+        .admin-product-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-left: 3px solid var(--primary);
+        }
+
+        .admin-order-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+            border-left: 3px solid var(--primary);
+        }
+
+        /* ===== الحالة ===== */
+        .status-pending {
+            color: #ff9800;
+        }
+        .status-completed {
+            color: var(--success);
+        }
+        .status-rejected {
+            color: var(--danger);
+        }
+
+        /* ===== أدوات مساعدة ===== */
+        .text-gold {
+            color: var(--primary);
+        }
+        .mt-20 {
+            margin-top: 20px;
+        }
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .hidden {
+            display: none;
+        }
+
+        /* ===== استجابة للجوال ===== */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            .sub-category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            .payment-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+            .bottom-nav a {
+                font-size: 10px;
+                padding: 4px 6px;
+            }
+            .bottom-nav a i {
+                font-size: 18px;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== شريط الرصيد العلوي ===== -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="balance">
+                <i class="fas fa-wallet"></i>
+                رصيدي: <span id="headerBalance">150</span> <span id="currencySymbol">ريال</span>
+                <button class="btn-add" onclick="showPage('payment')">
+                    <i class="fas fa-plus"></i> إضافة رصيد
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== التنقل السفلي ===== -->
+    <nav class="bottom-nav">
+        <a class="active" onclick="showPage('home')">
+            <i class="fas fa-home"></i> الرئيسية
+        </a>
+        <a onclick="showPage('shop')">
+            <i class="fas fa-store"></i> المتجر
+        </a>
+        <a onclick="showPage('balance')">
+            <i class="fas fa-wallet"></i> الرصيد
+        </a>
+        <a onclick="showPage('payment')">
+            <i class="fas fa-credit-card"></i> الدفع
+        </a>
+        <a onclick="showPage('converter')">
+            <i class="fas fa-exchange-alt"></i> تحويل
+        </a>
+        <a onclick="showPage('orders')">
+            <i class="fas fa-list"></i> طلباتي
+        </a>
+        <a onclick="showPage('admin')" style="color:var(--primary);">
+            <i class="fas fa-cog"></i> إدارة
+        </a>
+    </nav>
+
+    <div class="container">
+
+        <!-- ===== الصفحة الرئيسية ===== -->
+        <section id="page-home" class="page active">
+            <div style="text-align:center;padding:30px 0;">
+                <h1 style="font-size:36px;color:var(--primary);">🛍️ رويال كارد</h1>
+                <p style="font-size:18px;color:var(--text-dim);margin:15px 0;" id="homeDescription">أفضل الخدمات الرقمية بجودة عالية</p>
+                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                    <button class="btn btn-primary" onclick="showPage('shop')">🛍️ تسوق الآن</button>
+                    <button class="btn btn-secondary" onclick="showPage('payment')">💰 إضافة رصيد</button>
+                    <button class="btn btn-secondary" onclick="showPage('converter')">💱 تحويل العملات</button>
+                    <button class="btn btn-secondary" onclick="showPage('admin')">🔧 إدارة</button>
+                </div>
+                <div style="margin-top:30px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+                    <div style="background:var(--bg-card);padding:15px 25px;border-radius:15px;border:1px solid var(--border);">
+                        <div style="font-size:24px;color:var(--primary);">⭐</div>
+                        <div style="font-weight:bold;">4.9/5</div>
+                        <div style="font-size:12px;color:var(--text-dim);">تقييم العملاء</div>
+                    </div>
+                    <div style="background:var(--bg-card);padding:15px 25px;border-radius:15px;border:1px solid var(--border);">
+                        <div style="font-size:24px;color:var(--primary);">✅</div>
+                        <div style="font-weight:bold;">100%</div>
+                        <div style="font-size:12px;color:var(--text-dim);">ضمان الجودة</div>
+                    </div>
+                    <div style="background:var(--bg-card);padding:15px 25px;border-radius:15px;border:1px solid var(--border);">
+                        <div style="font-size:24px;color:var(--primary);">⚡</div>
+                        <div style="font-weight:bold;">فوري</div>
+                        <div style="font-size:12px;color:var(--text-dim);">توصيل الخدمة</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== صفحة المتجر ===== -->
+        <section id="page-shop" class="page">
+            <h2 class="section-title">🛍️ المتجر</h2>
+            <div id="categoriesContainer"></div>
+        </section>
+
+        <!-- ===== صفحة الرصيد ===== -->
+        <section id="page-balance" class="page">
+            <h2 class="section-title">💰 الرصيد</h2>
+            <div style="text-align:center;background:var(--bg-card);border:2px solid var(--primary);border-radius:var(--radius);padding:30px;max-width:400px;margin:auto;">
+                <i class="fas fa-wallet" style="font-size:60px;color:var(--primary);"></i>
+                <div style="font-size:36px;color:var(--primary);font-weight:bold;margin:15px 0;" id="balancePageAmount">150</div>
+                <div style="color:var(--text-dim);">رصيدك الحالي</div>
+                <button class="btn btn-primary mt-20" onclick="showPage('payment')">💰 إضافة رصيد</button>
+            </div>
+            <div style="margin-top:30px;">
+                <h3 style="color:var(--primary);text-align:center;">طرق الدفع المتاحة</h3>
+                <div class="payment-grid" id="paymentMethodsGrid"></div>
+            </div>
+        </section>
+
+        <!-- ===== صفحة الدفع ===== -->
+        <section id="page-payment" class="page">
+            <h2 class="section-title">💳 طرق الدفع</h2>
+            <div class="payment-grid" id="paymentMethodsGrid2"></div>
+            <div style="text-align:center;margin-top:20px;">
+                <button class="btn btn-primary" onclick="showAddBalanceModal()">💰 إضافة رصيد</button>
+            </div>
+        </section>
+
+        <!-- ===== صفحة تحويل العملات ===== -->
+        <section id="page-converter" class="page">
+            <h2 class="section-title">💱 تحويل العملات</h2>
+            <div class="converter-box">
+                <h3 style="color:var(--primary);text-align:center;margin-bottom:15px;">حاسبة الصرف</h3>
+                <div class="form-group">
+                    <label>💵 المبلغ بالعملة الأجنبية</label>
+                    <input type="number" id="convertAmount" placeholder="أدخل المبلغ" min="0.5" step="0.01" oninput="calculateConversion()">
+                    <div style="font-size:12px;color:var(--text-dim);margin-top:5px;">⚠️ أقل قيمة مسموحة: 0.50 دولار (نصف دولار)</div>
+                </div>
+                <div class="form-group">
+                    <label>🌍 اختر العملة</label>
+                    <select id="convertCurrency" onchange="calculateConversion()">
+                        <option value="usd">🇺🇸 دولار أمريكي (USD)</option>
+                        <option value="eur">🇪🇺 يورو (EUR)</option>
+                        <option value="gbp">🇬🇧 جنيه إسترليني (GBP)</option>
+                        <option value="try">🇹🇷 ليرة تركية (TRY)</option>
+                        <option value="jod">🇯🇴 دينار أردني (JOD)</option>
+                        <option value="aed">🇦🇪 درهم إماراتي (AED)</option>
+                        <option value="egp">🇪🇬 جنيه مصري (EGP)</option>
+                        <option value="sar">🇸🇦 ريال سعودي (SAR)</option>
+                    </select>
+                </div>
+                <div class="result">
+                    <div style="color:var(--text-dim);">🇸🇾 يساوي بالليرة السورية</div>
+                    <div class="amount" id="convertResult">0.00</div>
+                    <div style="font-size:12px;color:var(--text-dim);margin-top:5px;">سعر الصرف: <span id="exchangeRateDisplay">1 دولار = 15000 ليرة</span></div>
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:20px;">
+                <p style="color:var(--text-dim);font-size:14px;">⚠️ هذه الأسعار تقريبية ويتم تحديثها من قبل المشرف</p>
+            </div>
+        </section>
+
+        <!-- ===== صفحة طلباتي ===== -->
+        <section id="page-orders" class="page">
+            <h2 class="section-title">📋 طلباتي</h2>
+            <div id="ordersList"></div>
+        </section>
+
+        <!-- ===== صفحة الإدارة ===== -->
+        <section id="page-admin" class="page">
+            <h2 class="section-title">🔧 لوحة التحكم</h2>
+
+            <!-- إدارة العملة وسعر الصرف -->
+            <div class="admin-panel">
+                <h3>💱 إدارة العملة وسعر الصرف</h3>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                    <input type="text" id="currencyInput" value="ريال" style="padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;flex:1;" placeholder="اسم العملة المحلية">
+                    <button class="btn btn-primary" onclick="updateCurrency()">تحديث العملة</button>
+                </div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px;">
+                    <select id="exchangeCurrencySelect" style="padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;flex:1;">
+                        <option value="usd">🇺🇸 دولار أمريكي (USD)</option>
+                        <option value="eur">🇪🇺 يورو (EUR)</option>
+                        <option value="gbp">🇬🇧 جنيه إسترليني (GBP)</option>
+                        <option value="try">🇹🇷 ليرة تركية (TRY)</option>
+                        <option value="jod">🇯🇴 دينار أردني (JOD)</option>
+                        <option value="aed">🇦🇪 درهم إماراتي (AED)</option>
+                        <option value="egp">🇪🇬 جنيه مصري (EGP)</option>
+                        <option value="sar">🇸🇦 ريال سعودي (SAR)</option>
+                    </select>
+                    <input type="number" id="exchangeRateInput" placeholder="سعر الصرف" style="padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;flex:1;">
+                    <button class="btn btn-primary" onclick="updateExchangeRate()">تحديث السعر</button>
+                </div>
+            </div>
+
+            <!-- إدارة الأقسام الرئيسية -->
+            <div class="admin-panel">
+                <h3>📂 إدارة الأقسام الرئيسية</h3>
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h4>➕ إضافة قسم رئيسي</h4>
+                        <input type="text" id="newCategoryName" placeholder="اسم القسم">
+                        <input type="file" id="newCategoryImage" accept="image/*">
+                        <button class="btn btn-primary" onclick="addCategory()">إضافة</button>
+                    </div>
+                    <div class="admin-card">
+                        <h4>🗑️ حذف قسم رئيسي</h4>
+                        <select id="deleteCategorySelect"></select>
+                        <button class="btn btn-danger" onclick="deleteCategory()">حذف</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة الأقسام الفرعية -->
+            <div class="admin-panel">
+                <h3>📂 إدارة الأقسام الفرعية</h3>
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h4>➕ إضافة قسم فرعي</h4>
+                        <select id="subCategoryParentSelect"></select>
+                        <input type="text" id="newSubCategoryName" placeholder="اسم القسم الفرعي">
+                        <input type="file" id="newSubCategoryImage" accept="image/*">
+                        <button class="btn btn-primary" onclick="addSubCategory()">إضافة</button>
+                    </div>
+                    <div class="admin-card">
+                        <h4>🗑️ حذف قسم فرعي</h4>
+                        <select id="deleteSubCategorySelect"></select>
+                        <button class="btn btn-danger" onclick="deleteSubCategory()">حذف</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة المنتجات -->
+            <div class="admin-panel">
+                <h3>📦 إدارة المنتجات</h3>
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h4>➕ إضافة منتج</h4>
+                        <select id="productCategorySelect"></select>
+                        <input type="text" id="newProductName" placeholder="اسم المنتج">
+                        <input type="number" id="newProductPrice" placeholder="السعر">
+                        <input type="number" id="newProductMaxQty" placeholder="الحد الأقصى للشراء" value="5">
+                        <input type="text" id="newProductDesc" placeholder="الوصف">
+                        <input type="file" id="newProductImage" accept="image/*">
+                        <button class="btn btn-primary" onclick="addProduct()">إضافة</button>
+                    </div>
+                    <div class="admin-card">
+                        <h4>🗑️ حذف منتج</h4>
+                        <select id="deleteProductCategorySelect"></select>
+                        <select id="deleteProductSelect"></select>
+                        <button class="btn btn-danger" onclick="deleteProduct()">حذف</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة طرق الدفع -->
+            <div class="admin-panel">
+                <h3>💳 إدارة طرق الدفع</h3>
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h4>➕ إضافة طريقة دفع</h4>
+                        <input type="text" id="newPayName" placeholder="الاسم">
+                        <input type="text" id="newPayNumber" placeholder="الرقم">
+                        <input type="text" id="newPayCode" placeholder="رمز الكود">
+                        <input type="file" id="newPayImage" accept="image/*">
+                        <button class="btn btn-primary" onclick="addPaymentMethod()">إضافة</button>
+                    </div>
+                    <div class="admin-card">
+                        <h4>🗑️ حذف طريقة دفع</h4>
+                        <select id="deletePaymentSelect"></select>
+                        <button class="btn btn-danger" onclick="deletePaymentMethod()">حذف</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة الطلبات -->
+            <div class="admin-panel">
+                <h3>📋
