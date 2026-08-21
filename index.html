@@ -36,339 +36,12 @@
         .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite alternate; }
         @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
         
-        .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.8s ease, transform 0.8s ease; }
-        .splash-screen.hide { opacity: 0; transform: scale(1.1); pointer-events: none; }
-        .splash-screen .logo { font-size: 80px; animation: pulse 1.5s ease-in-out infinite; text-shadow: 0 0 60px var(--primary-glow); }
-        .splash-screen h1 { font-size: 36px; font-weight: 900; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 10px; }
-        .splash-screen .sub { color: var(--text-dim); font-size: 16px; margin-top: 5px; }
-        .splash-screen .loader { margin-top: 30px; width: 50px; height: 50px; border: 4px solid var(--bg-card); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .marquee-bar { background: var(--gradient-gold); background-size: 200% 200%; animation: shimmer 3s ease-in-out infinite; color: var(--text-dark); padding: 8px 0; font-weight: 700; overflow: hidden; white-space: nowrap; position: sticky; top: 0; z-index: 1001; }
-        @keyframes shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .marquee-bar .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
-        .marquee-bar span { margin: 0 40px; font-size: 14px; }
-        .marquee-bar span i { margin: 0 5px; }
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        
-        .top-bar { background: rgba(10,10,26,0.95); padding: 10px 20px; border-bottom: 2px solid var(--primary); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; position: sticky; top: 38px; z-index: 1000; backdrop-filter: blur(10px); }
-        .top-bar .balance { color: var(--primary); font-size: 16px; font-weight: 600; }
-        .top-bar .balance span { font-weight: 900; font-size: 22px; background: rgba(255,215,0,0.1); padding: 2px 12px; border-radius: 20px; }
-        .top-bar .btn-add { background: var(--gradient-gold); color: var(--text-dark); border: none; border-radius: 30px; padding: 6px 18px; font-weight: 700; cursor: pointer; transition: var(--transition); font-size: 13px; }
-        .top-bar .btn-add:hover { transform: scale(1.05); box-shadow: var(--shadow-gold); }
-        
-        .hamburger { position: fixed; top: 45px; left: 15px; z-index: 1002; cursor: pointer; background: var(--bg-card); border: 2px solid var(--primary); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 5px; transition: var(--transition); box-shadow: var(--shadow); }
-        .hamburger:hover { border-color: var(--primary-light); box-shadow: var(--shadow-gold); }
-        .hamburger span { display: block; width: 28px; height: 3px; background: var(--primary); border-radius: 5px; transition: var(--transition); }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; transform: scale(0); }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-        
-        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; display: none; }
-        .sidebar-overlay.active { display: block; }
-        .sidebar { position: fixed; top: 0; right: -320px; width: 300px; height: 100%; background: var(--bg); border-left: 3px solid var(--primary); z-index: 1002; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 20px; overflow-y: auto; box-shadow: -10px 0 40px rgba(0,0,0,0.5); }
-        .sidebar.active { right: 0; }
-        .sidebar .sidebar-close { background: none; border: none; color: var(--text); font-size: 28px; cursor: pointer; float: left; transition: var(--transition); }
-        .sidebar .sidebar-close:hover { color: var(--primary); transform: rotate(90deg); }
-        .sidebar .profile-section { text-align: center; padding: 20px 0 15px; border-bottom: 2px solid var(--border); margin-bottom: 15px; }
-        .sidebar .profile-avatar { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary); margin: 0 auto 10px; overflow: hidden; background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-size: 40px; color: var(--primary); cursor: pointer; transition: var(--transition); position: relative; }
-        .sidebar .profile-avatar:hover { border-color: var(--primary-light); box-shadow: var(--shadow-gold); }
-        .sidebar .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .sidebar .profile-name { font-size: 20px; font-weight: 700; color: var(--primary); }
-        .sidebar .profile-email { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
-        .sidebar .menu-items { list-style: none; padding: 0; }
-        .sidebar .menu-items li { padding: 12px 15px; border-radius: var(--radius); cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 12px; color: var(--text); margin-bottom: 3px; border: 1px solid transparent; }
-        .sidebar .menu-items li:hover { background: var(--bg-hover); border-color: var(--primary); color: var(--primary); }
-        .sidebar .menu-items li i { width: 22px; font-size: 18px; color: var(--primary); }
-        .sidebar .currency-section { margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--border); }
-        .sidebar .currency-section h4 { color: var(--text-dim); font-size: 13px; margin-bottom: 8px; }
-        .sidebar .currency-section .currency-item { padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: var(--transition); display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
-        .sidebar .currency-section .currency-item:hover { background: var(--bg-hover); }
-        .sidebar .currency-section .currency-item.active { background: var(--bg-hover); border: 1px solid var(--primary); }
-        
-        /* ===== قسم اللغات ===== */
-        .language-section { margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--border); }
-        .language-section h4 { color: var(--text-dim); font-size: 13px; margin-bottom: 8px; }
-        .language-section .lang-item { padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: var(--transition); display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
-        .language-section .lang-item:hover { background: var(--bg-hover); }
-        .language-section .lang-item.active { background: var(--bg-hover); border: 1px solid var(--primary); }
-        
-        .sidebar .logout-btn { margin-top: 20px; padding: 12px; background: rgba(255,68,68,0.15); border: 1px solid var(--danger); border-radius: var(--radius); color: var(--danger); text-align: center; cursor: pointer; transition: var(--transition); font-weight: 600; }
-        .sidebar .logout-btn:hover { background: var(--danger); color: #fff; }
-        
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,26,0.98); border-top: 2px solid var(--primary); display: flex; justify-content: space-around; padding: 8px 0; z-index: 999; backdrop-filter: blur(10px); }
-        .bottom-nav a { color: var(--text-dim); text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 10px; cursor: pointer; padding: 4px 8px; border-radius: 12px; transition: var(--transition); background: transparent; border: none; flex: 1; }
-        .bottom-nav a i { font-size: 22px; transition: var(--transition); }
-        .bottom-nav a:hover, .bottom-nav a.active { color: var(--primary); }
-        .bottom-nav a.active i { transform: translateY(-2px); }
-        
-        .container { max-width: 900px; margin: auto; padding: 20px 15px 80px; position: relative; z-index: 1; }
-        .section-title { text-align: center; font-size: 28px; color: var(--primary); margin-bottom: 25px; position: relative; }
-        .section-title::after { content: ''; display: block; width: 60px; height: 3px; background: var(--gradient-gold); margin: 8px auto 0; border-radius: 10px; }
-        .page { display: none; animation: fadeIn 0.5s ease; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .btn { padding: 10px 24px; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
-        .btn-primary { background: var(--gradient-gold); color: var(--text-dark); }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: var(--shadow-gold); }
-        .btn-danger { background: var(--danger); color: #fff; }
-        .btn-danger:hover { background: #cc0000; }
-        .btn-success { background: var(--success); color: #fff; }
-        .btn-success:hover { background: #388e3c; }
-        .btn-secondary { background: var(--bg-card); color: var(--text); border: 2px solid var(--border); }
-        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
-        .btn-block { width: 100%; justify-content: center; }
-        .btn-back { background: var(--bg-card); color: var(--primary); border: 1px solid var(--primary); }
-        .btn-back:hover { background: var(--primary); color: var(--text-dark); }
-        
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        @media (max-width: 768px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .grid-3 { grid-template-columns: 1fr; } }
-        
-        /* ===== البطاقات ===== */
-        .category-card, .subcategory-card, .product-card, .payment-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: var(--transition);
-            cursor: pointer;
-            text-align: center;
-            padding: 15px;
-        }
-        .category-card:hover, .subcategory-card:hover, .product-card:hover, .payment-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-gold);
-        }
-        
-        .category-card .cat-image, .subcategory-card .sub-image, 
-        .product-card .product-image, .payment-card .pm-image {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 8px;
-            background: rgba(255,215,0,0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-        .category-card .cat-image img, .subcategory-card .sub-image img,
-        .product-card .product-image img, .payment-card .pm-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .product-card .product-image.unavailable {
-            filter: grayscale(100%);
-            opacity: 0.6;
-        }
-        .product-card .product-image-wrapper { position: relative; }
-        .product-card .unavailable-overlay {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.7);
-            color: var(--danger);
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            border: 2px solid var(--danger);
-            text-align: center;
-            z-index: 5;
-        }
-        
-        .category-card .cat-name, .subcategory-card .sub-name,
-        .product-card .product-info h4, .payment-card .pm-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text);
-            margin-top: 8px;
-        }
-        .category-card .cat-count, .subcategory-card .sub-count { 
-            font-size: 12px; 
-            color: var(--text-dim); 
-        }
-        .product-card .product-info .price { 
-            color: var(--primary); 
-            font-weight: 700; 
-            font-size: 16px; 
-            margin-top: 3px; 
-        }
-        .product-card .product-info .unavailable-text {
-            color: var(--danger);
-            font-weight: 700;
-            font-size: 14px;
-            margin-top: 3px;
-        }
-        .payment-card .pm-number { 
-            font-size: 13px; 
-            color: var(--text-dim); 
-            margin-top: 3px; 
-        }
-        
-        /* ===== نافذة تثبيت التطبيق ===== */
-        .install-popup {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg);
-            border: 2px solid var(--primary);
-            border-radius: var(--radius);
-            padding: 20px 25px;
-            z-index: 9999;
-            backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-gold);
-            display: none;
-            align-items: center;
-            gap: 15px;
-            max-width: 400px;
-            width: 90%;
-            animation: slideUp 0.5s ease;
-        }
-        .install-popup.show { display: flex; }
-        @keyframes slideUp { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-        .install-popup .app-icon { width: 60px; height: 60px; border-radius: 15px; overflow: hidden; flex-shrink: 0; border: 2px solid var(--primary); }
-        .install-popup .app-icon img { width: 100%; height: 100%; object-fit: cover; }
-        .install-popup .app-icon .default-icon { font-size: 40px; color: var(--primary); display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: var(--bg); }
-        .install-popup .app-info { flex: 1; }
-        .install-popup .app-info h4 { color: var(--primary); font-size: 16px; margin-bottom: 2px; }
-        .install-popup .app-info p { color: var(--text-dim); font-size: 12px; }
-        .install-popup .install-btn { background: var(--primary); color: var(--text-dark); border: none; border-radius: 30px; padding: 8px 20px; font-weight: 700; cursor: pointer; transition: var(--transition); font-size: 14px; }
-        .install-popup .install-btn:hover { transform: scale(1.05); box-shadow: var(--shadow-gold); }
-        .install-popup .close-popup { background: none; border: none; color: var(--text-dim); font-size: 20px; cursor: pointer; transition: var(--transition); }
-        .install-popup .close-popup:hover { color: var(--danger); transform: rotate(90deg); }
-        
-        /* ===== النوافذ المنبثقة بألوان الموقع ===== */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
-        .modal.show { display: flex; }
-        .modal-content { 
-            background: var(--bg); 
-            padding: 25px; 
-            border-radius: var(--radius); 
-            border: 2px solid var(--primary); 
-            max-width: 500px; 
-            width: 100%; 
-            max-height: 90vh; 
-            overflow-y: auto; 
-            position: relative; 
-            animation: modalIn 0.3s ease;
-            box-shadow: var(--shadow-gold);
-        }
-        @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .modal-content .close { position: absolute; top: 10px; left: 18px; font-size: 28px; color: var(--text); cursor: pointer; transition: var(--transition); }
-        .modal-content .close:hover { color: var(--primary); transform: rotate(90deg); }
-        .modal-content h2 { color: var(--primary); margin-bottom: 15px; text-align: center; }
-        .modal-content input, .modal-content select, .modal-content textarea { 
-            width: 100%; 
-            padding: 10px; 
-            border-radius: 12px; 
-            border: 1px solid var(--border); 
-            background: var(--bg-card); 
-            color: var(--text); 
-            margin-bottom: 10px; 
-            font-family: inherit; 
-        }
-        .modal-content input:focus, .modal-content select:focus, .modal-content textarea:focus { border-color: var(--primary); outline: none; }
-        .modal-content .modal-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
-        .modal-content .error-msg { color: var(--danger); font-size: 14px; text-align: center; margin: 5px 0; }
-        .modal-content .success-msg { color: var(--success); font-size: 14px; text-align: center; margin: 5px 0; }
-        .modal-content .timer-circle { 
-            width: 120px; height: 120px; border-radius: 50%; 
-            border: 8px solid var(--border); 
-            position: relative; 
-            margin: 15px auto; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-        }
-        .modal-content .timer-circle .timer-text { font-size: 28px; font-weight: 700; color: var(--primary); }
-        .modal-content .timer-circle .timer-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
-        .modal-content .timer-circle .timer-svg circle { fill: none; stroke: var(--primary); stroke-width: 8; stroke-dasharray: 314; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear; }
-        .modal-content .invoice-amount-display { 
-            background: var(--bg-card); 
-            padding: 15px; 
-            border-radius: var(--radius); 
-            border: 2px solid var(--primary); 
-            margin: 15px 0; 
-            text-align: center; 
-        }
-        .modal-content .invoice-amount-display .label { color: var(--text-dim); font-size: 14px; }
-        .modal-content .invoice-amount-display .value { font-size: 32px; color: var(--primary); font-weight: 900; }
-        
-        .admin-panel { background: var(--bg-card); border: 2px solid var(--primary); border-radius: var(--radius); padding: 25px; margin-top: 20px; }
-        .admin-panel h3 { color: var(--primary); margin-bottom: 15px; font-size: 20px; }
-        .admin-product-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-left: 3px solid var(--primary); }
-        .admin-user-item { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; margin: 10px 0; border-left: 3px solid var(--info); }
-        .admin-request-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin: 5px 0; border-left: 3px solid var(--warning); }
-        
-        .loading-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; justify-content: center; align-items: center; flex-direction: column; }
-        .loading-screen.show { display: flex; }
-        .loading-screen .clock { font-size: 80px; color: var(--primary); animation: pulse 1.5s ease-in-out infinite; }
-        .loading-screen h3 { color: var(--primary); margin-top: 15px; font-size: 24px; }
-        .loading-screen p { color: var(--text-dim); margin-top: 5px; }
-        
-        .firework { position: fixed; pointer-events: none; z-index: 3001; font-size: 30px; animation: fireworkUp 1.5s ease-out forwards; }
-        @keyframes fireworkUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-200px) scale(0); } }
-        
-        .notification-badge { background: var(--danger); color: #fff; border-radius: 50%; padding: 2px 8px; font-size: 11px; font-weight: 700; margin-right: 5px; }
-        
-        .payment-detail-page { text-align: center; max-width: 500px; margin: auto; padding: 20px; }
-        .payment-detail-page .pd-image { width: 100%; max-height: 250px; object-fit: contain; border-radius: var(--radius); background: var(--bg-card); padding: 20px; margin-bottom: 20px; }
-        .payment-detail-page .pd-image img { width: 100%; height: 100%; object-fit: contain; }
-        .payment-detail-page .pd-name { font-size: 28px; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
-        .payment-detail-page .pd-number { font-size: 16px; color: var(--text-dim); margin-bottom: 20px; }
-        
-        .breadcrumb { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; padding: 10px; background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border); }
-        .breadcrumb span { color: var(--text-dim); font-size: 14px; }
-        .breadcrumb .current { color: var(--primary); font-weight: 700; }
-        .breadcrumb .sep { color: var(--text-dim); }
-        
-        @media (max-width: 768px) {
-            .sidebar { width: 280px; right: -290px; }
-            .hamburger { top: 42px; left: 10px; padding: 8px 10px; }
-            .top-bar { top: 38px; padding: 8px 12px; }
-            .top-bar .balance { font-size: 13px; }
-            .top-bar .balance span { font-size: 16px; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="stars" id="stars"></div>
-<div class="splash-screen" id="splashScreen">
-    <div class="logo">👑</div>
-    <h1 id="siteTitle">رويال كارد</h1>
-    <div class="sub" id="siteSubtitle">المتجر الأسطوري</div>
+    <h1>رويال كارد</h1>
+    <div class="sub">المتجر الأسطوري</div>
     <div class="loader"></div>
 </div>
 
-<div class="install-popup" id="installPopup">
-    <div class="app-icon" id="appIcon">
-        <img id="appIconImg" src="" style="display:none;" alt="أيقونة التطبيق">
-        <div class="default-icon" id="appIconDefault">👑</div>
-    </div>
-    <div class="app-info">
-        <h4 id="appName">رويال كارد</h4>
-        <p>قم بتثبيت التطبيق للوصول السريع</p>
-    </div>
-    <button class="install-btn" onclick="installApp()">تثبيت</button>
-    <button class="close-popup" onclick="closeInstallPopup()">✕</button>
-</div>
-
-<div class="loading-screen" id="loadingScreen">
-    <div class="clock">⏳</div>
-    <h3>جاري المعالجة...</h3>
-    <p>يرجى الانتظار</p>
-</div>
-
+<!-- ===== باقي محتوى الموقع ===== -->
 <div class="marquee-bar">
     <div class="marquee-content" id="marqueeContent">
         <span><i class="fas fa-fire"></i> عروض حصرية بأسعار خيالية</span>
@@ -417,8 +90,6 @@
         <li onclick="showPage('orders')"><i class="fas fa-list"></i> طلباتي</li>
         <li onclick="showPage('admin')" id="adminMenuLink" style="display:none;"><i class="fas fa-cog"></i> إدارة الموقع <span id="adminNotificationBadge" class="notification-badge" style="display:none;">0</span></li>
     </ul>
-    
-    <!-- ===== قسم العملات ===== -->
     <div class="currency-section">
         <h4>💱 العملات</h4>
         <div id="currencyList">
@@ -432,20 +103,6 @@
             </div>
         </div>
     </div>
-    
-    <!-- ===== قسم اللغات ===== -->
-    <div class="language-section">
-        <h4>🌐 اللغة</h4>
-        <div id="languageList">
-            <div class="lang-item active" data-lang="ar" onclick="changeLanguage('ar')">
-                <span>🇸🇦 العربية</span>
-            </div>
-            <div class="lang-item" data-lang="en" onclick="changeLanguage('en')">
-                <span>🇬🇧 English</span>
-            </div>
-        </div>
-    </div>
-    
     <div class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</div>
 </div>
 
@@ -458,325 +115,76 @@
 </nav>
 
 <div class="container">
-    <!-- ===== الصفحة الرئيسية ===== -->
     <section id="page-home" class="page active">
-        <h2 class="section-title" id="shopTitle">🛍️ المتجر الأسطوري</h2>
+        <h2 class="section-title">🛍️ المتجر الأسطوري</h2>
         <div id="homeContent">
             <div style="text-align:center;padding:30px 0;">
                 <div style="font-size:60px;color:var(--primary);margin-bottom:15px;">👑</div>
-                <h2 style="color:var(--primary);font-size:28px;" id="welcomeTitle">مرحباً بك في رويال كارد</h2>
-                <p style="color:var(--text-dim);font-size:16px;margin:10px 0;" id="welcomeDesc">أفضل المتاجر الرقمية بجودة عالية</p>
+                <h2 style="color:var(--primary);font-size:28px;">مرحباً بك في رويال كارد</h2>
+                <p style="color:var(--text-dim);font-size:16px;margin:10px 0;">أفضل المتاجر الرقمية بجودة عالية</p>
                 <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
-                    <button class="btn btn-primary" onclick="showPage('payment')" id="btnPayment">💳 طرق الدفع</button>
-                    <button class="btn btn-secondary" onclick="showPage('balance')" id="btnBalance">💰 رصيدي</button>
-                    <button class="btn btn-secondary" onclick="showPage('orders')" id="btnOrders">📋 طلباتي</button>
+                    <button class="btn btn-primary" onclick="showPage('payment')">💳 طرق الدفع</button>
+                    <button class="btn btn-secondary" onclick="showPage('balance')">💰 رصيدي</button>
+                    <button class="btn btn-secondary" onclick="showPage('orders')">📋 طلباتي</button>
                 </div>
                 <div class="grid-3" style="margin-top:30px;">
                     <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);text-align:center;">
                         <div style="font-size:30px;color:var(--primary);">⭐</div>
                         <div style="font-weight:bold;margin-top:5px;">4.9/5</div>
-                        <div style="font-size:12px;color:var(--text-dim);" id="ratingLabel">تقييم العملاء</div>
+                        <div style="font-size:12px;color:var(--text-dim);">تقييم العملاء</div>
                     </div>
                     <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);text-align:center;">
                         <div style="font-size:30px;color:var(--primary);">✅</div>
                         <div style="font-weight:bold;margin-top:5px;">100%</div>
-                        <div style="font-size:12px;color:var(--text-dim);" id="qualityLabel">ضمان الجودة</div>
+                        <div style="font-size:12px;color:var(--text-dim);">ضمان الجودة</div>
                     </div>
                     <div style="background:var(--bg-card);padding:20px;border-radius:var(--radius);border:1px solid var(--border);text-align:center;">
                         <div style="font-size:30px;color:var(--primary);">⚡</div>
-                        <div style="font-weight:bold;margin-top:5px;" id="instantLabel">فوري</div>
-                        <div style="font-size:12px;color:var(--text-dim);" id="deliveryLabel">توصيل الخدمة</div>
+                        <div style="font-weight:bold;margin-top:5px;">فوري</div>
+                        <div style="font-size:12px;color:var(--text-dim);">توصيل الخدمة</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== صفحة طرق الدفع ===== -->
     <section id="page-payment" class="page">
-        <h2 class="section-title" id="paymentTitle">💳 طرق الدفع</h2>
+        <h2 class="section-title">💳 طرق الدفع</h2>
         <div id="paymentMethodsGrid" class="grid-3"></div>
     </section>
 
-    <!-- ===== صفحة الدفع التفصيلية ===== -->
-    <section id="page-payment-detail" class="page">
-        <div class="breadcrumb">
-            <button class="btn btn-back" onclick="showPage('payment')" id="backPaymentBtn">🏠 طرق الدفع</button>
-            <span class="sep">›</span>
-            <span id="paymentDetailName" class="current"></span>
-        </div>
-        <div class="payment-detail-page" id="paymentDetailContent"></div>
-    </section>
-
-    <!-- ===== صفحة الرصيد ===== -->
     <section id="page-balance" class="page">
-        <h2 class="section-title" id="balanceTitle">💰 الرصيد</h2>
+        <h2 class="section-title">💰 الرصيد</h2>
         <div style="text-align:center;background:var(--bg-card);border:2px solid var(--primary);border-radius:var(--radius);padding:30px;max-width:400px;margin:auto;">
             <i class="fas fa-wallet" style="font-size:60px;color:var(--primary);"></i>
             <div style="font-size:36px;color:var(--primary);font-weight:bold;margin:15px 0;" id="balancePageAmount">0</div>
-            <div style="color:var(--text-dim);" id="balanceLabel">رصيدك الحالي</div>
-            <button class="btn btn-primary mt-20" onclick="showAddBalanceModal()" id="addBalanceBtn">💰 إضافة رصيد</button>
+            <div style="color:var(--text-dim);">رصيدك الحالي</div>
+            <button class="btn btn-primary mt-20" onclick="showAddBalanceModal()">💰 إضافة رصيد</button>
         </div>
     </section>
 
-    <!-- ===== صفحة طلباتي ===== -->
     <section id="page-orders" class="page">
-        <h2 class="section-title" id="ordersTitle">📋 طلباتي</h2>
+        <h2 class="section-title">📋 طلباتي</h2>
         <div id="ordersList"></div>
     </section>
 
-    <!-- ===== صفحة الإدارة ===== -->
     <section id="page-admin" class="page">
-        <h2 class="section-title" id="adminTitle">🔧 لوحة التحكم</h2>
-        
+        <h2 class="section-title">🔧 لوحة التحكم</h2>
         <div class="admin-panel">
-            <h3 id="statsTitle">📊 الإحصائيات</h3>
+            <h3>📊 الإحصائيات</h3>
             <div class="grid-3">
                 <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
                     <div style="font-size:28px;color:var(--primary);" id="statUsers">0</div>
-                    <div style="color:var(--text-dim);font-size:13px;" id="statUsersLabel">👥 المستخدمين</div>
+                    <div style="color:var(--text-dim);font-size:13px;">👥 المستخدمين</div>
                 </div>
                 <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
                     <div style="font-size:28px;color:var(--primary);" id="statOrders">0</div>
-                    <div style="color:var(--text-dim);font-size:13px;" id="statOrdersLabel">📦 الطلبات</div>
+                    <div style="color:var(--text-dim);font-size:13px;">📦 الطلبات</div>
                 </div>
                 <div style="background:var(--bg-card);padding:15px;border-radius:var(--radius);text-align:center;">
                     <div style="font-size:28px;color:var(--primary);" id="statRevenue">0</div>
-                    <div style="color:var(--text-dim);font-size:13px;" id="statRevenueLabel">💰 الأرباح</div>
+                    <div style="color:var(--text-dim);font-size:13px;">💰 الأرباح</div>
                 </div>
-            </div>
-        </div>
-
-        <!-- إعدادات الموقع -->
-        <div class="admin-panel">
-            <h3 id="siteSettingsTitle">⚙️ إعدادات الموقع</h3>
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
-                <div>
-                    <label style="font-size:12px;" id="siteNameLabel">اسم الموقع</label>
-                    <input type="text" id="editSiteTitle" value="رويال كارد" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;" onchange="updateSiteSettings()">
-                </div>
-                <div>
-                    <label style="font-size:12px;" id="siteSubLabel">العنوان الفرعي</label>
-                    <input type="text" id="editSiteSubtitle" value="المتجر الأسطوري" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;" onchange="updateSiteSettings()">
-                </div>
-                <div>
-                    <label style="font-size:12px;" id="welcomeTitleLabel">نص الترحيب</label>
-                    <input type="text" id="editWelcomeTitle" value="مرحباً بك في رويال كارد" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;" onchange="updateSiteSettings()">
-                </div>
-                <div>
-                    <label style="font-size:12px;" id="welcomeDescLabel">وصف الترحيب</label>
-                    <input type="text" id="editWelcomeDesc" value="أفضل المتاجر الرقمية بجودة عالية" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;" onchange="updateSiteSettings()">
-                </div>
-            </div>
-        </div>
-
-        <!-- إدارة اللغات -->
-        <div class="admin-panel">
-            <h3 id="languagesTitle">🌐 إدارة اللغات</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;min-width:120px;">
-                    <label style="font-size:12px;" id="langNameLabel">اسم اللغة</label>
-                    <input type="text" id="newLangName" placeholder="العربية" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:120px;">
-                    <label style="font-size:12px;" id="langCodeLabel">رمز اللغة</label>
-                    <input type="text" id="newLangCode" placeholder="ar" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:120px;">
-                    <label style="font-size:12px;" id="langFlagLabel">العلم</label>
-                    <input type="text" id="newLangFlag" placeholder="🇸🇦" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <button class="btn btn-primary" onclick="addLanguage()" id="addLangBtn">➕ إضافة</button>
-            </div>
-            <div id="languageListAdmin" style="margin-top:15px;"></div>
-        </div>
-
-        <!-- باقي أقسام الإدارة... -->
-        <div class="admin-panel">
-            <h3 id="categoriesTitle">📂 إدارة الأقسام الرئيسية</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;min-width:120px;">
-                    <label style="font-size:12px;" id="catNameLabel">اسم القسم</label>
-                    <input type="text" id="newCategoryName" placeholder="اسم القسم" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:120px;">
-                    <label style="font-size:12px;" id="catImageLabel">صورة القسم</label>
-                    <input type="file" id="newCategoryImage" accept="image/*" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <button class="btn btn-primary" onclick="addCategory()" id="addCatBtn">➕ إضافة</button>
-            </div>
-            <div id="categoryList" style="margin-top:15px;"></div>
-        </div>
-
-        <div class="admin-panel">
-            <h3 id="subCategoriesTitle">📂 إدارة الأقسام الفرعية</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;min-width:120px;">
-                    <label style="font-size:12px;" id="parentCatLabel">القسم الرئيسي</label>
-                    <select id="subCategoryParentSelect" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;"></select>
-                </div>
-                <div style="flex:1;min-width:120px;">
-                    <label style="font-size:12px;" id="subCatNameLabel">اسم القسم الفرعي</label>
-                    <input type="text" id="newSubCategoryName" placeholder="اسم القسم الفرعي" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:120px;">
-                    <label style="font-size:12px;" id="subCatImageLabel">صورة القسم الفرعي</label>
-                    <input type="file" id="newSubCategoryImage" accept="image/*" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <button class="btn btn-primary" onclick="addSubCategory()" id="addSubCatBtn">➕ إضافة</button>
-            </div>
-            <div id="subCategoryList" style="margin-top:15px;"></div>
-        </div>
-
-        <div class="admin-panel">
-            <h3 id="productsTitle">📦 إدارة المنتجات</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;min-width:100px;">
-                    <label style="font-size:12px;" id="productSubLabel">القسم الفرعي</label>
-                    <select id="productSubCategorySelect" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;"></select>
-                </div>
-                <div style="flex:1;min-width:100px;">
-                    <label style="font-size:12px;" id="productNameLabel">اسم المنتج</label>
-                    <input type="text" id="newProductName" placeholder="اسم المنتج" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:80px;">
-                    <label style="font-size:12px;" id="productPriceLabel">السعر ($)</label>
-                    <input type="number" id="newProductPrice" placeholder="السعر" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:100px;">
-                    <label style="font-size:12px;" id="productImageLabel">صورة المنتج</label>
-                    <input type="file" id="newProductImage" accept="image/*" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:100px;">
-                    <label style="font-size:12px;" id="productAvailableLabel">متوفر</label>
-                    <select id="newProductAvailable" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                        <option value="true">✅ متوفر</option>
-                        <option value="false">❌ غير متوفر</option>
-                    </select>
-                </div>
-                <div style="flex:1;min-width:120px;">
-                    <label style="font-size:12px;" id="productInfoLabel">معلومات مطلوبة</label>
-                    <select id="newProductInfoType" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                        <option value="none">لا شيء</option>
-                        <option value="player_id">معرف اللاعب</option>
-                        <option value="subscription">رقم الاشتراك</option>
-                        <option value="phone">رقم الهاتف</option>
-                        <option value="email">البريد الإلكتروني</option>
-                        <option value="custom">نص مخصص</option>
-                    </select>
-                </div>
-                <button class="btn btn-primary" onclick="addProduct()" id="addProductBtn">➕ إضافة</button>
-            </div>
-            <div id="productList" style="margin-top:15px;"></div>
-        </div>
-
-        <div class="admin-panel">
-            <h3 id="paymentMethodsTitle">💳 إدارة طرق الدفع</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;min-width:100px;">
-                    <label style="font-size:12px;" id="payNameLabel">اسم الطريقة</label>
-                    <input type="text" id="newPayName" placeholder="شنكاشي" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:100px;">
-                    <label style="font-size:12px;" id="payNumberLabel">الرقم/الحساب</label>
-                    <input type="text" id="newPayNumber" placeholder="رقم الحساب" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:100px;">
-                    <label style="font-size:12px;" id="payImageLabel">صورة</label>
-                    <input type="file" id="newPayImage" accept="image/*" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <button class="btn btn-primary" onclick="addPaymentMethod()" id="addPayBtn">➕ إضافة</button>
-            </div>
-            <div id="paymentMethodsListAdmin" style="margin-top:15px;"></div>
-        </div>
-
-        <!-- إدارة المستخدمين -->
-        <div class="admin-panel">
-            <h3 id="usersTitle">👥 إدارة المستخدمين</h3>
-            <div id="usersList"></div>
-        </div>
-
-        <!-- إدارة الطلبات -->
-        <div class="admin-panel">
-            <h3 id="ordersAdminTitle">📋 إدارة الطلبات</h3>
-            <div id="ordersListAdmin"></div>
-        </div>
-
-        <!-- إدارة طلبات الرصيد -->
-        <div class="admin-panel">
-            <h3 id="balanceRequestsTitle">📄 طلبات إضافة الرصيد <span id="requestsBadge" class="notification-badge" style="display:none;">0</span></h3>
-            <div id="balanceRequestsList"></div>
-        </div>
-
-        <!-- إدارة المدراء -->
-        <div class="admin-panel">
-            <h3 id="adminsTitle">👑 إدارة المدراء</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;min-width:100px;">
-                    <label style="font-size:12px;" id="adminEmailLabel">الإيميل</label>
-                    <input type="email" id="newAdminEmail" placeholder="admin@example.com" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:100px;">
-                    <label style="font-size:12px;" id="adminPassLabel">كلمة المرور</label>
-                    <input type="password" id="newAdminPass" placeholder="كلمة المرور" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:100px;">
-                    <label style="font-size:12px;" id="adminNameLabel">الاسم</label>
-                    <input type="text" id="newAdminName" placeholder="اسم المدير" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <button class="btn btn-primary" onclick="addAdmin()" id="addAdminBtn">➕ إضافة</button>
-            </div>
-            <div id="adminList" style="margin-top:15px;"></div>
-        </div>
-
-        <!-- تغيير كلمة مرور الإدارة -->
-        <div class="admin-panel">
-            <h3 id="changePasswordTitle">🔑 تغيير كلمة مرور الإدارة</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;min-width:150px;">
-                    <label style="font-size:12px;" id="newPassLabel">كلمة المرور الجديدة</label>
-                    <input type="password" id="newAdminPassword" placeholder="كلمة المرور الجديدة" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <button class="btn btn-primary" onclick="changeAdminPassword()" id="changePassBtn">تغيير</button>
-            </div>
-            <div id="passwordChangeMsg" style="margin-top:10px;"></div>
-        </div>
-
-        <!-- العبارات المتحركة -->
-        <div class="admin-panel">
-            <h3 id="marqueeTitle">📝 العبارات المتحركة</h3>
-            <textarea id="marqueeTexts" rows="3" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">🔥 عروض حصرية بأسعار خيالية
-⭐ خدمة فورية 24/7
-💰 أفضل الأسعار في السوق
-🚀 تسوق الآن واستمتع بالخصومات
-🛡️ ضمان الجودة 100%</textarea>
-            <button class="btn btn-primary mt-20" onclick="updateMarquee()" id="updateMarqueeBtn">تحديث العبارات</button>
-        </div>
-
-        <!-- إعدادات العمولة والحد الأدنى -->
-        <div class="admin-panel">
-            <h3 id="commissionTitle">💰 إعدادات العمولة والحد الأدنى</h3>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-                <div style="flex:1;min-width:150px;">
-                    <label style="font-size:12px;" id="commissionRateLabel">نسبة العمولة (%)</label>
-                    <input type="number" id="commissionRate" value="1" min="0" max="100" step="0.1" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <div style="flex:1;min-width:150px;">
-                    <label style="font-size:12px;" id="minTransferLabel">الحد الأدنى للتحويل ($)</label>
-                    <input type="number" id="minTransferAmount" value="5" min="1" step="0.5" style="width:100%;padding:10px;border-radius:12px;border:1px solid #333;background:#0a0a1a;color:#fff;">
-                </div>
-                <button class="btn btn-primary" onclick="updateSettings()" id="updateSettingsBtn">تحديث</button>
-            </div>
-            <div id="settingsMsg" style="margin-top:10px;"></div>
-        </div>
-
-        <!-- تخصيص الألوان -->
-        <div class="admin-panel">
-            <h3 id="colorsTitle">🎨 تخصيص الألوان</h3>
-            <div class="grid-3">
-                <div><label style="font-size:12px;" id="primaryColorLabel">اللون الأساسي</label><input type="color" id="colorPrimary" value="#ffd700" oninput="updateColors()" style="width:100%;height:40px;border-radius:8px;border:1px solid #333;background:#0a0a1a;cursor:pointer;"></div>
-                <div><label style="font-size:12px;" id="bgColorLabel">الخلفية</label><input type="color" id="colorBg" value="#0a0a1a" oninput="updateColors()" style="width:100%;height:40px;border-radius:8px;border:1px solid #333;background:#0a0a1a;cursor:pointer;"></div>
-                <div><label style="font-size:12px;" id="cardColorLabel">لون البطاقات</label><input type="color" id="colorCard" value="#1a1f2f" oninput="updateColors()" style="width:100%;height:40px;border-radius:8px;border:1px solid #333;background:#0a0a1a;cursor:pointer;"></div>
             </div>
         </div>
     </section>
@@ -786,13 +194,13 @@
 <div class="modal" id="loginModal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('loginModal')">✕</span>
-        <h2 id="loginTitle">🔑 تسجيل الدخول</h2>
+        <h2>🔑 تسجيل الدخول</h2>
         <div id="loginFields">
             <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
             <input type="password" id="loginPassword" placeholder="كلمة المرور">
             <div class="modal-buttons">
-                <button class="btn btn-primary" onclick="login()" id="loginBtn">تسجيل الدخول</button>
-                <button class="btn btn-secondary" onclick="showRegister()" id="registerBtn">إنشاء حساب</button>
+                <button class="btn btn-primary" onclick="login()">تسجيل الدخول</button>
+                <button class="btn btn-secondary" onclick="showRegister()">إنشاء حساب</button>
             </div>
         </div>
         <div id="registerFields" style="display:none;">
@@ -801,8 +209,8 @@
             <input type="tel" id="regPhone" placeholder="رقم الهاتف">
             <input type="password" id="regPassword" placeholder="كلمة المرور">
             <div class="modal-buttons">
-                <button class="btn btn-primary" onclick="register()" id="createAccountBtn">إنشاء حساب</button>
-                <button class="btn btn-secondary" onclick="showLogin()" id="backLoginBtn">عودة</button>
+                <button class="btn btn-primary" onclick="register()">إنشاء حساب</button>
+                <button class="btn btn-secondary" onclick="showLogin()">عودة</button>
             </div>
         </div>
     </div>
@@ -812,360 +220,465 @@
 <div class="modal" id="balanceModal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('balanceModal')">✕</span>
-        <h2 id="balanceModalTitle">💰 إضافة رصيد</h2>
+        <h2>💰 إضافة رصيد</h2>
         <div id="balanceError" class="error-msg"></div>
         <div id="balanceSuccess" class="success-msg"></div>
         <input type="number" id="balanceAmount" placeholder="المبلغ بالدولار" min="1">
         <input type="text" id="balanceTransferCode" placeholder="رقم عملية التحويل">
         <div class="modal-buttons">
-            <button class="btn btn-primary" onclick="requestBalance()" id="sendRequestBtn">إرسال طلب</button>
-            <button class="btn btn-danger" onclick="closeModal('balanceModal')" id="cancelBalanceBtn">إلغاء</button>
+            <button class="btn btn-primary" onclick="requestBalance()">إرسال طلب</button>
+            <button class="btn btn-danger" onclick="closeModal('balanceModal')">إلغاء</button>
         </div>
         <div id="balanceStatus" style="text-align:center;margin-top:10px;font-size:14px;"></div>
     </div>
 </div>
 
 <script>
-// ===== نظام اللغات =====
-let currentLanguage = 'ar';
-let languages = [];
-let translations = {};
+// ===== البيانات =====
+let currentUser = null;
+let balance = 0;
+let paymentMethods = [];
+let categories = [];
+let subCategories = [];
+let products = [];
+let orders = [];
+let balanceRequests = [];
+let users = [];
+let admins = [];
+let currencies = [];
+let selectedCurrency = 'usd';
+let exchangeRates = { usd: 1, syp: 130 };
+let adminPassword = 'Admin@2024';
+let commissionRate = 1;
+let minTransferAmount = 5;
+let isSidebarOpen = false;
 
-function loadLanguages() {
+// ===== تحميل البيانات =====
+function loadData() {
     try {
-        languages = JSON.parse(localStorage.getItem('languages')) || [
-            { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-            { code: 'en', name: 'English', flag: '🇬🇧' }
+        balance = parseFloat(localStorage.getItem('balance')) || 0;
+        paymentMethods = JSON.parse(localStorage.getItem('paymentMethods')) || [
+            { id: 1, name: 'شنكاشي', number: '0991234567', image: '' }
         ];
-    } catch(e) { languages = [{ code: 'ar', name: 'العربية', flag: '🇸🇦' }, { code: 'en', name: 'English', flag: '🇬🇧' }]; }
-    currentLanguage = localStorage.getItem('currentLanguage') || 'ar';
-    renderLanguages();
-    renderLanguagesAdmin();
-}
-
-function renderLanguages() {
-    const container = document.getElementById('languageList');
-    if (!container) return;
-    container.innerHTML = languages.map(l => `
-        <div class="lang-item ${currentLanguage === l.code ? 'active' : ''}" data-lang="${l.code}" onclick="changeLanguage('${l.code}')">
-            <span>${l.flag} ${l.name}</span>
-        </div>
-    `).join('');
-}
-
-function renderLanguagesAdmin() {
-    const container = document.getElementById('languageListAdmin');
-    if (!container) return;
-    container.innerHTML = languages.map(l => `
-        <div class="admin-product-item">
-            <span>${l.flag} ${l.name} (${l.code})</span>
-            ${l.code !== 'ar' ? `<button class="btn btn-danger" onclick="deleteLanguage('${l.code}')">🗑️ حذف</button>` : '<span style="color:var(--primary);font-size:12px;">(الافتراضية)</span>'}
-        </div>
-    `).join('');
-}
-
-function addLanguage() {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    const name = document.getElementById('newLangName').value.trim();
-    const code = document.getElementById('newLangCode').value.trim().toLowerCase();
-    const flag = document.getElementById('newLangFlag').value.trim() || '🌐';
-    if (!name || !code) return alert('❌ أدخل اسم اللغة ورمزها');
-    if (languages.some(l => l.code === code)) return alert('❌ هذه اللغة موجودة مسبقاً');
-    languages.push({ code, name, flag });
-    localStorage.setItem('languages', JSON.stringify(languages));
-    renderLanguages();
-    renderLanguagesAdmin();
-    document.getElementById('newLangName').value = '';
-    document.getElementById('newLangCode').value = '';
-    document.getElementById('newLangFlag').value = '';
-    alert('✅ تم إضافة اللغة');
-}
-
-function deleteLanguage(code) {
-    if (!isAdmin()) return alert('🔒 فقط المدراء');
-    if (code === 'ar') return alert('❌ لا يمكن حذف اللغة الافتراضية');
-    if (!confirm('هل أنت متأكد من حذف هذه اللغة؟')) return;
-    languages = languages.filter(l => l.code !== code);
-    localStorage.setItem('languages', JSON.stringify(languages));
-    renderLanguages();
-    renderLanguagesAdmin();
-    if (currentLanguage === code) changeLanguage('ar');
-}
-
-function changeLanguage(code) {
-    currentLanguage = code;
-    localStorage.setItem('currentLanguage', code);
-    renderLanguages();
-    updateUITexts();
-}
-
-function updateUITexts() {
-    // هنا ستضيف ترجمات لكل عنصر في الموقع
-    const texts = {
-        'ar': {
-            siteTitle: 'رويال كارد',
-            siteSubtitle: 'المتجر الأسطوري',
-            shopTitle: '🛍️ المتجر الأسطوري',
-            welcomeTitle: 'مرحباً بك في رويال كارد',
-            welcomeDesc: 'أفضل المتاجر الرقمية بجودة عالية',
-            btnPayment: '💳 طرق الدفع',
-            btnBalance: '💰 رصيدي',
-            btnOrders: '📋 طلباتي',
-            ratingLabel: 'تقييم العملاء',
-            qualityLabel: 'ضمان الجودة',
-            instantLabel: 'فوري',
-            deliveryLabel: 'توصيل الخدمة',
-            paymentTitle: '💳 طرق الدفع',
-            balanceTitle: '💰 الرصيد',
-            balanceLabel: 'رصيدك الحالي',
-            addBalanceBtn: '💰 إضافة رصيد',
-            ordersTitle: '📋 طلباتي',
-            adminTitle: '🔧 لوحة التحكم',
-            statsTitle: '📊 الإحصائيات',
-            statUsersLabel: '👥 المستخدمين',
-            statOrdersLabel: '📦 الطلبات',
-            statRevenueLabel: '💰 الأرباح',
-            siteSettingsTitle: '⚙️ إعدادات الموقع',
-            siteNameLabel: 'اسم الموقع',
-            siteSubLabel: 'العنوان الفرعي',
-            welcomeTitleLabel: 'نص الترحيب',
-            welcomeDescLabel: 'وصف الترحيب',
-            languagesTitle: '🌐 إدارة اللغات',
-            langNameLabel: 'اسم اللغة',
-            langCodeLabel: 'رمز اللغة',
-            langFlagLabel: 'العلم',
-            addLangBtn: '➕ إضافة',
-            categoriesTitle: '📂 إدارة الأقسام الرئيسية',
-            catNameLabel: 'اسم القسم',
-            catImageLabel: 'صورة القسم',
-            addCatBtn: '➕ إضافة',
-            subCategoriesTitle: '📂 إدارة الأقسام الفرعية',
-            parentCatLabel: 'القسم الرئيسي',
-            subCatNameLabel: 'اسم القسم الفرعي',
-            subCatImageLabel: 'صورة القسم الفرعي',
-            addSubCatBtn: '➕ إضافة',
-            productsTitle: '📦 إدارة المنتجات',
-            productSubLabel: 'القسم الفرعي',
-            productNameLabel: 'اسم المنتج',
-            productPriceLabel: 'السعر ($)',
-            productImageLabel: 'صورة المنتج',
-            productAvailableLabel: 'متوفر',
-            productInfoLabel: 'معلومات مطلوبة',
-            addProductBtn: '➕ إضافة',
-            paymentMethodsTitle: '💳 إدارة طرق الدفع',
-            payNameLabel: 'اسم الطريقة',
-            payNumberLabel: 'الرقم/الحساب',
-            payImageLabel: 'صورة',
-            addPayBtn: '➕ إضافة',
-            usersTitle: '👥 إدارة المستخدمين',
-            ordersAdminTitle: '📋 إدارة الطلبات',
-            balanceRequestsTitle: '📄 طلبات إضافة الرصيد',
-            adminsTitle: '👑 إدارة المدراء',
-            adminEmailLabel: 'الإيميل',
-            adminPassLabel: 'كلمة المرور',
-            adminNameLabel: 'الاسم',
-            addAdminBtn: '➕ إضافة',
-            changePasswordTitle: '🔑 تغيير كلمة مرور الإدارة',
-            newPassLabel: 'كلمة المرور الجديدة',
-            changePassBtn: 'تغيير',
-            marqueeTitle: '📝 العبارات المتحركة',
-            updateMarqueeBtn: 'تحديث العبارات',
-            commissionTitle: '💰 إعدادات العمولة والحد الأدنى',
-            commissionRateLabel: 'نسبة العمولة (%)',
-            minTransferLabel: 'الحد الأدنى للتحويل ($)',
-            updateSettingsBtn: 'تحديث',
-            colorsTitle: '🎨 تخصيص الألوان',
-            primaryColorLabel: 'اللون الأساسي',
-            bgColorLabel: 'الخلفية',
-            cardColorLabel: 'لون البطاقات',
-            loginTitle: '🔑 تسجيل الدخول',
-            loginBtn: 'تسجيل الدخول',
-            registerBtn: 'إنشاء حساب',
-            createAccountBtn: 'إنشاء حساب',
-            backLoginBtn: 'عودة',
-            balanceModalTitle: '💰 إضافة رصيد',
-            sendRequestBtn: 'إرسال طلب',
-            cancelBalanceBtn: 'إلغاء',
-            backPaymentBtn: '🏠 طرق الدفع'
-        },
-        'en': {
-            siteTitle: 'Royal Card',
-            siteSubtitle: 'The Legendary Store',
-            shopTitle: '🛍️ The Legendary Store',
-            welcomeTitle: 'Welcome to Royal Card',
-            welcomeDesc: 'The best digital stores with high quality',
-            btnPayment: '💳 Payment Methods',
-            btnBalance: '💰 My Balance',
-            btnOrders: '📋 My Orders',
-            ratingLabel: 'Customer Rating',
-            qualityLabel: 'Quality Guarantee',
-            instantLabel: 'Instant',
-            deliveryLabel: 'Service Delivery',
-            paymentTitle: '💳 Payment Methods',
-            balanceTitle: '💰 Balance',
-            balanceLabel: 'Your Current Balance',
-            addBalanceBtn: '💰 Add Balance',
-            ordersTitle: '📋 My Orders',
-            adminTitle: '🔧 Control Panel',
-            statsTitle: '📊 Statistics',
-            statUsersLabel: '👥 Users',
-            statOrdersLabel: '📦 Orders',
-            statRevenueLabel: '💰 Revenue',
-            siteSettingsTitle: '⚙️ Site Settings',
-            siteNameLabel: 'Site Name',
-            siteSubLabel: 'Subtitle',
-            welcomeTitleLabel: 'Welcome Text',
-            welcomeDescLabel: 'Welcome Description',
-            languagesTitle: '🌐 Language Management',
-            langNameLabel: 'Language Name',
-            langCodeLabel: 'Language Code',
-            langFlagLabel: 'Flag',
-            addLangBtn: '➕ Add',
-            categoriesTitle: '📂 Main Categories',
-            catNameLabel: 'Category Name',
-            catImageLabel: 'Category Image',
-            addCatBtn: '➕ Add',
-            subCategoriesTitle: '📂 Sub Categories',
-            parentCatLabel: 'Main Category',
-            subCatNameLabel: 'Sub Category Name',
-            subCatImageLabel: 'Sub Category Image',
-            addSubCatBtn: '➕ Add',
-            productsTitle: '📦 Products',
-            productSubLabel: 'Sub Category',
-            productNameLabel: 'Product Name',
-            productPriceLabel: 'Price ($)',
-            productImageLabel: 'Product Image',
-            productAvailableLabel: 'Available',
-            productInfoLabel: 'Required Info',
-            addProductBtn: '➕ Add',
-            paymentMethodsTitle: '💳 Payment Methods',
-            payNameLabel: 'Method Name',
-            payNumberLabel: 'Number/Account',
-            payImageLabel: 'Image',
-            addPayBtn: '➕ Add',
-            usersTitle: '👥 Users Management',
-            ordersAdminTitle: '📋 Orders Management',
-            balanceRequestsTitle: '📄 Balance Requests',
-            adminsTitle: '👑 Admins Management',
-            adminEmailLabel: 'Email',
-            adminPassLabel: 'Password',
-            adminNameLabel: 'Name',
-            addAdminBtn: '➕ Add',
-            changePasswordTitle: '🔑 Change Admin Password',
-            newPassLabel: 'New Password',
-            changePassBtn: 'Change',
-            marqueeTitle: '📝 Marquee Text',
-            updateMarqueeBtn: 'Update Marquee',
-            commissionTitle: '💰 Commission & Minimum',
-            commissionRateLabel: 'Commission Rate (%)',
-            minTransferLabel: 'Minimum Transfer ($)',
-            updateSettingsBtn: 'Update',
-            colorsTitle: '🎨 Customize Colors',
-            primaryColorLabel: 'Primary Color',
-            bgColorLabel: 'Background',
-            cardColorLabel: 'Card Color',
-            loginTitle: '🔑 Login',
-            loginBtn: 'Login',
-            registerBtn: 'Create Account',
-            createAccountBtn: 'Create Account',
-            backLoginBtn: 'Back',
-            balanceModalTitle: '💰 Add Balance',
-            sendRequestBtn: 'Send Request',
-            cancelBalanceBtn: 'Cancel',
-            backPaymentBtn: '🏠 Payment Methods'
+        categories = JSON.parse(localStorage.getItem('categories')) || [];
+        subCategories = JSON.parse(localStorage.getItem('subCategories')) || [];
+        products = JSON.parse(localStorage.getItem('products')) || [];
+        orders = JSON.parse(localStorage.getItem('orders')) || [];
+        balanceRequests = JSON.parse(localStorage.getItem('balanceRequests')) || [];
+        users = JSON.parse(localStorage.getItem('users')) || [];
+        admins = JSON.parse(localStorage.getItem('admins')) || [];
+        currencies = JSON.parse(localStorage.getItem('currencies')) || [
+            { id: 1, name: 'دولار أمريكي', symbol: '🇺🇸', rate: 1, code: 'usd' },
+            { id: 2, name: 'ليرة سورية', symbol: '🇸🇾', rate: 130, code: 'syp' }
+        ];
+        exchangeRates = JSON.parse(localStorage.getItem('exchangeRates')) || { usd: 1, syp: 130 };
+        adminPassword = localStorage.getItem('adminPassword') || 'Admin@2024';
+        commissionRate = parseFloat(localStorage.getItem('commissionRate')) || 1;
+        minTransferAmount = parseFloat(localStorage.getItem('minTransferAmount')) || 5;
+        
+        const adminExists = admins.some(a => a.email === 'admin@royal.com');
+        if (!adminExists && admins.length === 0) {
+            admins.push({ email: 'admin@royal.com', password: adminPassword, name: 'المدير الرئيسي' });
+            localStorage.setItem('admins', JSON.stringify(admins));
         }
-    };
-
-    const t = texts[currentLanguage] || texts['ar'];
-    document.getElementById('siteTitle').textContent = t.siteTitle;
-    document.getElementById('siteSubtitle').textContent = t.siteSubtitle;
-    document.getElementById('shopTitle').textContent = t.shopTitle;
-    document.getElementById('welcomeTitle').textContent = t.welcomeTitle;
-    document.getElementById('welcomeDesc').textContent = t.welcomeDesc;
-    document.getElementById('btnPayment').textContent = t.btnPayment;
-    document.getElementById('btnBalance').textContent = t.btnBalance;
-    document.getElementById('btnOrders').textContent = t.btnOrders;
-    document.getElementById('ratingLabel').textContent = t.ratingLabel;
-    document.getElementById('qualityLabel').textContent = t.qualityLabel;
-    document.getElementById('instantLabel').textContent = t.instantLabel;
-    document.getElementById('deliveryLabel').textContent = t.deliveryLabel;
-    document.getElementById('paymentTitle').textContent = t.paymentTitle;
-    document.getElementById('balanceTitle').textContent = t.balanceTitle;
-    document.getElementById('balanceLabel').textContent = t.balanceLabel;
-    document.getElementById('addBalanceBtn').textContent = t.addBalanceBtn;
-    document.getElementById('ordersTitle').textContent = t.ordersTitle;
-    document.getElementById('adminTitle').textContent = t.adminTitle;
-    document.getElementById('statsTitle').textContent = t.statsTitle;
-    document.getElementById('statUsersLabel').textContent = t.statUsersLabel;
-    document.getElementById('statOrdersLabel').textContent = t.statOrdersLabel;
-    document.getElementById('statRevenueLabel').textContent = t.statRevenueLabel;
-    document.getElementById('siteSettingsTitle').textContent = t.siteSettingsTitle;
-    document.getElementById('siteNameLabel').textContent = t.siteNameLabel;
-    document.getElementById('siteSubLabel').textContent = t.siteSubLabel;
-    document.getElementById('welcomeTitleLabel').textContent = t.welcomeTitleLabel;
-    document.getElementById('welcomeDescLabel').textContent = t.welcomeDescLabel;
-    document.getElementById('languagesTitle').textContent = t.languagesTitle;
-    document.getElementById('langNameLabel').textContent = t.langNameLabel;
-    document.getElementById('langCodeLabel').textContent = t.langCodeLabel;
-    document.getElementById('langFlagLabel').textContent = t.langFlagLabel;
-    document.getElementById('addLangBtn').textContent = t.addLangBtn;
-    document.getElementById('categoriesTitle').textContent = t.categoriesTitle;
-    document.getElementById('catNameLabel').textContent = t.catNameLabel;
-    document.getElementById('catImageLabel').textContent = t.catImageLabel;
-    document.getElementById('addCatBtn').textContent = t.addCatBtn;
-    document.getElementById('subCategoriesTitle').textContent = t.subCategoriesTitle;
-    document.getElementById('parentCatLabel').textContent = t.parentCatLabel;
-    document.getElementById('subCatNameLabel').textContent = t.subCatNameLabel;
-    document.getElementById('subCatImageLabel').textContent = t.subCatImageLabel;
-    document.getElementById('addSubCatBtn').textContent = t.addSubCatBtn;
-    document.getElementById('productsTitle').textContent = t.productsTitle;
-    document.getElementById('productSubLabel').textContent = t.productSubLabel;
-    document.getElementById('productNameLabel').textContent = t.productNameLabel;
-    document.getElementById('productPriceLabel').textContent = t.productPriceLabel;
-    document.getElementById('productImageLabel').textContent = t.productImageLabel;
-    document.getElementById('productAvailableLabel').textContent = t.productAvailableLabel;
-    document.getElementById('productInfoLabel').textContent = t.productInfoLabel;
-    document.getElementById('addProductBtn').textContent = t.addProductBtn;
-    document.getElementById('paymentMethodsTitle').textContent = t.paymentMethodsTitle;
-    document.getElementById('payNameLabel').textContent = t.payNameLabel;
-    document.getElementById('payNumberLabel').textContent = t.payNumberLabel;
-    document.getElementById('payImageLabel').textContent = t.payImageLabel;
-    document.getElementById('addPayBtn').textContent = t.addPayBtn;
-    document.getElementById('usersTitle').textContent = t.usersTitle;
-    document.getElementById('ordersAdminTitle').textContent = t.ordersAdminTitle;
-    document.getElementById('balanceRequestsTitle').textContent = t.balanceRequestsTitle;
-    document.getElementById('adminsTitle').textContent = t.adminsTitle;
-    document.getElementById('adminEmailLabel').textContent = t.adminEmailLabel;
-    document.getElementById('adminPassLabel').textContent = t.adminPassLabel;
-    document.getElementById('adminNameLabel').textContent = t.adminNameLabel;
-    document.getElementById('addAdminBtn').textContent = t.addAdminBtn;
-    document.getElementById('changePasswordTitle').textContent = t.changePasswordTitle;
-    document.getElementById('newPassLabel').textContent = t.newPassLabel;
-    document.getElementById('changePassBtn').textContent = t.changePassBtn;
-    document.getElementById('marqueeTitle').textContent = t.marqueeTitle;
-    document.getElementById('updateMarqueeBtn').textContent = t.updateMarqueeBtn;
-    document.getElementById('commissionTitle').textContent = t.commissionTitle;
-    document.getElementById('commissionRateLabel').textContent = t.commissionRateLabel;
-    document.getElementById('minTransferLabel').textContent = t.minTransferLabel;
-    document.getElementById('updateSettingsBtn').textContent = t.updateSettingsBtn;
-    document.getElementById('colorsTitle').textContent = t.colorsTitle;
-    document.getElementById('primaryColorLabel').textContent = t.primaryColorLabel;
-    document.getElementById('bgColorLabel').textContent = t.bgColorLabel;
-    document.getElementById('cardColorLabel').textContent = t.cardColorLabel;
-    document.getElementById('loginTitle').textContent = t.loginTitle;
-    document.getElementById('loginBtn').textContent = t.loginBtn;
-    document.getElementById('registerBtn').textContent = t.registerBtn;
-    document.getElementById('createAccountBtn').textContent = t.createAccountBtn;
-    document.getElementById('backLoginBtn').textContent = t.backLoginBtn;
-    document.getElementById('balanceModalTitle').textContent = t.balanceModalTitle;
-    document.getElementById('sendRequestBtn').textContent = t.sendRequestBtn;
-    document.getElementById('cancelBalanceBtn').textContent = t.cancelBalanceBtn;
-    document.getElementById('backPaymentBtn').textContent = t.backPaymentBtn;
+        const userData = localStorage.getItem('currentUser');
+        if (userData) currentUser = JSON.parse(userData);
+    } catch(e) { console.log('خطأ', e); }
 }
 
-// ===== باقي الكود (البيانات، الدوال، إلخ) =====
-// ... (نفس الكود السابق مع إضافة دالة updateUITexts في الأماكن المناسبة)
+function saveData() {
+    localStorage.setItem('balance', balance);
+    localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
+    localStorage.setItem('categories', JSON.stringify(categories));
+    localStorage.setItem('subCategories', JSON.stringify(subCategories));
+    localStorage.setItem('products', JSON.stringify(products));
+    localStorage.setItem('orders', JSON.stringify(orders));
+    localStorage.setItem('balanceRequests', JSON.stringify(balanceRequests));
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('admins', JSON.stringify(admins));
+    localStorage.setItem('currencies', JSON.stringify(currencies));
+    localStorage.setItem('exchangeRates', JSON.stringify(exchangeRates));
+    localStorage.setItem('adminPassword', adminPassword);
+    localStorage.setItem('commissionRate', commissionRate);
+    localStorage.setItem('minTransferAmount', minTransferAmount);
+    if (currentUser) localStorage.setItem('currentUser', JSON.stringify(currentUser));
+}
+
+// ===== إخفاء شاشة الترحيب =====
+window.onload = function() {
+    // إنشاء النجوم
+    const c = document.getElementById('stars');
+    for (let i=0; i<80; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.width = Math.random()*2+1+'px';
+        s.style.height = s.style.width;
+        s.style.left = Math.random()*100+'%';
+        s.style.top = Math.random()*100+'%';
+        s.style.setProperty('--duration', (Math.random()*3+2)+'s');
+        s.style.animationDelay = (Math.random()*5)+'s';
+        c.appendChild(s);
+    }
+    loadData();
+    updateUI();
+    // إخفاء شاشة الترحيب بعد 500 مللي
+    setTimeout(function() {
+    }, 500);
+};
+
+// ===== باقي الدوال =====
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const hamburger = document.getElementById('hamburger');
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+    hamburger.classList.toggle('active');
+    isSidebarOpen = sidebar.classList.contains('active');
+}
+
+function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page-' + page);
+    if (target) target.classList.add('active');
+    document.querySelectorAll('.bottom-nav a').forEach(a => a.classList.remove('active'));
+    document.querySelectorAll('.bottom-nav a').forEach(a => {
+        if (a.onclick && a.onclick.toString().includes(page)) a.classList.add('active');
+    });
+    document.querySelectorAll('.menu-items li').forEach(a => a.classList.remove('active'));
+    document.querySelectorAll('.menu-items li').forEach(a => {
+        if (a.onclick && a.onclick.toString().includes(page)) a.classList.add('active');
+    });
+    if (page === 'admin') {
+        if (!isAdmin()) { alert('⚠️ هذه الصفحة مخصصة للمدراء فقط!'); showPage('home'); return; }
+        renderAdminPanel();
+    }
+    if (page === 'payment') renderPaymentMethods();
+    if (page === 'orders') renderOrders();
+    if (page === 'balance') updateBalance();
+    if (isSidebarOpen) toggleSidebar();
+}
+
+function isAdmin() {
+    if (!currentUser) return false;
+    return admins.some(a => a.email === currentUser.email);
+}
+
+function changeCurrency(code) {
+    selectedCurrency = code;
+    document.querySelectorAll('.currency-item').forEach(el => el.classList.remove('active'));
+    document.querySelector(`.currency-item[data-currency="${code}"]`)?.classList.add('active');
+    updateBalance();
+    localStorage.setItem('selectedCurrency', code);
+}
+
+function convertCurrency(amount, from, to) {
+    if (from === to) return amount;
+    const rateFrom = exchangeRates[from] || 1;
+    const rateTo = exchangeRates[to] || 1;
+    return (amount / rateFrom) * rateTo;
+}
+
+function updateBalance() {
+    const displayBalance = convertCurrency(balance, 'usd', selectedCurrency);
+    document.getElementById('headerBalance').textContent = displayBalance.toFixed(2);
+    document.getElementById('balancePageAmount').textContent = displayBalance.toFixed(2);
+    const currency = currencies.find(c => c.code === selectedCurrency);
+    document.getElementById('currencySymbol').textContent = currency ? currency.symbol : 'دولار';
+}
+
+function renderPaymentMethods() {
+    const container = document.getElementById('paymentMethodsGrid');
+    if (!container) return;
+    container.innerHTML = paymentMethods.map(m => `
+        <div class="payment-card" onclick="showPaymentDetail(${m.id})">
+            ${m.image ? `<div class="pm-image"><img src="${m.image}" alt="${m.name}"></div>` : `<div class="pm-image" style="font-size:60px;color:var(--primary);display:flex;align-items:center;justify-content:center;">💳</div>`}
+            <div class="pm-name">${m.name}</div>
+            <div class="pm-number">${m.number}</div>
+        </div>
+    `).join('') || '<p style="color:var(--text-dim);text-align:center;">لا توجد طرق دفع</p>';
+}
+
+function showPaymentDetail(id) {
+    if (!currentUser) { showLoginModal(); return; }
+    const method = paymentMethods.find(m => m.id === id);
+    if (!method) return;
+    alert('📄 صفحة الدفع لـ ' + method.name + '\nالرقم: ' + method.number + '\n(سيتم إضافة صفحة منفصلة قريباً)');
+}
+
+function showAddBalanceModal() {
+    if (!currentUser) { showLoginModal(); return; }
+    document.getElementById('balanceModal').classList.add('show');
+    document.getElementById('balanceAmount').value = '';
+    document.getElementById('balanceTransferCode').value = '';
+    document.getElementById('balanceStatus').textContent = '';
+}
+
+function requestBalance() {
+    const amount = parseFloat(document.getElementById('balanceAmount').value);
+    const code = document.getElementById('balanceTransferCode').value.trim();
+    if (!amount || amount < 1) return alert('❌ أدخل مبلغاً صحيحاً');
+    if (amount < minTransferAmount) return alert('❌ الحد الأدنى للتحويل هو ' + minTransferAmount + ' دولار');
+    if (!code) return alert('❌ أدخل رقم عملية التحويل');
+    
+    const request = {
+        id: Date.now(),
+        userId: currentUser.email,
+        userName: currentUser.name,
+        amount: amount,
+        transferCode: code,
+        date: new Date().toLocaleString('ar'),
+        status: 'pending'
+    };
+    balanceRequests.push(request);
+    saveData();
+    document.getElementById('balanceStatus').textContent = '✅ تم إرسال طلبك بنجاح! سيتم إضافة الرصيد بعد التأكيد من الإدارة.';
+    document.getElementById('balanceStatus').style.color = 'var(--success)';
+    document.getElementById('balanceAmount').value = '';
+    document.getElementById('balanceTransferCode').value = '';
+    updateStats();
+    setTimeout(() => closeModal('balanceModal'), 3000);
+}
+
+function renderOrders() {
+    const container = document.getElementById('ordersList');
+    if (!container) return;
+    container.innerHTML = orders.map(o => `
+        <div style="background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;margin:5px 0;border-left:3px solid var(--primary);">
+            <div>🛍️ ${o.productName || 'طلب'}</div>
+            <div>💰 ${o.amount || o.price || 0} دولار</div>
+            <div>📅 ${o.date || new Date().toLocaleDateString('ar')}</div>
+            <div>الحالة: <span style="color:${o.status === 'مكتمل' ? 'var(--success)' : o.status === 'مرفوض' ? 'var(--danger)' : 'var(--warning)'};">${o.status || 'قيد التنفيذ'}</span></div>
+        </div>
+    `).join('') || '<p style="text-align:center;color:var(--text-dim);">لا توجد طلبات</p>';
+}
+
+function renderUsers() {
+    const container = document.getElementById('usersList');
+    if (!container) return;
+    container.innerHTML = users.map(u => `
+        <div class="admin-user-item">
+            <div><strong>${u.name || 'بدون اسم'}</strong> - ${u.email}</div>
+            <div style="font-size:12px;color:var(--text-dim);">📱 ${u.phone || 'لا يوجد'} | 📅 ${u.date || 'غير معروف'}</div>
+            <div style="font-size:12px;color:var(--text-dim);">💰 الرصيد: ${u.balance || 0} دولار</div>
+            <button class="btn btn-danger" onclick="deleteUser('${u.email}')" style="font-size:11px;padding:4px 12px;">🗑️ حذف</button>
+        </div>
+    `).join('') || '<p style="color:var(--text-dim);">لا يوجد مستخدمين مسجلين</p>';
+}
+
+function deleteUser(email) {
+    if (!isAdmin()) return alert('🔒 فقط المدراء');
+    if (!confirm('هل أنت متأكد من حذف هذا المستخدم؟')) return;
+    users = users.filter(u => u.email !== email);
+    saveData();
+    renderUsers();
+    updateStats();
+}
+
+function renderAdminList() {
+    const container = document.getElementById('adminList');
+    if (!container) return;
+    container.innerHTML = admins.map(a => `
+        <div class="admin-product-item">
+            <span>👑 ${a.name} - ${a.email}</span>
+            ${a.email !== 'admin@royal.com' ? `<button class="btn btn-danger" onclick="removeAdmin('${a.email}')">🗑️ حذف</button>` : '<span style="color:var(--primary);font-size:12px;">(المالك)</span>'}
+        </div>
+    `).join('');
+}
+
+function addAdmin() {
+    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي');
+    const email = document.getElementById('newAdminEmail').value.trim();
+    const password = document.getElementById('newAdminPass').value.trim();
+    const name = document.getElementById('newAdminName').value.trim() || 'مدير';
+    if (!email || !password) return alert('❌ أدخل الإيميل وكلمة المرور');
+    if (admins.some(a => a.email === email)) return alert('❌ هذا الإيميل مدير بالفعل');
+    admins.push({ email, password, name });
+    saveData();
+    renderAdminList();
+    document.getElementById('newAdminEmail').value = '';
+    document.getElementById('newAdminPass').value = '';
+    document.getElementById('newAdminName').value = '';
+    alert('✅ تم إضافة المدير');
+}
+
+function removeAdmin(email) {
+    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي');
+    if (email === 'admin@royal.com') return alert('❌ لا يمكن حذف المدير الرئيسي');
+    if (!confirm('هل أنت متأكد من حذف هذا المدير؟')) return;
+    admins = admins.filter(a => a.email !== email);
+    saveData();
+    renderAdminList();
+    alert('✅ تم حذف المدير');
+}
+
+function changeAdminPassword() {
+    if (!isAdmin()) return alert('🔒 فقط المدير الرئيسي');
+    const newPass = document.getElementById('newAdminPassword').value.trim();
+    if (!newPass || newPass.length < 6) return alert('❌ كلمة المرور 6 أحرف على الأقل');
+    adminPassword = newPass;
+    const mainAdmin = admins.find(a => a.email === 'admin@royal.com');
+    if (mainAdmin) mainAdmin.password = newPass;
+    saveData();
+    document.getElementById('passwordChangeMsg').innerHTML = '<span style="color:var(--success);">✅ تم التغيير</span>';
+    document.getElementById('newAdminPassword').value = '';
+    alert('✅ تم تغيير كلمة المرور');
+}
+
+function updateStats() {
+    document.getElementById('statUsers').textContent = users.length;
+    document.getElementById('statOrders').textContent = orders.length;
+    const totalRevenue = orders.reduce((sum, o) => sum + (o.price || 0), 0);
+    document.getElementById('statRevenue').textContent = totalRevenue.toFixed(2);
+}
+
+function updateUI() {
+    const loginBtn = document.getElementById('loginBtnTop');
+    const logoutBtn = document.getElementById('logoutBtnTop');
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const profileName = document.getElementById('profileName');
+    const profileEmail = document.getElementById('profileEmail');
+    const adminMenuLink = document.getElementById('adminMenuLink');
+    const adminNavLink = document.getElementById('adminNavLink');
+    
+    if (currentUser) {
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+        userNameDisplay.textContent = '👋 ' + (currentUser.name || 'مستخدم');
+        profileName.textContent = currentUser.name || 'مستخدم';
+        profileEmail.textContent = currentUser.email || '';
+        const isAdminUser = isAdmin();
+        adminMenuLink.style.display = isAdminUser ? 'block' : 'none';
+        adminNavLink.style.display = isAdminUser ? 'block' : 'none';
+        if (currentUser.avatar) {
+            document.getElementById('avatarImage').style.display = 'block';
+            document.getElementById('avatarImage').src = currentUser.avatar;
+            document.getElementById('avatarText').style.display = 'none';
+        }
+    } else {
+        loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+        userNameDisplay.textContent = '';
+        profileName.textContent = 'زائر';
+        profileEmail.textContent = 'غير مسجل';
+        adminMenuLink.style.display = 'none';
+        adminNavLink.style.display = 'none';
+    }
+    updateBalance();
+    renderPaymentMethods();
+    renderOrders();
+    renderUsers();
+    renderAdminList();
+    updateStats();
+}
+
+function renderAdminPanel() {
+    renderUsers();
+    renderPaymentMethods();
+    renderAdminList();
+    updateStats();
+}
+
+function showLogin() {
+    document.getElementById('loginFields').style.display = 'block';
+    document.getElementById('registerFields').style.display = 'none';
+}
+
+function showRegister() {
+    document.getElementById('loginFields').style.display = 'none';
+    document.getElementById('registerFields').style.display = 'block';
+}
+
+function register() {
+    const name = document.getElementById('regUsername').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
+    if (!name || !email || !phone || !password) return alert('❌ أدخل جميع البيانات');
+    if (users.some(u => u.email === email)) return alert('❌ هذا الإيميل مسجل مسبقاً');
+    const newUser = { name, email, phone, password, balance: 0, date: new Date().toLocaleDateString('ar'), avatar: '' };
+    users.push(newUser);
+    currentUser = newUser;
+    saveData();
+    updateUI();
+    closeModal('loginModal');
+    alert('✅ تم إنشاء الحساب بنجاح!');
+    showPage('home');
+}
+
+function login() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    if (!email || !password) return alert('❌ أدخل الإيميل وكلمة المرور');
+    const admin = admins.find(a => a.email === email && a.password === password);
+    if (admin) {
+        currentUser = { name: admin.name || 'مدير', email: admin.email, isAdmin: true };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        updateUI();
+        closeModal('loginModal');
+        alert('👋 مرحباً أيها المدير!');
+        showPage('admin');
+        return;
+    }
+    const user = users.find(u => u.email === email && u.password === password);
+    if (user) {
+        currentUser = user;
+        saveData();
+        updateUI();
+        closeModal('loginModal');
+        alert('👋 مرحباً ' + user.name);
+        showPage('home');
+        return;
+    }
+    alert('❌ الإيميل أو كلمة المرور غير صحيحة، أو الحساب غير موجود');
+}
+
+function logout() {
+    if (!confirm('هل أنت متأكد أنك تريد تسجيل الخروج؟')) return;
+    currentUser = null;
+    localStorage.removeItem('currentUser');
+    updateUI();
+    alert('👋 تم تسجيل الخروج');
+    showPage('home');
+    if (isSidebarOpen) toggleSidebar();
+}
+
+function showLoginModal() {
+    document.getElementById('loginModal').classList.add('show');
+    showLogin();
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('show');
+}
+
+function uploadAvatar(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const dataUrl = e.target.result;
+        document.getElementById('avatarImage').style.display = 'block';
+        document.getElementById('avatarImage').src = dataUrl;
+        document.getElementById('avatarText').style.display = 'none';
+        if (currentUser) { currentUser.avatar = dataUrl; saveData(); }
+    };
+    reader.readAsDataURL(file);
+}
+
+// ===== تهيئة التطبيق =====
+loadData();
+updateUI();
+const savedCurrency = localStorage.getItem('selectedCurrency');
+if (savedCurrency) {
+    selectedCurrency = savedCurrency;
+    document.querySelectorAll('.currency-item').forEach(el => {
+        el.classList.toggle('active', el.dataset.currency === savedCurrency);
+    });
+}
+console.log('👑 رويال كارد جاهز!');
 </script>
 </body>
 </html>
-
